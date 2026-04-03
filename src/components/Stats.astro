@@ -1,0 +1,50 @@
+---
+const stats = [
+  { value: "3000", suffix: "+", label: "Madres porcinas" },
+  { value: "15", suffix: "+", label: "Cortes disponibles" },
+  { value: "100", suffix: "%", label: "Cadena propia" },
+  { value: "3", suffix: "", label: "Socios productores" },
+];
+---
+
+<section class="bg-carne py-16 md:py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+      {stats.map((stat) => (
+        <div class="text-center">
+          <div class="font-display font-bold text-4xl md:text-5xl text-hueso mb-2">
+            <span class="stat-number" data-target={stat.value}>0</span>{stat.suffix}
+          </div>
+          <div class="font-accent text-xs tracking-widest text-hueso/70 uppercase">
+            {stat.label}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target as HTMLElement;
+        const target = parseInt(el.dataset.target || "0");
+        let current = 0;
+        const step = Math.max(1, Math.floor(target / 40));
+        const interval = setInterval(() => {
+          current += step;
+          if (current >= target) {
+            current = target;
+            clearInterval(interval);
+          }
+          el.textContent = current.toString();
+        }, 30);
+        observer.unobserve(el);
+      });
+    },
+    { threshold: 0.5 }
+  );
+  document.querySelectorAll(".stat-number").forEach((el) => observer.observe(el));
+</script>

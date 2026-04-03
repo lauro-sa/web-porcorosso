@@ -1,0 +1,21 @@
+---
+interface Props {
+  variant?: "carne" | "piel" | "morcilla" | "hueso";
+  class?: string;
+}
+
+const { variant = "carne", class: className = "" } = Astro.props;
+
+const variantClasses = {
+  carne: "bg-carne/10 text-carne border-carne/20",
+  piel: "bg-piel/15 text-morcilla border-piel/30",
+  morcilla: "bg-morcilla text-hueso border-morcilla",
+  hueso: "bg-hueso text-morcilla border-hueso/50",
+};
+
+const classes = `inline-block px-3 py-1 text-xs font-display font-semibold uppercase tracking-wider border rounded-sm ${variantClasses[variant]} ${className}`;
+---
+
+<span class={classes}>
+  <slot />
+</span>

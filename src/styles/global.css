@@ -1,1 +1,78 @@
 @import "tailwindcss";
+
+/* ========================================
+   PORCO ROSSO - Design Tokens (Tailwind v4)
+   ======================================== */
+
+@theme {
+  /* Colores de marca */
+  --color-morcilla: #352323;
+  --color-frigo: #f4f2f2;
+  --color-carne: #982c2a;
+  --color-piel: #dd8790;
+  --color-hueso: #f3e3cc;
+
+  /* Variantes utilitarias */
+  --color-carne-dark: #7a2321;
+  --color-carne-light: #b33533;
+  --color-piel-light: #e8a5ac;
+  --color-morcilla-light: #4a3535;
+
+  /* Tipografias */
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Inter", "Segoe UI", sans-serif;
+  --font-accent: "TAYBigBird", "Courier New", monospace;
+}
+
+/* ========================================
+   Fuente custom: TAY Big Bird
+   ======================================== */
+
+@font-face {
+  font-family: "TAYBigBird";
+  src: url("/fonts/TAYBigBird.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ========================================
+   Base
+   ======================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-frigo);
+  color: var(--color-morcilla);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-carne);
+  color: var(--color-hueso);
+}
+
+/* ========================================
+   Animaciones
+   ======================================== */
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

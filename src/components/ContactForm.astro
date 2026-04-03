@@ -1,0 +1,168 @@
+---
+import SectionTitle from "./SectionTitle.astro";
+import Button from "./Button.astro";
+---
+
+<section id="contacto" class="py-20 md:py-28 bg-frigo">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20">
+      <!-- Left: Info -->
+      <div>
+        <SectionTitle
+          tag="Contacto"
+          title="Quiero ser"
+          accent="cliente."
+          description="Dejanos tus datos y nos ponemos en contacto para armar una propuesta a tu medida."
+        />
+
+        <div class="space-y-6 mt-8">
+          <div>
+            <h4 class="font-display font-bold uppercase text-sm text-morcilla mb-1">Telefono</h4>
+            <a href="tel:+5491140453345" class="text-carne hover:text-carne-dark transition-colors">
+              +54 9 11-4045-3345
+            </a>
+          </div>
+          <div>
+            <h4 class="font-display font-bold uppercase text-sm text-morcilla mb-1">Email</h4>
+            <a href="mailto:hola@porcorosso.com.ar" class="text-carne hover:text-carne-dark transition-colors">
+              hola@porcorosso.com.ar
+            </a>
+          </div>
+          <div>
+            <h4 class="font-display font-bold uppercase text-sm text-morcilla mb-1">Almacen</h4>
+            <p class="text-morcilla/60">
+              Martin Fierro 3361, Ituzaingo<br />
+              Complejo Thays, Local 17<br />
+              Martes a Domingo, 10 a 18 hs
+            </p>
+          </div>
+        </div>
+
+        <!-- Illustration -->
+        <div class="mt-10 max-w-[200px] hidden lg:block">
+          <img src="/images/ilustraciones/pig-pig-02.png" alt="" class="w-full h-auto opacity-60" />
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="bg-hueso p-8 md:p-10">
+        <form id="contact-form" class="space-y-5">
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
+                Nombre *
+              </label>
+              <input
+                type="text"
+                name="nombre"
+                required
+                class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
+                placeholder="Tu nombre"
+              />
+            </div>
+            <div>
+              <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
+                Telefono *
+              </label>
+              <input
+                type="tel"
+                name="telefono"
+                required
+                class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
+                placeholder="+54 9 11..."
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
+              Email *
+            </label>
+            <input
+              type="email"
+              name="email"
+              required
+              class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
+              placeholder="tu@email.com"
+            />
+          </div>
+
+          <div>
+            <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
+              Empresa
+            </label>
+            <input
+              type="text"
+              name="empresa"
+              class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
+              placeholder="Nombre de tu empresa o local"
+            />
+          </div>
+
+          <div>
+            <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
+              Rubro
+            </label>
+            <select
+              name="rubro"
+              class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla focus:border-carne focus:outline-none transition-colors"
+            >
+              <option value="">Selecciona tu rubro</option>
+              <option value="restaurante">Restaurante / Bar</option>
+              <option value="hotel">Hotel / Catering</option>
+              <option value="carniceria">Carniceria</option>
+              <option value="supermercado">Supermercado / Almacen</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
+              Mensaje
+            </label>
+            <textarea
+              name="mensaje"
+              rows="4"
+              class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors resize-none"
+              placeholder="Contanos que necesitas..."
+            ></textarea>
+          </div>
+
+          <Button variant="primary" size="lg" class="w-full" type="submit">
+            Enviar consulta
+          </Button>
+        </form>
+
+        <!-- Success message -->
+        <div id="form-success" class="hidden text-center py-12">
+          <div class="font-display font-bold text-2xl uppercase text-carne mb-3">
+            Mensaje enviado
+          </div>
+          <p class="text-morcilla/60 mb-6">
+            Nos ponemos en contacto a la brevedad.
+          </p>
+          <a
+            href="https://wa.me/5491140453345"
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-2 text-carne font-display font-semibold uppercase text-sm tracking-wider hover:text-carne-dark transition-colors"
+          >
+            O escribinos por WhatsApp →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  const success = document.getElementById("form-success");
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    // TODO: integrate with backend/API
+    form.classList.add("hidden");
+    success?.classList.remove("hidden");
+  });
+</script>

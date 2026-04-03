@@ -1,0 +1,78 @@
+---
+import SectionTitle from "./SectionTitle.astro";
+import Card from "./Card.astro";
+
+const pillars = [
+  {
+    icon: "01",
+    title: "Crianza",
+    text: "Cuidamos cada etapa del crecimiento con bienestar animal y alimentacion controlada.",
+  },
+  {
+    icon: "02",
+    title: "Desposte",
+    text: "Procesamos con precision tecnica, garantizando cortes uniformes y de calidad constante.",
+  },
+  {
+    icon: "03",
+    title: "Entrega",
+    text: "Logistica propia con cadena de frio ininterrumpida hasta tu puerta.",
+  },
+  {
+    icon: "04",
+    title: "Trazabilidad",
+    text: "Cada producto es rastreable desde el campo hasta tu cocina.",
+  },
+];
+---
+
+<section id="nosotros" class="py-20 md:py-28 bg-frigo">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+      <!-- Left: Story -->
+      <div>
+        <SectionTitle
+          tag="Nosotros"
+          title="Tres productores,"
+          accent="una obsesion."
+          description="Somos una empresa familiar agroindustrial que hace algo facil de explicar pero dificil de llevar a cabo: nos hacemos cargo de toda la cadena."
+        />
+        <div class="space-y-4 text-morcilla/70 leading-relaxed">
+          <p>
+            Criamos, faenamos, despostamos, elaboramos, movemos y vendemos nuestros productos.
+            Nuestro diferencial esta en el modelo: somos medianos, livianos y podemos aggiornarnos facilmente.
+          </p>
+          <p>
+            Eso nos permite desarrollar productos nuevos, ajustar procesos y ejecutarlos.
+            Trabajamos asi porque nos gusta y porque funciona. Y porque cuando la cadena es simple, el resultado es bueno.
+          </p>
+        </div>
+        <!-- Illustration -->
+        <div class="mt-10 max-w-xs">
+          <img
+            src="/images/ilustraciones/papa-pig-01.png"
+            alt="Ilustracion Porco Rosso"
+            class="w-full h-auto opacity-80"
+          />
+        </div>
+      </div>
+
+      <!-- Right: Pillars -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {pillars.map((pillar) => (
+          <Card variant="hueso" class="group hover:shadow-lg transition-shadow duration-300">
+            <span class="font-display font-bold text-4xl text-carne/20 group-hover:text-carne/40 transition-colors">
+              {pillar.icon}
+            </span>
+            <h3 class="font-display font-bold text-xl uppercase text-morcilla mt-3 mb-2">
+              {pillar.title}
+            </h3>
+            <p class="text-sm text-morcilla/60 leading-relaxed">
+              {pillar.text}
+            </p>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

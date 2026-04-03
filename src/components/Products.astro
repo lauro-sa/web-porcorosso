@@ -1,0 +1,99 @@
+---
+import SectionTitle from "./SectionTitle.astro";
+import Tag from "./Tag.astro";
+
+const products = [
+  {
+    name: "Porcino Premium",
+    tag: "Destacado",
+    description: "Nuestra especialidad. Cortes de cerdo de produccion propia con trazabilidad completa.",
+    items: ["Bondiola", "Matambrito", "Costillitas", "Pork Belly", "Solomillo", "Vacio", "Ribs de carre"],
+    image: "/images/productos/bondiola.jpg",
+    highlighted: true,
+  },
+  {
+    name: "Vacuno Seleccionado",
+    tag: "Cortes",
+    description: "Carne vacuna seleccionada de productores de confianza.",
+    items: ["Tapa de asado", "Tira de centro", "Vacio flecha"],
+    image: "/images/productos/tapa-de-asado.jpg",
+    highlighted: false,
+  },
+  {
+    name: "Embutidos & Chacinados",
+    tag: "Elaboracion propia",
+    description: "Produccion artesanal con recetas de familia.",
+    items: ["Chorizo bombon", "Morcilla dulce", "Morcilla salada", "Salchicha parrillera"],
+    image: "/images/productos/chorizo-bombón.jpg",
+    highlighted: false,
+  },
+  {
+    name: "Milanesas",
+    tag: "Clasico",
+    description: "No son las de mama, pero casi.",
+    items: ["Milanesas de cerdo", "Milanesas de pollo", "Milanesas de carne"],
+    image: "/images/productos/caprichito-3.jpg",
+    highlighted: false,
+  },
+];
+---
+
+<section id="productos" class="py-20 md:py-28 bg-hueso">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <SectionTitle
+      tag="Productos"
+      title="Lo que mejor"
+      accent="sabemos hacer."
+      description="Carne de calidad, hecha con oficio, y un cuidado que se nota en cada corte."
+    />
+
+    <div class="grid gap-6 md:gap-8">
+      {products.map((product, i) => (
+        <div
+          class={`grid md:grid-cols-2 gap-0 overflow-hidden ${
+            product.highlighted ? "border-2 border-carne" : "border border-morcilla/10"
+          }`}
+        >
+          <!-- Image -->
+          <div class={`aspect-[4/3] md:aspect-auto overflow-hidden ${i % 2 === 1 ? "md:order-2" : ""}`}>
+            <img
+              src={product.image}
+              alt={product.name}
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+
+          <!-- Content -->
+          <div class={`p-8 md:p-12 flex flex-col justify-center ${
+            product.highlighted ? "bg-carne text-hueso" : "bg-frigo"
+          }`}>
+            <Tag variant={product.highlighted ? "hueso" : "carne"}>
+              {product.tag}
+            </Tag>
+            <h3 class={`font-display font-bold text-2xl md:text-3xl uppercase mt-4 mb-3 ${
+              product.highlighted ? "text-hueso" : "text-morcilla"
+            }`}>
+              {product.name}
+            </h3>
+            <p class={`mb-6 leading-relaxed ${
+              product.highlighted ? "text-hueso/80" : "text-morcilla/60"
+            }`}>
+              {product.description}
+            </p>
+            <div class="flex flex-wrap gap-2">
+              {product.items.map((item) => (
+                <span class={`text-xs font-display uppercase tracking-wider px-3 py-1.5 ${
+                  product.highlighted
+                    ? "bg-hueso/15 text-hueso"
+                    : "bg-morcilla/5 text-morcilla/70"
+                }`}>
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

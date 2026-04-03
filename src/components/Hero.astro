@@ -1,0 +1,55 @@
+---
+import Button from "./Button.astro";
+---
+
+<section class="relative min-h-screen flex items-center bg-hueso overflow-hidden">
+  <!-- Background illustration -->
+  <div class="absolute right-0 bottom-0 w-1/2 opacity-10 pointer-events-none hidden lg:block">
+    <img src="/images/ilustraciones/papa-pig-02.png" alt="" class="w-full h-auto" />
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 relative z-10">
+    <div class="max-w-3xl">
+      <!-- Tag -->
+      <span class="font-accent text-sm tracking-widest text-carne mb-6 block">
+        PRODUCTOR DIRECTO &middot; EST. 2011
+      </span>
+
+      <!-- Titulo -->
+      <h1 class="font-display font-bold uppercase text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.9] text-morcilla mb-6">
+        CARNE DE<br />
+        <span class="text-carne">CALIDAD,</span><br />
+        HECHA CON<br />
+        OFICIO.
+      </h1>
+
+      <!-- Descripcion -->
+      <p class="text-lg md:text-xl text-morcilla/70 max-w-xl mb-10 leading-relaxed">
+        Somos una empresa familiar agroindustrial que se hace cargo de toda la cadena.
+        Criamos, faenamos, despostamos, elaboramos y vendemos nuestros productos.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-wrap gap-4">
+        <Button href="#contacto" variant="primary" size="lg">
+          Quiero ser cliente
+        </Button>
+        <Button
+          href="https://wa.me/5491140453345?text=Hola%20Porco%20Rosso!%20Quiero%20info%20mayorista"
+          variant="outline"
+          size="lg"
+          target="_blank"
+          rel="noopener"
+        >
+          WhatsApp
+        </Button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
+    <span class="font-accent text-xs tracking-widest text-morcilla/50">SCROLL</span>
+    <div class="w-px h-8 bg-morcilla/30 animate-pulse"></div>
+  </div>
+</section>
