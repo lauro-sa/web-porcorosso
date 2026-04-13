@@ -20,7 +20,7 @@
 
   /* Tipografias */
   --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
-  --font-body: "Inter", "Segoe UI", sans-serif;
+  --font-body: "Montserrat", "Segoe UI", sans-serif;
   --font-accent: "TAYBigBird", "Courier New", monospace;
 }
 
@@ -75,4 +75,85 @@ body {
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@keyframes success-check {
+  0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+  50% { transform: scale(1.2) rotate(-45deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-45deg); opacity: 1; }
+}
+
+@keyframes success-circle {
+  0% { stroke-dashoffset: 157; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes success-fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================
+   Custom form controls
+   ======================================== */
+
+/* Hide native radio/checkbox */
+input[type="radio"].pr-radio,
+input[type="checkbox"].pr-check {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-morcilla);
+  opacity: 0.25;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+input[type="radio"].pr-radio {
+  border-radius: 50%;
+}
+
+input[type="checkbox"].pr-check {
+  border-radius: 3px;
+}
+
+input[type="radio"].pr-radio:checked,
+input[type="checkbox"].pr-check:checked {
+  border-color: var(--color-carne);
+  background: var(--color-carne);
+  opacity: 1;
+}
+
+input[type="radio"].pr-radio:checked::after {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-hueso);
+  margin: 4px auto;
+}
+
+input[type="checkbox"].pr-check:checked::after {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 10px;
+  border: solid var(--color-hueso);
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+  margin: 1px auto 0;
+}
+
+/* Custom select */
+select.pr-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23352323' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 44px;
 }

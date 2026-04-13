@@ -1,23 +1,22 @@
 ---
 import SectionTitle from "./SectionTitle.astro";
-import Button from "./Button.astro";
 ---
 
 <section id="contacto" class="py-20 md:py-28 bg-frigo">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
       <!-- Left: Info -->
-      <div>
+      <div class="lg:pt-4">
         <SectionTitle
           tag="Contacto"
-          title="Quiero ser"
-          accent="cliente."
-          description="Dejanos tus datos y nos ponemos en contacto para armar una propuesta a tu medida."
+          title="Armamos una propuesta"
+          accent="a tu medida."
+          description="Completá el formulario en unos simples pasos y nos ponemos en contacto para diseñar la mejor solución para tu negocio."
         />
 
         <div class="space-y-6 mt-8">
           <div>
-            <h4 class="font-display font-bold uppercase text-sm text-morcilla mb-1">Telefono</h4>
+            <h4 class="font-display font-bold uppercase text-sm text-morcilla mb-1">Teléfono</h4>
             <a href="tel:+5491140453345" class="text-carne hover:text-carne-dark transition-colors">
               +54 9 11-4045-3345
             </a>
@@ -29,9 +28,9 @@ import Button from "./Button.astro";
             </a>
           </div>
           <div>
-            <h4 class="font-display font-bold uppercase text-sm text-morcilla mb-1">Almacen</h4>
+            <h4 class="font-display font-bold uppercase text-sm text-morcilla mb-1">Almacén</h4>
             <p class="text-morcilla/60">
-              Martin Fierro 3361, Ituzaingo<br />
+              Martín Fierro 3361, Ituzaingó<br />
               Complejo Thays, Local 17<br />
               Martes a Domingo, 10 a 18 hs
             </p>
@@ -40,129 +39,777 @@ import Button from "./Button.astro";
 
         <!-- Illustration -->
         <div class="mt-10 max-w-[200px] hidden lg:block">
-          <img src="/images/ilustraciones/pig-pig-02.png" alt="" class="w-full h-auto opacity-60" />
+          <img src="/images/ilustraciones/pig-pig-02.png" alt="Ilustración Pig Pig - Porco Rosso contacto mayorista" class="w-full h-auto opacity-60" loading="lazy" />
         </div>
       </div>
 
-      <!-- Right: Form -->
+      <!-- Right: Multi-step Form -->
       <div class="bg-hueso p-8 md:p-10">
-        <form id="contact-form" class="space-y-5">
-          <div class="grid sm:grid-cols-2 gap-5">
-            <div>
-              <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
-                Nombre *
+        <!-- Progress bar -->
+        <div class="form-progress mb-8">
+          <div class="flex justify-between mb-2">
+            <span id="step-label" class="font-accent text-xs tracking-widest text-carne uppercase">Paso 1 de 4</span>
+            <span id="step-title" class="font-display text-xs uppercase tracking-wider text-morcilla/50">Tipo de cliente</span>
+          </div>
+          <div class="w-full h-1 bg-morcilla/10 overflow-hidden">
+            <div id="progress-bar" class="h-full bg-carne transition-all duration-500 ease-out" style="width: 25%"></div>
+          </div>
+        </div>
+
+        <form id="contact-form">
+          <!-- PASO 1: Tipo de cliente -->
+          <div class="form-step" data-step="1">
+            <p class="text-morcilla/60 mb-6">¿Qué tipo de negocio tenés?</p>
+            <div class="space-y-3">
+              <label class="flex items-center gap-4 p-4 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+                <input type="radio" name="tipo_cliente" value="restaurante" class="pr-radio" />
+                <div>
+                  <span class="font-display font-bold text-sm uppercase text-morcilla">Restaurante / Bar</span>
+                  <p class="text-xs text-morcilla/50 mt-0.5">Gastronomía con salón o delivery</p>
+                </div>
               </label>
-              <input
-                type="text"
-                name="nombre"
-                required
-                class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
-                placeholder="Tu nombre"
-              />
-            </div>
-            <div>
-              <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
-                Telefono *
+              <label class="flex items-center gap-4 p-4 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+                <input type="radio" name="tipo_cliente" value="hotel" class="pr-radio" />
+                <div>
+                  <span class="font-display font-bold text-sm uppercase text-morcilla">Hotel / Catering</span>
+                  <p class="text-xs text-morcilla/50 mt-0.5">Servicio de eventos o alojamiento</p>
+                </div>
               </label>
-              <input
-                type="tel"
-                name="telefono"
-                required
-                class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
-                placeholder="+54 9 11..."
-              />
+              <label class="flex items-center gap-4 p-4 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+                <input type="radio" name="tipo_cliente" value="carniceria" class="pr-radio" />
+                <div>
+                  <span class="font-display font-bold text-sm uppercase text-morcilla">Carnicería / Almacén</span>
+                  <p class="text-xs text-morcilla/50 mt-0.5">Reventa al público</p>
+                </div>
+              </label>
+              <label class="flex items-center gap-4 p-4 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+                <input type="radio" name="tipo_cliente" value="supermercado" class="pr-radio" />
+                <div>
+                  <span class="font-display font-bold text-sm uppercase text-morcilla">Supermercado / Autoservicio</span>
+                  <p class="text-xs text-morcilla/50 mt-0.5">Retail y grandes superficies</p>
+                </div>
+              </label>
+              <label class="flex items-center gap-4 p-4 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+                <input type="radio" name="tipo_cliente" value="otro" class="pr-radio" />
+                <div>
+                  <span class="font-display font-bold text-sm uppercase text-morcilla">Otro</span>
+                  <p class="text-xs text-morcilla/50 mt-0.5">Contanos en el último paso</p>
+                </div>
+              </label>
+            </div>
+            <p id="step1-error" class="text-carne text-xs mt-3 hidden">Seleccioná un tipo de negocio para continuar.</p>
+          </div>
+
+          <!-- PASO 2: Tu negocio -->
+          <div class="form-step hidden" data-step="2">
+            <p class="text-morcilla/60 mb-6">Contanos sobre tu negocio.</p>
+            <div class="space-y-5">
+              <div>
+                <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
+                  Nombre del negocio *
+                </label>
+                <input
+                  type="text"
+                  name="empresa"
+                  required
+                  class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
+                  placeholder="Ej: Parrilla Don Julio"
+                />
+              </div>
+              <div>
+                <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
+                  Zona / Localidad *
+                </label>
+                <input
+                  type="text"
+                  name="zona"
+                  required
+                  class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
+                  placeholder="Ej: Palermo, CABA"
+                />
+              </div>
+            </div>
+            <p id="step2-error" class="text-carne text-xs mt-3 hidden">Completá los campos obligatorios.</p>
+          </div>
+
+          <!-- PASO 3: Qué necesitás -->
+          <div class="form-step hidden" data-step="3">
+            <p class="text-morcilla/60 mb-6">¿Qué productos te interesan?</p>
+            <div class="grid grid-cols-2 gap-3 mb-6">
+              <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+                <input type="checkbox" name="productos" value="porcino" class="pr-check" />
+                <span class="text-sm text-morcilla">Porcino</span>
+              </label>
+              <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+                <input type="checkbox" name="productos" value="vacuno" class="pr-check" />
+                <span class="text-sm text-morcilla">Vacuno</span>
+              </label>
+              <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+                <input type="checkbox" name="productos" value="embutidos" class="pr-check" />
+                <span class="text-sm text-morcilla">Embutidos</span>
+              </label>
+              <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+                <input type="checkbox" name="productos" value="milanesas" class="pr-check" />
+                <span class="text-sm text-morcilla">Milanesas</span>
+              </label>
+              <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+                <input type="checkbox" name="productos" value="pollo" class="pr-check" />
+                <span class="text-sm text-morcilla">Pollo</span>
+              </label>
+              <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+                <input type="checkbox" name="productos" value="todos" class="pr-check" />
+                <span class="text-sm text-morcilla">Todo el catálogo</span>
+              </label>
+            </div>
+
+            <div class="space-y-5">
+              <div>
+                <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
+                  Volumen estimado
+                </label>
+                <input type="hidden" name="volumen" value="" />
+                <div class="pr-dropdown relative" data-target="volumen">
+                  <button type="button" class="pr-dropdown-trigger w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla text-left transition-colors flex items-center justify-between">
+                    <span class="pr-dropdown-label text-morcilla/30">¿Cuántos kg por semana?</span>
+                    <svg class="w-3 h-2 text-morcilla/40 transition-transform" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5" /></svg>
+                  </button>
+                  <div class="pr-dropdown-menu hidden absolute top-full left-0 right-0 z-20 bg-frigo border border-morcilla/10 border-t-0 shadow-lg">
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="hasta-50">Hasta 50 kg/semana</div>
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="50-150">50 a 150 kg/semana</div>
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="150-500">150 a 500 kg/semana</div>
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="mas-500">Más de 500 kg/semana</div>
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="no-se">No sé todavía</div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
+                  Frecuencia de entrega
+                </label>
+                <input type="hidden" name="frecuencia" value="" />
+                <div class="pr-dropdown relative" data-target="frecuencia">
+                  <button type="button" class="pr-dropdown-trigger w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla text-left transition-colors flex items-center justify-between">
+                    <span class="pr-dropdown-label text-morcilla/30">¿Cada cuánto necesitás?</span>
+                    <svg class="w-3 h-2 text-morcilla/40 transition-transform" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5" /></svg>
+                  </button>
+                  <div class="pr-dropdown-menu hidden absolute top-full left-0 right-0 z-20 bg-frigo border border-morcilla/10 border-t-0 shadow-lg">
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="semanal">Semanal</div>
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="quincenal">Quincenal</div>
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="mensual">Mensual</div>
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="a-demanda">A demanda</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div>
-            <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
-              Email *
-            </label>
-            <input
-              type="email"
-              name="email"
-              required
-              class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
-              placeholder="tu@email.com"
-            />
+          <!-- PASO 4: Datos de contacto -->
+          <div class="form-step hidden" data-step="4">
+            <p class="text-morcilla/60 mb-6">¿Cómo te contactamos?</p>
+            <div class="space-y-5">
+              <div>
+                <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
+                  Nombre completo *
+                </label>
+                <input
+                  type="text"
+                  name="nombre"
+                  required
+                  class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
+                  placeholder="Tu nombre y apellido"
+                />
+              </div>
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
+                    Teléfono *
+                  </label>
+                  <input
+                    type="tel"
+                    name="telefono"
+                    required
+                    class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
+                    placeholder="+54 9 11..."
+                  />
+                </div>
+                <div>
+                  <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
+                    placeholder="tu@email.com"
+                  />
+                </div>
+              </div>
+              <div>
+                <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
+                  Mensaje (opcional)
+                </label>
+                <textarea
+                  name="mensaje"
+                  rows="3"
+                  class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors resize-none"
+                  placeholder="¿Algo más que quieras contarnos?"
+                ></textarea>
+              </div>
+            </div>
+            <p id="step4-error" class="text-carne text-xs mt-3 hidden">Completá nombre, teléfono y email.</p>
           </div>
 
-          <div>
-            <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
-              Empresa
-            </label>
-            <input
-              type="text"
-              name="empresa"
-              class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
-              placeholder="Nombre de tu empresa o local"
-            />
-          </div>
-
-          <div>
-            <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
-              Rubro
-            </label>
-            <select
-              name="rubro"
-              class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla focus:border-carne focus:outline-none transition-colors"
+          <!-- Navigation buttons -->
+          <div class="flex gap-4 mt-8">
+            <button
+              type="button"
+              id="btn-prev"
+              class="hidden px-6 py-3 border border-morcilla/20 text-morcilla font-display font-semibold text-sm uppercase tracking-wider hover:border-morcilla/40 transition-colors"
             >
-              <option value="">Selecciona tu rubro</option>
-              <option value="restaurante">Restaurante / Bar</option>
-              <option value="hotel">Hotel / Catering</option>
-              <option value="carniceria">Carniceria</option>
-              <option value="supermercado">Supermercado / Almacen</option>
-              <option value="otro">Otro</option>
-            </select>
+              &larr; Anterior
+            </button>
+            <button
+              type="button"
+              id="btn-next"
+              class="flex-1 px-6 py-3 bg-carne text-hueso font-display font-semibold text-sm uppercase tracking-wider hover:bg-carne-dark transition-colors"
+            >
+              Siguiente &rarr;
+            </button>
+            <button
+              type="submit"
+              id="btn-submit"
+              class="hidden flex-1 px-6 py-3 bg-carne text-hueso font-display font-semibold text-sm uppercase tracking-wider hover:bg-carne-dark transition-colors"
+            >
+              Enviar consulta
+            </button>
           </div>
-
-          <div>
-            <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">
-              Mensaje
-            </label>
-            <textarea
-              name="mensaje"
-              rows="4"
-              class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors resize-none"
-              placeholder="Contanos que necesitas..."
-            ></textarea>
-          </div>
-
-          <Button variant="primary" size="lg" class="w-full" type="submit">
-            Enviar consulta
-          </Button>
         </form>
 
         <!-- Success message -->
-        <div id="form-success" class="hidden text-center py-12">
-          <div class="font-display font-bold text-2xl uppercase text-carne mb-3">
-            Mensaje enviado
+        <div id="form-success" class="hidden py-8">
+          <!-- Animated check -->
+          <div class="flex justify-center mb-6">
+            <div class="relative w-16 h-16">
+              <svg class="w-16 h-16" viewBox="0 0 56 56">
+                <circle cx="28" cy="28" r="25" fill="none" stroke="#982c2a" stroke-width="2.5" stroke-dasharray="157" style="animation: success-circle 0.6s ease-out forwards;" />
+              </svg>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-5 h-3 border-b-[3px] border-l-[3px] border-carne" style="animation: success-check 0.4s ease-out 0.4s both;"></div>
+              </div>
+            </div>
           </div>
-          <p class="text-morcilla/60 mb-6">
-            Nos ponemos en contacto a la brevedad.
-          </p>
-          <a
-            href="https://wa.me/5491140453345"
-            target="_blank"
-            rel="noopener"
-            class="inline-flex items-center gap-2 text-carne font-display font-semibold uppercase text-sm tracking-wider hover:text-carne-dark transition-colors"
-          >
-            O escribinos por WhatsApp →
-          </a>
+
+          <div class="text-center" style="animation: success-fade-up 0.5s ease-out 0.6s both;">
+            <div class="font-display font-bold text-2xl uppercase text-carne mb-3">
+              ¡Consulta enviada!
+            </div>
+            <p class="text-morcilla/60 mb-6 text-sm">
+              Nos ponemos en contacto a la brevedad. Tiempo de respuesta: menos de 24 hs hábiles.
+            </p>
+          </div>
+
+          <!-- Data summary -->
+          <div id="form-summary" class="border border-morcilla/10 bg-frigo p-5 mb-6 text-sm" style="animation: success-fade-up 0.5s ease-out 0.8s both;"></div>
+
+          <div class="text-center" style="animation: success-fade-up 0.5s ease-out 1s both;">
+            <a
+              href="https://wa.me/5491140453345?text=Hola%20Porco%20Rosso!%20Acabo%20de%20completar%20el%20formulario%20mayorista"
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center gap-2 text-carne font-display font-semibold uppercase text-sm tracking-wider hover:text-carne-dark transition-colors"
+            >
+              O escribinos por WhatsApp &rarr;
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<script>
-  const form = document.getElementById("contact-form") as HTMLFormElement;
-  const success = document.getElementById("form-success");
+<!-- ===================== MODAL ===================== -->
+<div
+  id="form-modal"
+  class="fixed inset-0 z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Formulario de contacto"
+>
+  <!-- Backdrop -->
+  <div id="modal-backdrop" class="absolute inset-0 bg-morcilla/80 backdrop-blur-sm"></div>
 
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    // TODO: integrate with backend/API
-    form.classList.add("hidden");
-    success?.classList.remove("hidden");
+  <!-- Modal content -->
+  <div class="relative bg-hueso w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto p-8 md:p-10 shadow-2xl">
+    <!-- Close button -->
+    <button
+      id="modal-close"
+      class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center text-morcilla/40 hover:text-morcilla transition-colors"
+      aria-label="Cerrar formulario"
+    >
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="4" y1="4" x2="16" y2="16" /><line x1="16" y1="4" x2="4" y2="16" />
+      </svg>
+    </button>
+
+    <!-- Modal header -->
+    <div class="mb-6">
+      <span class="font-accent text-xs tracking-widest text-carne uppercase block mb-2">Solicitar info</span>
+      <h3 class="font-display font-bold text-2xl md:text-3xl uppercase text-morcilla leading-tight">
+        Armamos una propuesta <span class="text-carne">a tu medida.</span>
+      </h3>
+    </div>
+
+    <!-- Progress bar (modal) -->
+    <div class="modal-progress mb-6">
+      <div class="flex justify-between mb-2">
+        <span id="modal-step-label" class="font-accent text-xs tracking-widest text-carne uppercase">Paso 1 de 4</span>
+        <span id="modal-step-title" class="font-display text-xs uppercase tracking-wider text-morcilla/50">Tipo de cliente</span>
+      </div>
+      <div class="w-full h-1 bg-morcilla/10 overflow-hidden">
+        <div id="modal-progress-bar" class="h-full bg-carne transition-all duration-500 ease-out" style="width: 25%"></div>
+      </div>
+    </div>
+
+    <form id="modal-form">
+      <!-- PASO 1 -->
+      <div class="modal-step" data-step="1">
+        <p class="text-morcilla/60 mb-5 text-sm">¿Qué tipo de negocio tenés?</p>
+        <div class="space-y-2.5">
+          <label class="flex items-center gap-4 p-3.5 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+            <input type="radio" name="tipo_cliente" value="restaurante" class="pr-radio" />
+            <div>
+              <span class="font-display font-bold text-sm uppercase text-morcilla">Restaurante / Bar</span>
+              <p class="text-xs text-morcilla/50 mt-0.5">Gastronomía con salón o delivery</p>
+            </div>
+          </label>
+          <label class="flex items-center gap-4 p-3.5 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+            <input type="radio" name="tipo_cliente" value="hotel" class="pr-radio" />
+            <div>
+              <span class="font-display font-bold text-sm uppercase text-morcilla">Hotel / Catering</span>
+              <p class="text-xs text-morcilla/50 mt-0.5">Servicio de eventos o alojamiento</p>
+            </div>
+          </label>
+          <label class="flex items-center gap-4 p-3.5 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+            <input type="radio" name="tipo_cliente" value="carniceria" class="pr-radio" />
+            <div>
+              <span class="font-display font-bold text-sm uppercase text-morcilla">Carnicería / Almacén</span>
+              <p class="text-xs text-morcilla/50 mt-0.5">Reventa al público</p>
+            </div>
+          </label>
+          <label class="flex items-center gap-4 p-3.5 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+            <input type="radio" name="tipo_cliente" value="supermercado" class="pr-radio" />
+            <div>
+              <span class="font-display font-bold text-sm uppercase text-morcilla">Supermercado / Autoservicio</span>
+            </div>
+          </label>
+          <label class="flex items-center gap-4 p-3.5 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+            <input type="radio" name="tipo_cliente" value="otro" class="pr-radio" />
+            <div>
+              <span class="font-display font-bold text-sm uppercase text-morcilla">Otro</span>
+            </div>
+          </label>
+        </div>
+        <p id="modal-step1-error" class="text-carne text-xs mt-3 hidden">Seleccioná un tipo de negocio.</p>
+      </div>
+
+      <!-- PASO 2 -->
+      <div class="modal-step hidden" data-step="2">
+        <p class="text-morcilla/60 mb-5 text-sm">Contanos sobre tu negocio.</p>
+        <div class="space-y-5">
+          <div>
+            <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Nombre del negocio *</label>
+            <input type="text" name="empresa" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="Ej: Parrilla Don Julio" />
+          </div>
+          <div>
+            <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Zona / Localidad *</label>
+            <input type="text" name="zona" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="Ej: Palermo, CABA" />
+          </div>
+        </div>
+        <p id="modal-step2-error" class="text-carne text-xs mt-3 hidden">Completá los campos obligatorios.</p>
+      </div>
+
+      <!-- PASO 3 -->
+      <div class="modal-step hidden" data-step="3">
+        <p class="text-morcilla/60 mb-5 text-sm">¿Qué productos te interesan?</p>
+        <div class="grid grid-cols-2 gap-2.5 mb-5">
+          <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+            <input type="checkbox" name="productos" value="porcino" class="pr-check" />
+            <span class="text-sm text-morcilla">Porcino</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+            <input type="checkbox" name="productos" value="vacuno" class="pr-check" />
+            <span class="text-sm text-morcilla">Vacuno</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+            <input type="checkbox" name="productos" value="embutidos" class="pr-check" />
+            <span class="text-sm text-morcilla">Embutidos</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+            <input type="checkbox" name="productos" value="milanesas" class="pr-check" />
+            <span class="text-sm text-morcilla">Milanesas</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+            <input type="checkbox" name="productos" value="pollo" class="pr-check" />
+            <span class="text-sm text-morcilla">Pollo</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
+            <input type="checkbox" name="productos" value="todos" class="pr-check" />
+            <span class="text-sm text-morcilla">Todo</span>
+          </label>
+        </div>
+        <div class="space-y-5">
+          <div>
+            <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Volumen estimado</label>
+            <input type="hidden" name="volumen" value="" />
+            <div class="pr-dropdown relative" data-target="volumen">
+              <button type="button" class="pr-dropdown-trigger w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla text-left transition-colors flex items-center justify-between">
+                <span class="pr-dropdown-label text-morcilla/30">¿Cuántos kg por semana?</span>
+                <svg class="w-3 h-2 text-morcilla/40 transition-transform" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5" /></svg>
+              </button>
+              <div class="pr-dropdown-menu hidden absolute top-full left-0 right-0 z-20 bg-frigo border border-morcilla/10 border-t-0 shadow-lg">
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="hasta-50">Hasta 50 kg/semana</div>
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="50-150">50 a 150 kg/semana</div>
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="150-500">150 a 500 kg/semana</div>
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="mas-500">Más de 500 kg/semana</div>
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="no-se">No sé todavía</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Frecuencia de entrega</label>
+            <input type="hidden" name="frecuencia" value="" />
+            <div class="pr-dropdown relative" data-target="frecuencia">
+              <button type="button" class="pr-dropdown-trigger w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla text-left transition-colors flex items-center justify-between">
+                <span class="pr-dropdown-label text-morcilla/30">¿Cada cuánto necesitás?</span>
+                <svg class="w-3 h-2 text-morcilla/40 transition-transform" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5" /></svg>
+              </button>
+              <div class="pr-dropdown-menu hidden absolute top-full left-0 right-0 z-20 bg-frigo border border-morcilla/10 border-t-0 shadow-lg">
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="semanal">Semanal</div>
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="quincenal">Quincenal</div>
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="mensual">Mensual</div>
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="a-demanda">A demanda</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 4 -->
+      <div class="modal-step hidden" data-step="4">
+        <p class="text-morcilla/60 mb-5 text-sm">¿Cómo te contactamos?</p>
+        <div class="space-y-5">
+          <div>
+            <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Nombre completo *</label>
+            <input type="text" name="nombre" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="Tu nombre y apellido" />
+          </div>
+          <div class="grid grid-cols-2 gap-5">
+            <div>
+              <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Teléfono *</label>
+              <input type="tel" name="telefono" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="+54 9 11..." />
+            </div>
+            <div>
+              <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Email *</label>
+              <input type="email" name="email" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="tu@email.com" />
+            </div>
+          </div>
+          <div>
+            <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Mensaje (opcional)</label>
+            <textarea name="mensaje" rows="3" class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors resize-none" placeholder="¿Algo más que quieras contarnos?"></textarea>
+          </div>
+        </div>
+        <p id="modal-step4-error" class="text-carne text-xs mt-3 hidden">Completá nombre, teléfono y email.</p>
+      </div>
+
+      <!-- Nav buttons -->
+      <div class="flex gap-4 mt-8">
+        <button type="button" id="modal-prev" class="hidden px-6 py-3 border border-morcilla/20 text-morcilla font-display font-semibold text-sm uppercase tracking-wider hover:border-morcilla/40 transition-colors">&larr; Anterior</button>
+        <button type="button" id="modal-next" class="flex-1 px-6 py-3 bg-carne text-hueso font-display font-semibold text-sm uppercase tracking-wider hover:bg-carne-dark transition-colors">Siguiente &rarr;</button>
+        <button type="submit" id="modal-submit" class="hidden flex-1 px-6 py-3 bg-carne text-hueso font-display font-semibold text-sm uppercase tracking-wider hover:bg-carne-dark transition-colors">Enviar consulta</button>
+      </div>
+    </form>
+
+    <!-- Modal success -->
+    <div id="modal-success" class="hidden py-6">
+      <!-- Animated check -->
+      <div class="flex justify-center mb-5">
+        <div class="relative w-14 h-14">
+          <svg class="w-14 h-14" viewBox="0 0 56 56">
+            <circle cx="28" cy="28" r="25" fill="none" stroke="#982c2a" stroke-width="2.5" stroke-dasharray="157" style="animation: success-circle 0.6s ease-out forwards;" />
+          </svg>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-5 h-3 border-b-[3px] border-l-[3px] border-carne" style="animation: success-check 0.4s ease-out 0.4s both;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center" style="animation: success-fade-up 0.5s ease-out 0.6s both;">
+        <div class="font-display font-bold text-xl uppercase text-carne mb-2">¡Consulta enviada!</div>
+        <p class="text-morcilla/60 mb-5 text-sm">Nos ponemos en contacto en menos de 24 hs hábiles.</p>
+      </div>
+
+      <!-- Data summary -->
+      <div id="modal-summary" class="border border-morcilla/10 bg-frigo p-5 mb-5 text-sm" style="animation: success-fade-up 0.5s ease-out 0.8s both;"></div>
+
+      <div class="text-center" style="animation: success-fade-up 0.5s ease-out 1s both;">
+        <a href="https://wa.me/5491140453345?text=Hola%20Porco%20Rosso!%20Acabo%20de%20completar%20el%20formulario%20mayorista" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-carne font-display font-semibold uppercase text-sm tracking-wider hover:text-carne-dark transition-colors">
+          O escribinos por WhatsApp &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ====== Shared form logic ======
+  function initMultiStepForm(config: {
+    formId: string;
+    stepClass: string;
+    prevId: string;
+    nextId: string;
+    submitId: string;
+    progressId: string;
+    labelId: string;
+    titleId: string;
+    successId: string;
+    progressContainerClass: string;
+    errorPrefix: string;
+    summaryId: string;
+  }) {
+    const form = document.getElementById(config.formId) as HTMLFormElement;
+    const success = document.getElementById(config.successId);
+    const steps = form?.querySelectorAll(`.${config.stepClass}`) as NodeListOf<HTMLElement>;
+    const btnPrev = document.getElementById(config.prevId) as HTMLButtonElement;
+    const btnNext = document.getElementById(config.nextId) as HTMLButtonElement;
+    const btnSubmit = document.getElementById(config.submitId) as HTMLButtonElement;
+    const progressBar = document.getElementById(config.progressId) as HTMLElement;
+    const stepLabel = document.getElementById(config.labelId) as HTMLElement;
+    const stepTitle = document.getElementById(config.titleId) as HTMLElement;
+
+    if (!form || !steps.length) return;
+
+    const totalSteps = steps.length;
+    let currentStep = 1;
+    const stepTitles = ["Tipo de cliente", "Tu negocio", "Qué necesitás", "Datos de contacto"];
+
+    function updateUI() {
+      steps.forEach((step) => {
+        const stepNum = parseInt(step.dataset.step || "1");
+        step.classList.toggle("hidden", stepNum !== currentStep);
+      });
+      progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
+      stepLabel.textContent = `Paso ${currentStep} de ${totalSteps}`;
+      stepTitle.textContent = stepTitles[currentStep - 1];
+      btnPrev.classList.toggle("hidden", currentStep === 1);
+      btnNext.classList.toggle("hidden", currentStep === totalSteps);
+      btnSubmit.classList.toggle("hidden", currentStep !== totalSteps);
+    }
+
+    function validateStep(step: number): boolean {
+      form.querySelectorAll(`[id^='${config.errorPrefix}']`).forEach(el => el.classList.add("hidden"));
+
+      if (step === 1) {
+        if (!form.querySelector<HTMLInputElement>("input[name='tipo_cliente']:checked")) {
+          document.getElementById(`${config.errorPrefix}1-error`)?.classList.remove("hidden");
+          return false;
+        }
+      }
+      if (step === 2) {
+        const empresa = form.querySelector<HTMLInputElement>("input[name='empresa']");
+        const zona = form.querySelector<HTMLInputElement>("input[name='zona']");
+        if (!empresa?.value.trim() || !zona?.value.trim()) {
+          document.getElementById(`${config.errorPrefix}2-error`)?.classList.remove("hidden");
+          return false;
+        }
+      }
+      if (step === 4) {
+        const nombre = form.querySelector<HTMLInputElement>("input[name='nombre']");
+        const telefono = form.querySelector<HTMLInputElement>("input[name='telefono']");
+        const email = form.querySelector<HTMLInputElement>("input[name='email']");
+        if (!nombre?.value.trim() || !telefono?.value.trim() || !email?.value.trim()) {
+          document.getElementById(`${config.errorPrefix}4-error`)?.classList.remove("hidden");
+          return false;
+        }
+      }
+      return true;
+    }
+
+    btnNext?.addEventListener("click", () => {
+      if (!validateStep(currentStep)) return;
+      if (currentStep < totalSteps) { currentStep++; updateUI(); }
+    });
+
+    btnPrev?.addEventListener("click", () => {
+      if (currentStep > 1) { currentStep--; updateUI(); }
+    });
+
+    form?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!validateStep(currentStep)) return;
+
+      const formData = new FormData(form);
+      const data: Record<string, string | string[]> = {};
+      for (const [key, value] of formData.entries()) {
+        if (key === "productos") {
+          if (!data[key]) data[key] = [];
+          (data[key] as string[]).push(value as string);
+        } else {
+          data[key] = value as string;
+        }
+      }
+      console.log("Form data:", data);
+      // TODO: Send to backend API / email service / Google Sheets
+
+      // Build summary
+      const summaryEl = document.getElementById(config.summaryId);
+      if (summaryEl) {
+        const labels: Record<string, string> = {
+          tipo_cliente: "Tipo de negocio",
+          empresa: "Negocio",
+          zona: "Zona",
+          productos: "Productos",
+          volumen: "Volumen",
+          frecuencia: "Frecuencia",
+          nombre: "Contacto",
+          telefono: "Teléfono",
+          email: "Email",
+          mensaje: "Mensaje",
+        };
+        const rows = Object.entries(data)
+          .filter(([_, v]) => {
+            if (Array.isArray(v)) return v.length > 0;
+            return v && String(v).trim() !== "";
+          })
+          .map(([key, value]) => {
+            const label = labels[key] || key;
+            const val = Array.isArray(value) ? value.join(", ") : String(value);
+            return `<div class="py-1.5 border-b border-morcilla/5 last:border-0">
+              <span class="text-morcilla/40 font-display text-[10px] uppercase tracking-wider block">${label}</span>
+              <span class="text-morcilla text-sm">${val}</span>
+            </div>`;
+          })
+          .join("");
+        summaryEl.innerHTML = `<div class="font-display text-xs uppercase tracking-wider text-morcilla/40 mb-2">Resumen de tu consulta</div>${rows}`;
+      }
+
+      form.classList.add("hidden");
+      form.closest("div")?.querySelector(`.${config.progressContainerClass}`)?.classList.add("hidden");
+      success?.classList.remove("hidden");
+    });
+
+    updateUI();
+  }
+
+  // ====== Init section form ======
+  initMultiStepForm({
+    formId: "contact-form",
+    stepClass: "form-step",
+    prevId: "btn-prev",
+    nextId: "btn-next",
+    submitId: "btn-submit",
+    progressId: "progress-bar",
+    labelId: "step-label",
+    titleId: "step-title",
+    successId: "form-success",
+    progressContainerClass: "form-progress",
+    errorPrefix: "step",
+    summaryId: "form-summary",
+  });
+
+  // ====== Init modal form ======
+  initMultiStepForm({
+    formId: "modal-form",
+    stepClass: "modal-step",
+    prevId: "modal-prev",
+    nextId: "modal-next",
+    submitId: "modal-submit",
+    progressId: "modal-progress-bar",
+    labelId: "modal-step-label",
+    titleId: "modal-step-title",
+    successId: "modal-success",
+    progressContainerClass: "modal-progress",
+    errorPrefix: "modal-step",
+    summaryId: "modal-summary",
+  });
+
+  // ====== Modal open/close ======
+  const modal = document.getElementById("form-modal");
+  const modalBackdrop = document.getElementById("modal-backdrop");
+  const modalClose = document.getElementById("modal-close");
+
+  function openModal() {
+    modal?.classList.remove("opacity-0", "pointer-events-none");
+    modal?.classList.add("opacity-100", "pointer-events-auto");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    modal?.classList.add("opacity-0", "pointer-events-none");
+    modal?.classList.remove("opacity-100", "pointer-events-auto");
+    document.body.style.overflow = "";
+  }
+
+  modalClose?.addEventListener("click", closeModal);
+  modalBackdrop?.addEventListener("click", closeModal);
+
+  // Close on Escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+  });
+
+  // Open modal from any element with data-open-form
+  document.querySelectorAll("[data-open-form]").forEach((el) => {
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      openModal();
+    });
+  });
+
+  // ====== Custom dropdowns ======
+  document.querySelectorAll(".pr-dropdown").forEach((dropdown) => {
+    const trigger = dropdown.querySelector(".pr-dropdown-trigger") as HTMLButtonElement;
+    const menu = dropdown.querySelector(".pr-dropdown-menu") as HTMLElement;
+    const label = dropdown.querySelector(".pr-dropdown-label") as HTMLElement;
+    const arrow = trigger?.querySelector("svg") as SVGElement;
+    const targetName = (dropdown as HTMLElement).dataset.target;
+    const form = dropdown.closest("form");
+    const hiddenInput = form?.querySelector<HTMLInputElement>(`input[name='${targetName}']`);
+
+    trigger?.addEventListener("click", () => {
+      // Close all other dropdowns
+      document.querySelectorAll(".pr-dropdown-menu").forEach((m) => {
+        if (m !== menu) m.classList.add("hidden");
+      });
+      document.querySelectorAll(".pr-dropdown-trigger svg").forEach((a) => {
+        if (a !== arrow) (a as SVGElement).style.transform = "";
+      });
+
+      const isOpen = !menu.classList.contains("hidden");
+      menu.classList.toggle("hidden");
+      arrow.style.transform = isOpen ? "" : "rotate(180deg)";
+    });
+
+    dropdown.querySelectorAll(".pr-dropdown-option").forEach((option) => {
+      option.addEventListener("click", () => {
+        const value = (option as HTMLElement).dataset.value || "";
+        const text = option.textContent?.trim() || "";
+        if (hiddenInput) hiddenInput.value = value;
+        label.textContent = text;
+        label.classList.remove("text-morcilla/30");
+        label.classList.add("text-morcilla");
+        menu.classList.add("hidden");
+        arrow.style.transform = "";
+        trigger.classList.add("border-carne/30");
+      });
+    });
+  });
+
+  // Close dropdowns on click outside
+  document.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    if (!target.closest(".pr-dropdown")) {
+      document.querySelectorAll(".pr-dropdown-menu").forEach((m) => m.classList.add("hidden"));
+      document.querySelectorAll(".pr-dropdown-trigger svg").forEach((a) => (a as SVGElement).style.transform = "");
+    }
   });
 </script>

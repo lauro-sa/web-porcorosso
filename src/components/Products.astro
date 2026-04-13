@@ -5,32 +5,32 @@ import Tag from "./Tag.astro";
 const products = [
   {
     name: "Porcino Premium",
-    tag: "Destacado",
-    description: "Nuestra especialidad. Cortes de cerdo de produccion propia con trazabilidad completa.",
+    tag: "Producción propia",
+    description: "Nuestra especialidad. 3.000 madres porcinas, trazabilidad de campo a mostrador. Cortes a medida según tu operación.",
     items: ["Bondiola", "Matambrito", "Costillitas", "Pork Belly", "Solomillo", "Vacio", "Ribs de carre"],
     image: "/images/productos/bondiola.jpg",
     highlighted: true,
   },
   {
     name: "Vacuno Seleccionado",
-    tag: "Cortes",
-    description: "Carne vacuna seleccionada de productores de confianza.",
+    tag: "Proveedores de confianza",
+    description: "Carne vacuna seleccionada con el mismo criterio que aplicamos a nuestra producción porcina.",
     items: ["Tapa de asado", "Tira de centro", "Vacio flecha"],
     image: "/images/productos/tapa-de-asado.jpg",
     highlighted: false,
   },
   {
     name: "Embutidos & Chacinados",
-    tag: "Elaboracion propia",
-    description: "Produccion artesanal con recetas de familia.",
+    tag: "Elaboración propia",
+    description: "Producción artesanal con recetas de familia. Ideales para cartas gastronómicas y reventa diferenciada.",
     items: ["Chorizo bombon", "Morcilla dulce", "Morcilla salada", "Salchicha parrillera"],
     image: "/images/productos/chorizo-bombón.jpg",
     highlighted: false,
   },
   {
     name: "Milanesas",
-    tag: "Clasico",
-    description: "No son las de mama, pero casi.",
+    tag: "Listas para tu negocio",
+    description: "La síntesis de años de producción porcina. Listas para freidora o plancha, rendimiento garantizado.",
     items: ["Milanesas de cerdo", "Milanesas de pollo", "Milanesas de carne"],
     image: "/images/productos/caprichito-3.jpg",
     highlighted: false,
@@ -41,10 +41,10 @@ const products = [
 <section id="productos" class="py-20 md:py-28 bg-hueso">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <SectionTitle
-      tag="Productos"
+      tag="Productos mayoristas"
       title="Lo que mejor"
       accent="sabemos hacer."
-      description="Carne de calidad, hecha con oficio, y un cuidado que se nota en cada corte."
+      description="Producción propia con trazabilidad completa. Cortes consistentes para que tu negocio nunca dependa del azar."
     />
 
     <div class="grid gap-6 md:gap-8">
@@ -58,8 +58,9 @@ const products = [
           <div class={`aspect-[4/3] md:aspect-auto overflow-hidden ${i % 2 === 1 ? "md:order-2" : ""}`}>
             <img
               src={product.image}
-              alt={product.name}
+              alt={`${product.name} - Cortes de carne Porco Rosso Buenos Aires`}
               class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+              loading="lazy"
             />
           </div>
 

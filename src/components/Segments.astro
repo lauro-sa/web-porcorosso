@@ -1,0 +1,91 @@
+---
+import SectionTitle from "./SectionTitle.astro";
+import Button from "./Button.astro";
+
+const segments = [
+  {
+    title: "HoReCa",
+    subtitle: "Hoteles, Restaurantes & Catering",
+    description:
+      "Cortes consistentes, volumen asegurado y entrega puntual para que tu cocina nunca pare. Adaptamos el desposte a las necesidades de tu carta.",
+    features: [
+      "Cortes a medida para tu menú",
+      "Volumen y frecuencia garantizada",
+      "Cadena de frío ininterrumpida",
+      "Facturación flexible",
+    ],
+    cta: "Soy gastronómico",
+    image: "/images/ilustraciones/papa-pig-03.png",
+    alt: "Ilustración Papa Pig - Porco Rosso proveedor gastronómico",
+  },
+  {
+    title: "Revendedores",
+    subtitle: "Carnicerías, Almacenes & Comercios",
+    description:
+      "Producto de marca con trazabilidad completa para que tu local se diferencie. Precio de productor directo, sin intermediarios.",
+    features: [
+      "Precio sin intermediarios",
+      "Producto con marca y trazabilidad",
+      "Stock continuo todo el año",
+      "Soporte comercial",
+    ],
+    cta: "Quiero revender",
+    image: "/images/ilustraciones/mama-pig.png",
+    alt: "Ilustración Mama Pig - Porco Rosso revendedores",
+  },
+];
+---
+
+<section id="segmentos" class="py-20 md:py-28 bg-frigo">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <SectionTitle
+      tag="Para tu negocio"
+      title="Una solución para"
+      accent="cada operación."
+      align="center"
+      description="Ya seas un restaurante que necesita consistencia o un comercio que busca diferenciarse, tenemos la propuesta justa."
+    />
+
+    <div class="grid md:grid-cols-2 gap-8 mt-12">
+      {segments.map((seg) => (
+        <div class="border border-morcilla/10 bg-hueso p-8 md:p-10 flex flex-col">
+          <!-- Ilustración -->
+          <div class="flex justify-center mb-6">
+            <img
+              src={seg.image}
+              alt={seg.alt}
+              class="h-32 w-auto opacity-70"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- Contenido -->
+          <span class="font-accent text-xs tracking-widest text-carne uppercase">
+            {seg.subtitle}
+          </span>
+          <h3 class="font-display font-bold text-3xl md:text-4xl uppercase text-morcilla mt-2 mb-4">
+            {seg.title}
+          </h3>
+          <p class="text-morcilla/60 leading-relaxed mb-6">
+            {seg.description}
+          </p>
+
+          <!-- Features -->
+          <ul class="space-y-3 mb-8 flex-grow">
+            {seg.features.map((feat) => (
+              <li class="flex items-start gap-3">
+                <span class="text-carne font-bold mt-0.5">—</span>
+                <span class="text-sm text-morcilla/70">{feat}</span>
+              </li>
+            ))}
+          </ul>
+
+          <!-- CTA -->
+          <Button href="#contacto" variant="primary" size="lg" class="w-full text-center">
+            {seg.cta}
+          </Button>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
