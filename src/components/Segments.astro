@@ -4,34 +4,34 @@ import Button from "./Button.astro";
 
 const segments = [
   {
-    title: "HoReCa",
-    subtitle: "Hoteles, Restaurantes & Catering",
+    title: "Mayorista",
+    subtitle: "01 — Carnicerías, Distribuidoras & Elaboradores",
     description:
-      "Cortes consistentes, volumen asegurado y entrega puntual para que tu cocina nunca pare. Adaptamos el desposte a las necesidades de tu carta.",
+      "Si accedés a nuestros precios mayoristas es porque tenés una unidad de negocio detrás: elaborás tus propios productos y necesitás cortes consistentes, o revendés cortes frescos envasados al vacío y elaborados en tu carnicería. Trabajamos con ese tipo de cliente porque hablamos el mismo idioma y sabemos qué espera de un proveedor.",
     features: [
-      "Cortes a medida para tu menú",
-      "Volumen y frecuencia garantizada",
-      "Cadena de frío ininterrumpida",
-      "Facturación flexible",
+      "Abastecimiento los 365 días del año",
+      "Logística ordenada y coordinada",
+      "Trazabilidad clara",
+      "Comunicación directa",
+    ],
+    cta: "Soy mayorista",
+    image: "/images/ilustraciones/papa-pig-03.png",
+    alt: "Ilustración Papa Pig - Porco Rosso mayorista",
+  },
+  {
+    title: "Gastronómicos",
+    subtitle: "02 — Restaurantes, Bares & Cocinas",
+    description:
+      "Trabajamos mucho con gastronómicos porque nuestro servicio encaja bárbaro con la enloquecida dinámica de una cocina: producto parejo, sin desperdicio y sabés que salés de la misma dirección. La consistencia es lo que más valoran de nosotros.",
+    features: [
+      "Entregas claras y puntuales",
+      "Logística ordenada",
+      "Pedidos automatizados",
+      "Adaptación puntual a tu operación",
     ],
     cta: "Soy gastronómico",
     image: "/images/ilustraciones/papa-pig-03.png",
-    alt: "Ilustración Papa Pig - Porco Rosso proveedor gastronómico",
-  },
-  {
-    title: "Revendedores",
-    subtitle: "Carnicerías, Almacenes & Comercios",
-    description:
-      "Producto de marca con trazabilidad completa para que tu local se diferencie. Precio de productor directo, sin intermediarios.",
-    features: [
-      "Precio sin intermediarios",
-      "Producto con marca y trazabilidad",
-      "Stock continuo todo el año",
-      "Soporte comercial",
-    ],
-    cta: "Quiero revender",
-    image: "/images/ilustraciones/mama-pig.png",
-    alt: "Ilustración Mama Pig - Porco Rosso revendedores",
+    alt: "Ilustración Papa Pig - Porco Rosso gastronómicos",
   },
 ];
 ---
@@ -39,11 +39,11 @@ const segments = [
 <section id="segmentos" class="py-20 md:py-28 bg-frigo">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <SectionTitle
-      tag="Para tu negocio"
-      title="Una solución para"
-      accent="cada operación."
+      tag="¿Con quién trabajamos?"
+      title="Reconocé"
+      accent="tu operación."
       align="center"
-      description="Ya seas un restaurante que necesita consistencia o un comercio que busca diferenciarse, tenemos la propuesta justa."
+      description="Ya seas mayorista, consumidor o gastronómico, tenemos la propuesta justa para tu necesidad."
     />
 
     <div class="grid md:grid-cols-2 gap-8 mt-12">

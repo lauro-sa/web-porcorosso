@@ -1,14 +1,15 @@
 ---
 const stats = [
-  { value: "3000", suffix: "+", label: "Madres porcinas" },
-  { value: "15", suffix: "+", label: "Cortes disponibles" },
-  { value: "100", suffix: "%", label: "Cadena propia" },
-  { value: "3", suffix: "", label: "Socios productores" },
+  { value: "8000", suffix: "+", label: "Kg de cerdo procesado por semana" },
+  { value: "1600", suffix: "", label: "Madres en criadero propio" },
+  { value: "40", suffix: "+", label: "Clientes B2B activos" },
+  { value: "100", suffix: "%", label: "Trazabilidad y cadena propia" },
 ];
 ---
 
-<section class="bg-carne py-16 md:py-20">
+<section class="bg-carne py-16 md:py-20" aria-label="Cifras clave de Porco Rosso">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="sr-only">Porco Rosso en números</h2>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
       {stats.map((stat) => (
         <div class="text-center">

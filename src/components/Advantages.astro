@@ -20,17 +20,17 @@ const advantages = [
   {
     number: "04",
     title: "Volumen asegurado",
-    text: "Produccion propia que garantiza stock y continuidad.",
+    text: "Producción propia que garantiza stock y continuidad.",
   },
   {
     number: "05",
-    title: "Facturacion flexible",
+    title: "Facturación flexible",
     text: "Nos adaptamos a tu estructura comercial y administrativa.",
   },
   {
     number: "06",
     title: "Un solo proveedor",
-    text: "Cerdo, vaca, pollo, embutidos y mas. Todo en un solo lugar.",
+    text: "Cerdo, vaca, pollo, embutidos y más. Todo en un solo lugar.",
   },
 ];
 ---
@@ -39,19 +39,19 @@ const advantages = [
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <SectionTitle
       tag="Ventajas"
-      title="Por que elegir"
+      title="Por qué elegir"
       accent="Porco Rosso."
       dark
-      description="No somos un frigorifico mas. Somos productores con nombre y apellido."
+      description="No somos un frigorífico más. Somos productores con nombre y apellido."
     />
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {advantages.map((adv) => (
-        <div class="group p-6 md:p-8 border border-hueso/10 hover:border-piel/30 transition-colors duration-300">
+        <div class="group p-8 md:p-10 border border-hueso/10 hover:border-piel/30 transition-colors duration-300">
           <span class="font-display font-bold text-3xl text-carne/40 group-hover:text-carne transition-colors">
             {adv.number}
           </span>
-          <h3 class="font-display font-bold text-lg uppercase text-hueso mt-3 mb-2">
+          <h3 class="font-display font-bold text-xl md:text-2xl uppercase text-hueso mt-3 mb-2">
             {adv.title}
           </h3>
           <p class="text-sm text-hueso/50 leading-relaxed">

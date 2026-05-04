@@ -6,46 +6,49 @@ const pillars = [
   {
     icon: "01",
     title: "Crianza",
-    text: "Cuidamos cada etapa del crecimiento con bienestar animal y alimentacion controlada.",
+    text: "1.600 madres en criadero propio. Controlamos genética, bienestar animal y condiciones sanitarias desde el origen.",
   },
   {
     icon: "02",
     title: "Desposte",
-    text: "Procesamos con precision tecnica, garantizando cortes uniformes y de calidad constante.",
+    text: "Procesamos con precisión técnica, garantizando cortes uniformes y de calidad constante. Sin improvisación.",
   },
   {
     icon: "03",
     title: "Entrega",
-    text: "Logistica propia con cadena de frio ininterrumpida hasta tu puerta.",
+    text: "Logística propia con cadena de frío ininterrumpida. Entregas claras y pedidos automatizados.",
   },
   {
     icon: "04",
     title: "Trazabilidad",
-    text: "Cada producto es rastreable desde el campo hasta tu cocina.",
+    text: "Cada producto es rastreable desde el campo hasta tu cocina. 100% cadena propia.",
   },
 ];
 ---
 
-<section id="nosotros" class="py-20 md:py-28 bg-frigo">
+<section id="nosotros" class="py-20 md:py-28 bg-hueso">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
       <!-- Left: Story -->
       <div>
         <SectionTitle
-          tag="Nosotros"
-          title="Tres productores,"
-          accent="una idea clara."
-          description="En 2018 nos unimos para buscar nuevas formas de darle valor agregado al cerdo. Descomoditizar: convertir un animal bien criado en un producto bien hecho."
+          tag="Buen Provecho!"
+          title="Si remontás vuelo,"
+          accent="guarda con el techo."
+          description="3 productores porcinos, 2 madres y una idea clara. En 2018 nos unimos para buscar nuevas formas de darle valor agregado al cerdo."
         />
         <div class="space-y-4 text-morcilla/70 leading-relaxed">
           <p>
-            Nos hacemos cargo de toda la cadena: criamos, faenamos, despostamos, elaboramos y entregamos.
-            Nuestro diferencial está en el modelo: somos medianos, livianos y nos adaptamos a las necesidades de cada cliente.
+            Lo que empezó como una sociedad de trabajo se convirtió en una amistad. Y lo que comenzó como un ensayo terminó definiendo nuestra principal unidad de negocio.
           </p>
           <p>
-            Calidad, precio y servicio. La evidencia del cuidado está en nuestros cortes, en los procesos
-            y en el desarrollo de esta marca que construimos todos los días. Porque agregar valor no es un slogan:
-            es una necesidad.
+            Sin descuidar la producción, nuestro origen y nuestro respaldo entendimos por qué elegimos este camino: demostrar que un animal bien criado es un producto bien hecho capaz de decir calidad, precio y servicio. Tan cliché como real.
+          </p>
+          <p>
+            Nuestro diferencial está en tener un criadero de 1.600 madres que sostiene todo el modelo y, al mismo tiempo, una estructura mediana que nos permite aggiornarnos fácilmente. Tenemos volumen para ser estables y control para ser consistentes, sin perder la velocidad de una empresa liviana.
+          </p>
+          <p class="font-medium text-morcilla italic">
+            La evidencia del cuidado está en nuestros cortes, en nuestros procesos y en el desarrollo de esta marca que queremos y construimos todos los días. Porque agregar valor no es un slogan, es una necesidad en la Argentina del presente.
           </p>
         </div>
         <!-- Illustration -->
@@ -60,7 +63,7 @@ const pillars = [
       </div>
 
       <!-- Right: Pillars -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {pillars.map((pillar) => (
           <Card variant="hueso" class="group hover:shadow-lg transition-shadow duration-300">
             <span class="font-display font-bold text-4xl text-carne/20 group-hover:text-carne/40 transition-colors">

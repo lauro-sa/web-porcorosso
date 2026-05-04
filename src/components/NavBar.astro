@@ -42,7 +42,9 @@ const navLinks = [
       <button
         id="menu-toggle"
         class="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5"
-        aria-label="Menu"
+        aria-label="Abrir menú de navegación"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
       >
         <span class="menu-line w-6 h-0.5 bg-morcilla transition-all duration-300"></span>
         <span class="menu-line w-6 h-0.5 bg-morcilla transition-all duration-300"></span>
@@ -98,12 +100,14 @@ const navLinks = [
   function openMenu() {
     mobileMenu?.classList.remove("opacity-0", "pointer-events-none");
     mobileMenu?.classList.add("opacity-100", "pointer-events-auto");
+    menuToggle?.setAttribute("aria-expanded", "true");
     document.body.style.overflow = "hidden";
   }
 
   function closeMenu() {
     mobileMenu?.classList.add("opacity-0", "pointer-events-none");
     mobileMenu?.classList.remove("opacity-100", "pointer-events-auto");
+    menuToggle?.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
   }
 
