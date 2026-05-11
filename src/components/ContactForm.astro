@@ -504,7 +504,7 @@ import SectionTitle from "./SectionTitle.astro";
             <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Nombre completo *</label>
             <input type="text" name="nombre" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="Tu nombre y apellido" />
           </div>
-          <div class="grid grid-cols-2 gap-5">
+          <div class="grid sm:grid-cols-2 gap-5">
             <div>
               <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Teléfono *</label>
               <input type="tel" name="telefono" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="+54 9 11..." />
@@ -562,6 +562,10 @@ import SectionTitle from "./SectionTitle.astro";
 </div>
 
 <script>
+  // ====== CONFIG: Reemplazar cuando tengas el backend listo ======
+  const RECAPTCHA_SITE_KEY = "RECAPTCHA_SITE_KEY_HERE"; // Reemplazar con tu site key de Google reCAPTCHA v3
+  const FORM_ENDPOINT = ""; // Reemplazar con la URL de tu API/backend (ej: "https://tu-api.com/contact")
+
   // ====== Shared form logic ======
   function initMultiStepForm(config: {
     formId: string;
@@ -644,9 +648,13 @@ import SectionTitle from "./SectionTitle.astro";
       if (currentStep > 1) { currentStep--; updateUI(); }
     });
 
-    form?.addEventListener("submit", (e) => {
+    form?.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (!validateStep(currentStep)) return;
+
+      // Disable submit button while processing
+      btnSubmit.disabled = true;
+      btnSubmit.textContent = "Enviando...";
 
       const formData = new FormData(form);
       const data: Record<string, string | string[]> = {};
@@ -658,8 +666,29 @@ import SectionTitle from "./SectionTitle.astro";
           data[key] = value as string;
         }
       }
-      console.log("Form data:", data);
-      // TODO: Send to backend API / email service / Google Sheets
+
+      // reCAPTCHA v3 verification
+      try {
+        const token = await (window as any).grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: "submit_contact" });
+        data["recaptcha_token"] = token;
+      } catch (err) {
+        console.warn("reCAPTCHA not available:", err);
+      }
+
+      // Send to backend
+      if (FORM_ENDPOINT) {
+        try {
+          await fetch(FORM_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+        } catch (err) {
+          console.warn("Form endpoint not available yet:", err);
+        }
+      } else {
+        console.log("Form data (backend not configured yet):", data);
+      }
 
       // Build summary
       const summaryEl = document.getElementById(config.summaryId);
@@ -677,7 +706,8 @@ import SectionTitle from "./SectionTitle.astro";
           mensaje: "Mensaje",
         };
         const rows = Object.entries(data)
-          .filter(([_, v]) => {
+          .filter(([key, v]) => {
+            if (key === "recaptcha_token") return false;
             if (Array.isArray(v)) return v.length > 0;
             return v && String(v).trim() !== "";
           })
@@ -693,6 +723,8 @@ import SectionTitle from "./SectionTitle.astro";
         summaryEl.innerHTML = `<div class="font-display text-xs uppercase tracking-wider text-morcilla/40 mb-2">Resumen de tu consulta</div>${rows}`;
       }
 
+      btnSubmit.disabled = false;
+      btnSubmit.textContent = "Enviar consulta";
       form.classList.add("hidden");
       form.closest("div")?.querySelector(`.${config.progressContainerClass}`)?.classList.add("hidden");
       success?.classList.remove("hidden");

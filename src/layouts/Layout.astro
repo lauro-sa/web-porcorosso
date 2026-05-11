@@ -61,6 +61,9 @@ const ogImage = new URL("/images/og/og-image.png", Astro.site ?? Astro.url).href
 
     <title>{title}</title>
 
+    <!-- reCAPTCHA v3 -->
+    <script src="https://www.google.com/recaptcha/api.js?render=RECAPTCHA_SITE_KEY_HERE" async defer></script>
+
     <!-- Structured Data: LocalBusiness -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
@@ -104,6 +107,7 @@ const ogImage = new URL("/images/og/og-image.png", Astro.site ?? Astro.url).href
       Ir al contenido principal
     </a>
     <slot />
+    <script is:inline src="/firma-stian/firma-stian.js" defer></script>
   </body>
 </html>
 

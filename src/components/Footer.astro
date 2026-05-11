@@ -2,11 +2,11 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-morcilla py-12 md:py-16">
+<footer class="bg-morcilla pt-12 md:pt-16 pb-4">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid md:grid-cols-3 gap-10 md:gap-8 items-start">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 items-start">
       <!-- Logo & tagline -->
-      <div>
+      <div class="sm:col-span-2 lg:col-span-1">
         <img
           src="/images/logos/logo-hueso-01.png"
           alt="Porco Rosso - Empresa familiar agroindustrial"
@@ -19,29 +19,29 @@ const currentYear = new Date().getFullYear();
         </p>
       </div>
 
-      <!-- Links -->
-      <div class="grid grid-cols-2 gap-8">
-        <div>
-          <h3 class="font-display font-bold text-xs uppercase tracking-wider text-hueso/60 mb-4">
-            Secciones
-          </h3>
-          <ul class="space-y-2">
-            <li><a href="#nosotros" class="text-sm text-hueso/40 hover:text-hueso transition-colors">Nosotros</a></li>
-            <li><a href="#productos" class="text-sm text-hueso/40 hover:text-hueso transition-colors">Productos</a></li>
-            <li><a href="#ventajas" class="text-sm text-hueso/40 hover:text-hueso transition-colors">Ventajas</a></li>
-            <li><a href="#contacto" class="text-sm text-hueso/40 hover:text-hueso transition-colors">Contacto</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="font-display font-bold text-xs uppercase tracking-wider text-hueso/60 mb-4">
-            Contacto
-          </h3>
-          <ul class="space-y-2">
-            <li><a href="tel:+5491140453345" class="text-sm text-hueso/40 hover:text-hueso transition-colors">+54 9 11-4045-3345</a></li>
-            <li><a href="mailto:hola@porcorosso.com.ar" class="text-sm text-hueso/40 hover:text-hueso transition-colors">hola@porcorosso.com.ar</a></li>
-            <li><a href="https://porcorosso.com.ar" target="_blank" rel="noopener noreferrer" class="text-sm text-hueso/40 hover:text-hueso transition-colors">porcorosso.com.ar</a></li>
-          </ul>
-        </div>
+      <!-- Secciones -->
+      <div>
+        <h3 class="font-display font-bold text-xs uppercase tracking-wider text-hueso/60 mb-4">
+          Secciones
+        </h3>
+        <ul class="space-y-2">
+          <li><a href="#nosotros" class="text-sm text-hueso/40 hover:text-hueso transition-colors">Nosotros</a></li>
+          <li><a href="#productos" class="text-sm text-hueso/40 hover:text-hueso transition-colors">Productos</a></li>
+          <li><a href="#ventajas" class="text-sm text-hueso/40 hover:text-hueso transition-colors">Ventajas</a></li>
+          <li><a href="#contacto" class="text-sm text-hueso/40 hover:text-hueso transition-colors">Contacto</a></li>
+        </ul>
+      </div>
+
+      <!-- Contacto -->
+      <div>
+        <h3 class="font-display font-bold text-xs uppercase tracking-wider text-hueso/60 mb-4">
+          Contacto
+        </h3>
+        <ul class="space-y-2">
+          <li><a href="tel:+5491140453345" class="text-sm text-hueso/40 hover:text-hueso transition-colors">+54 9 11-4045-3345</a></li>
+          <li><a href="mailto:hola@porcorosso.com.ar" class="text-sm text-hueso/40 hover:text-hueso transition-colors">hola@porcorosso.com.ar</a></li>
+          <li><a href="https://porcorosso.com.ar" target="_blank" rel="noopener noreferrer" class="text-sm text-hueso/40 hover:text-hueso transition-colors">porcorosso.com.ar</a></li>
+        </ul>
       </div>
 
       <!-- Almacen -->
@@ -58,7 +58,7 @@ const currentYear = new Date().getFullYear();
     </div>
 
     <!-- Bottom bar -->
-    <div class="mt-12 pt-8 border-t border-hueso/10 flex flex-col sm:flex-row justify-between items-center gap-4">
+    <div id="footer-bottom" class="mt-12 pt-8 border-t border-hueso/10 flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left sm:pr-20">
       <p class="text-xs text-hueso/30">
         &copy; {currentYear} Porco Rosso&reg;. Todos los derechos reservados.
       </p>
@@ -66,5 +66,10 @@ const currentYear = new Date().getFullYear();
         Buenos Aires, Argentina
       </p>
     </div>
+  </div>
+
+  <!-- Firma separada -->
+  <div class="mt-6 flex justify-center sm:justify-start max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <firma-stian enlace="https://stiancode.dev" logo="/firma-stian/logo-claro.png"></firma-stian>
   </div>
 </footer>
