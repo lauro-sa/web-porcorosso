@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://porcorosso.com.ar',
+  site: 'https://b2b.porcorosso.com.ar',
   vite: {
     plugins: [tailwindcss()]
   },

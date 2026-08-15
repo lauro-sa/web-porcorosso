@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://porcorosso.com.ar/sitemap-index.xml
+Sitemap: https://b2b.porcorosso.com.ar/sitemap-index.xml
