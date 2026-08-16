@@ -46,6 +46,10 @@
 
 html {
   scroll-behavior: smooth;
+  /* El navbar es fixed (h-20 arriba de todo, h-14 al scrollear), asi que un
+     salto a #productos dejaba el titulo escondido detras. scroll-padding-top
+     frena el scroll antes, reservando el alto del navbar mas un respiro. */
+  scroll-padding-top: 5.5rem;
 }
 
 body {

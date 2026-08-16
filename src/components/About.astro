@@ -1,6 +1,8 @@
 ---
+import { Image } from "astro:assets";
 import SectionTitle from "./SectionTitle.astro";
 import Card from "./Card.astro";
+import papaPig01 from "../assets/images/ilustraciones/papa-pig-01.webp";
 
 const pillars = [
   {
@@ -54,12 +56,12 @@ const pillars = [
 
     <!-- Illustration -->
     <div class="mt-12 flex justify-center opacity-60">
-      <img
-        src="/images/ilustraciones/papa-pig-01.webp"
+      <Image
+        src={papaPig01}
         alt="Ilustración Papa Pig - Familia productora Porco Rosso"
         class="h-32 w-auto"
-        width="600"
-        height="600"
+        widths={[128, 256]}
+        sizes="128px"
         loading="lazy"
       />
     </div>

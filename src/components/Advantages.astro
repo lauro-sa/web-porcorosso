@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import SectionTitle from "./SectionTitle.astro";
+import nonaPig from "../assets/images/ilustraciones/nona-pig.webp";
 
 const advantages = [
   {
@@ -53,12 +55,12 @@ const advantages = [
 
     <!-- Ilustración decorativa -->
     <div class="mt-12 flex justify-center opacity-15">
-      <img
-        src="/images/ilustraciones/nona-pig.webp"
+      <Image
+        src={nonaPig}
         alt="Ilustración Nona Pig - Familia Porco Rosso"
         class="h-40 w-auto"
-        width="600"
-        height="1009"
+        widths={[240, 480]}
+        sizes="240px"
         loading="lazy"
       />
     </div>

@@ -32,6 +32,13 @@ en Google, campañas pagas (Google Ads y redes) y recomendación en asistentes d
 - [x] **Borrador del formulario** en `localStorage`: quien abandona a mitad retoma donde
       quedó. Compartido entre el formulario de la sección y el del modal, se borra al
       enviar y caduca solo a los 7 días
+- [x] **`srcset` responsive con `astro:assets`**: las imágenes se mudaron a `src/assets/`
+      y Astro genera una variante por tamaño de pantalla. Una foto de producto en celular
+      pasó de 153 KB a 29 KB
+- [x] **Teléfono B2B propio**: +54 9 11 7271-4251, el WhatsApp Business con el que se
+      maneja el canal mayorista. Reemplaza al anterior en todo el sitio
+- [x] **`scroll-padding-top`**: los saltos a `#productos`, `#nosotros`, etc. ya no quedan
+      escondidos detrás del navbar fijo
 
 ---
 
@@ -88,8 +95,6 @@ Ordenado por relación entre impacto y esfuerzo.
 - [ ] **`BreadcrumbList`** cuando existan páginas internas.
 - [ ] **Optimizar la imagen de Open Graph** — sigue en PNG a propósito (WhatsApp y
       Facebook no leen WebP de forma fiable), pero se puede comprimir.
-- [ ] **Migrar a `astro:assets`** — usar el componente `<Image>` para que Astro genere
-      `srcset` responsive automáticamente, en vez de servir una sola resolución a todos.
 
 ---
 

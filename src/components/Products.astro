@@ -1,6 +1,10 @@
 ---
+import { Image } from "astro:assets";
 import SectionTitle from "./SectionTitle.astro";
 import Tag from "./Tag.astro";
+import bondiola from "../assets/images/productos/bondiola.webp";
+import tapaDeAsado from "../assets/images/productos/tapa-de-asado.webp";
+import chorizoBombon from "../assets/images/productos/chorizo-bombon.webp";
 
 const products = [
   {
@@ -8,9 +12,7 @@ const products = [
     tag: "Producción propia",
     description: "Cortes enteros de cerdo con trazabilidad completa. Ideales para desposte propio, elaboración o venta directa en mostrador.",
     items: ["Bondiola", "Matambrito", "Costillitas", "Pork Belly", "Solomillo", "Vacío", "Ribs de carré", "Carré"],
-    image: "/images/productos/bondiola.webp",
-    width: 1200,
-    height: 941,
+    image: bondiola,
     highlighted: true,
   },
   {
@@ -18,9 +20,7 @@ const products = [
     tag: "Listas para tu operación",
     description: "Cortes fraccionados y envasados al vacío. Listos para recibir, almacenar y usar. Estandarizados para que tu negocio no dependa del azar.",
     items: ["Bondiola porcionada", "Costillitas rack", "Pork Belly laminado", "Matambrito porcionado", "Cortes a medida"],
-    image: "/images/productos/tapa-de-asado.webp",
-    width: 1200,
-    height: 945,
+    image: tapaDeAsado,
     highlighted: false,
   },
   {
@@ -28,12 +28,14 @@ const products = [
     tag: "Elaboración propia",
     description: "Listos para freidora, plancha o parrilla. Elaborados con recetas propias y la misma materia prima de nuestro criadero.",
     items: ["Milanesas de cerdo", "Milanesas de pollo", "Chorizo bombón", "Morcilla dulce", "Morcilla salada", "Salchicha parrillera"],
-    image: "/images/productos/chorizo-bombon.webp",
-    width: 1200,
-    height: 1591,
+    image: chorizoBombon,
     highlighted: false,
   },
 ];
+
+// La foto ocupa media pantalla en desktop (la grilla es de dos columnas dentro
+// de un contenedor de 80rem) y el ancho completo en mobile.
+const SIZES_PRODUCTO = "(max-width: 768px) 100vw, 640px";
 ---
 
 <section id="productos" class="py-20 md:py-28 bg-hueso">
@@ -54,12 +56,12 @@ const products = [
         >
           <!-- Image -->
           <div class={`aspect-[4/3] md:aspect-auto overflow-hidden ${i % 2 === 1 ? "md:order-2" : ""}`}>
-            <img
+            <Image
               src={product.image}
               alt={`${product.name} - Cortes de carne Porco Rosso Buenos Aires`}
               class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-              width={product.width}
-              height={product.height}
+              widths={[400, 640, 900, 1200]}
+              sizes={SIZES_PRODUCTO}
               loading="lazy"
             />
           </div>

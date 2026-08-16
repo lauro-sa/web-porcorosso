@@ -20,5 +20,15 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# Material de diseño original (PDFs de cientos de MB, .ai, fuentes, PSDs).
+# Vive en disco pero no en el repo: son archivos de trabajo de marca, no del
+# sitio, y su peso haría el clon inmanejable. Lo que el sitio necesita ya está
+# exportado en src/assets/ y public/.
+Porco Rosso - Brand 2025 2/
+_originals_productos/
+
+# Config local del editor
+*.code-workspace
+
 # jetbrains setting folder
 .idea/
