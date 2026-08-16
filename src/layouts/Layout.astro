@@ -6,8 +6,8 @@ interface Props {
 }
 
 const {
-  title = "Porco Rosso | Proveedor de Carne Porcina y Vacuna en Buenos Aires",
-  description = "Proveedor mayorista de carne de cerdo y vacuna para restaurantes, hoteles y gastronomía en Buenos Aires. Producción propia, cadena completa, trazabilidad total. Pedí tu presupuesto.",
+  title = "Porco Rosso | Proveedor Mayorista de Carne Porcina en CABA y GBA",
+  description = "Proveedor mayorista de carne de cerdo para restaurantes, hoteles, carnicerías y gastronomía en CABA y Gran Buenos Aires. Producción propia, integración vertical completa, entregas en Zona Norte, Zona Oeste y Zona Sur del GBA. Pedí tu presupuesto.",
   canonicalURL = Astro.url.href,
 } = Astro.props;
 
@@ -33,7 +33,7 @@ const ogImage = new URL("/images/og/og-image.png", Astro.site ?? Astro.url).href
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Porco Rosso - Proveedor mayorista de carne porcina y vacuna en Buenos Aires" />
+    <meta property="og:image:alt" content="Porco Rosso - Proveedor mayorista de carne porcina en CABA y GBA" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:locale" content="es_AR" />
     <meta property="og:site_name" content="Porco Rosso" />
@@ -47,6 +47,8 @@ const ogImage = new URL("/images/og/og-image.png", Astro.site ?? Astro.url).href
     <!-- Geo targeting -->
     <meta name="geo.region" content="AR-B" />
     <meta name="geo.placename" content="Buenos Aires" />
+    <meta name="geo.position" content="-34.6587;-58.6679" />
+    <meta name="ICBM" content="-34.6587, -58.6679" />
 
     <!-- Robots -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -61,20 +63,28 @@ const ogImage = new URL("/images/og/og-image.png", Astro.site ?? Astro.url).href
 
     <title>{title}</title>
 
-    <!-- reCAPTCHA v3 -->
-    <script src="https://www.google.com/recaptcha/api.js?render=RECAPTCHA_SITE_KEY_HERE" async defer></script>
+    <!-- reCAPTCHA v3: descomentar cuando tengas la site key real -->
+    <!-- <script src="https://www.google.com/recaptcha/api.js?render=TU_SITE_KEY" async defer></script> -->
 
     <!-- Structured Data: LocalBusiness -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "Porco Rosso",
-      "description": "Empresa familiar agroindustrial. Proveedor mayorista de carne porcina y vacuna en Buenos Aires. Criamos, faenamos, despostamos, elaboramos y vendemos.",
+      "description": "Empresa familiar agroindustrial. Proveedor mayorista de carne porcina en CABA y Gran Buenos Aires. Integración vertical completa: criamos, faenamos, despostamos, elaboramos y entregamos.",
       "url": canonicalURL,
       "logo": ogImage,
       "image": ogImage,
       "telephone": "+5491140453345",
       "email": "hola@porcorosso.com.ar",
+      "foundingDate": "2018",
+      // sameAs ancla la entidad a sus perfiles reales. Sin esto, buscadores y
+      // modelos de lenguaje tienden a confundir la empresa con la pelicula
+      // homonima de Studio Ghibli (1992), que domina las busquedas del nombre.
+      "sameAs": [
+        "https://porcorosso.com.ar",
+        "https://www.instagram.com/porcorossoba"
+      ],
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Martín Fierro 3361, Complejo Thays Local 17",
@@ -94,12 +104,22 @@ const ogImage = new URL("/images/og/og-image.png", Astro.site ?? Astro.url).href
         "closes": "18:00"
       },
       "priceRange": "$$",
-      "areaServed": {
-        "@type": "GeoCircle",
-        "geoMidpoint": { "@type": "GeoCoordinates", "latitude": -34.6037, "longitude": -58.3816 },
-        "geoRadius": "100000"
-      },
-      "knowsAbout": ["carne porcina", "carne vacuna", "cerdo", "proveedor mayorista", "gastronomía"]
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Ciudad Autónoma de Buenos Aires",
+          "sameAs": "https://es.wikipedia.org/wiki/Buenos_Aires"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Gran Buenos Aires",
+          "containedInPlace": { "@type": "AdministrativeArea", "name": "Provincia de Buenos Aires" }
+        },
+        { "@type": "AdministrativeArea", "name": "Zona Norte GBA" },
+        { "@type": "AdministrativeArea", "name": "Zona Oeste GBA" },
+        { "@type": "AdministrativeArea", "name": "Zona Sur GBA" }
+      ],
+      "knowsAbout": ["carne porcina", "cerdo", "proveedor mayorista", "gastronomía", "piezas enteras de cerdo", "cortes al vacío", "productos elaborados", "milanesas", "embutidos", "chorizo", "morcilla", "bondiola", "matambrito", "costillitas"]
     })} />
   </head>
   <body>

@@ -1,0 +1,117 @@
+---
+import SectionTitle from "./SectionTitle.astro";
+
+/**
+ * Preguntas frecuentes B2B.
+ *
+ * Cumple dos funciones ademas de informar:
+ * 1. SEO: el marcado FAQPage habilita resultados enriquecidos en Google.
+ * 2. GEO: los modelos de lenguaje citan fuentes que responden preguntas
+ *    directas. Cada respuesta esta redactada para poder ser citada sola,
+ *    repitiendo el sujeto ("Porco Rosso") en vez de pronombres, y
+ *    desambiguando de la pelicula homonima de Studio Ghibli.
+ *
+ * Solo se incluyen respuestas verificables con datos publicos de la empresa.
+ * Las preguntas comerciales pendientes de confirmar (pedido minimo, plazos,
+ * medios de pago, condicion fiscal) estan listadas en ROADMAP.md.
+ */
+
+const faqs = [
+  {
+    q: "¿Qué es Porco Rosso?",
+    a: "Porco Rosso es una empresa familiar agroindustrial argentina que produce y comercializa carne porcina al por mayor. Está integrada verticalmente: cría los animales en criadero propio, faena, desposta, elabora y entrega con logística propia. Abastece a carnicerías, distribuidoras, elaboradores, restaurantes, hoteles y servicios de catering en CABA y el Gran Buenos Aires.",
+  },
+  {
+    q: "¿Porco Rosso es productor o distribuidor?",
+    a: "Porco Rosso es productor. Cuenta con criadero propio y controla toda la cadena, desde la genética y el bienestar animal hasta la entrega final. Al no haber intermediarios entre el criadero y el cliente, el precio y la trazabilidad dependen de una sola empresa.",
+  },
+  {
+    q: "¿A qué zonas entrega Porco Rosso?",
+    a: "Porco Rosso entrega en la Ciudad Autónoma de Buenos Aires y en el Gran Buenos Aires, cubriendo Zona Norte, Zona Oeste y Zona Sur. La distribución se hace con logística propia y cadena de frío ininterrumpida.",
+  },
+  {
+    q: "¿Qué productos de cerdo ofrece Porco Rosso al por mayor?",
+    a: "Porco Rosso ofrece tres familias de productos mayoristas. Piezas enteras: bondiola, matambrito, costillitas, pork belly, solomillo, vacío, ribs de carré y carré. Cortes fraccionados y envasados al vacío, listos para recibir y almacenar. Y productos elaborados con receta propia: milanesas de cerdo y de pollo, chorizo bombón, morcilla dulce y salada, y salchicha parrillera.",
+  },
+  {
+    q: "¿Con qué tipo de negocios trabaja Porco Rosso?",
+    a: "Porco Rosso trabaja con dos perfiles. Por un lado, mayoristas: carnicerías, distribuidoras y elaboradores que revenden o transforman el producto. Por otro, gastronómicos: restaurantes, bares, hoteles y servicios de catering que necesitan cortes parejos y abastecimiento constante.",
+  },
+  {
+    q: "¿Porco Rosso hace cortes a medida?",
+    a: "Sí. Porco Rosso adapta el desposte y el porcionado a la necesidad de cada cliente, tanto para la carta de un restaurante como para el formato de venta de una carnicería. Los cortes a medida se acuerdan con el equipo comercial al armar el pedido.",
+  },
+  {
+    q: "¿La carne de Porco Rosso tiene trazabilidad?",
+    a: "Sí. Cada producto de Porco Rosso es rastreable desde el criadero hasta la entrega, porque toda la cadena es propia: crianza, faena, desposte, elaboración y logística. No se compra materia prima a terceros.",
+  },
+  {
+    q: "¿Dónde está ubicado Porco Rosso?",
+    a: "Porco Rosso está en Martín Fierro 3361, Complejo Thays Local 17, Ituzaingó, Provincia de Buenos Aires (código postal B1715). Atiende de martes a domingo de 10 a 18 horas.",
+  },
+  {
+    q: "¿Cómo se pide un presupuesto mayorista a Porco Rosso?",
+    a: "Se puede pedir presupuesto completando el formulario de esta página, que toma el tipo de negocio, la zona, los productos de interés y el volumen estimado, o escribiendo directamente por WhatsApp al +54 9 11 4045-3345. El equipo comercial responde con una propuesta ajustada a la operación de cada cliente.",
+  },
+  {
+    q: "¿Porco Rosso vende a consumidor final?",
+    a: "Esta página es el canal mayorista de Porco Rosso, orientado a negocios que compran por volumen. Para compras de consumidor final, Porco Rosso tiene una tienda online propia en porcorosso.com.ar.",
+  },
+];
+---
+
+<section id="preguntas" class="py-20 md:py-28 bg-frigo">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <SectionTitle
+      tag="Preguntas frecuentes"
+      title="Lo que suelen"
+      accent="preguntarnos."
+      align="center"
+      description="Si tu duda no está acá, escribinos y te respondemos directamente por WhatsApp."
+    />
+
+    <div class="mt-12 border-t border-morcilla/10">
+      {faqs.map((faq) => (
+        <details class="group border-b border-morcilla/10">
+          <summary
+            class="flex items-start justify-between gap-4 py-5 cursor-pointer list-none focus-visible:outline-2 focus-visible:outline-carne"
+          >
+            <h3 class="font-display font-semibold text-lg md:text-xl uppercase text-morcilla leading-tight">
+              {faq.q}
+            </h3>
+            <span
+              class="flex-shrink-0 mt-1 text-carne text-2xl leading-none transition-transform duration-300 group-open:rotate-45"
+              aria-hidden="true"
+            >+</span>
+          </summary>
+          <p class="pb-6 pr-8 text-morcilla/70 leading-relaxed">
+            {faq.a}
+          </p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.a,
+      },
+    })),
+  })}
+/>
+
+<style>
+  /* Saca el triangulo nativo del <details> en Safari */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
