@@ -44,12 +44,10 @@
    Base
    ======================================== */
 
-html {
-  scroll-behavior: smooth;
-  /* El navbar es fixed (h-20 arriba de todo, h-14 al scrollear), asi que un
-     salto a #productos dejaba el titulo escondido detras. scroll-padding-top
-     frena el scroll antes, reservando el alto del navbar mas un respiro. */
-  scroll-padding-top: 5.5rem;
+/* Alto del navbar. Lo reserva #app-scroll para que la barra de scroll empiece
+   debajo del menu; el propio navbar lo baja a 3.5rem cuando se compacta. */
+:root {
+  --nav-h: 5rem;
 }
 
 body {
@@ -58,7 +56,6 @@ body {
   color: var(--color-morcilla);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
 ::selection {

@@ -98,16 +98,26 @@ const navLinks = [
   const navLogo = document.getElementById("nav-logo");
   const navInner = document.getElementById("nav-inner");
 
-  // Scroll effect
-  window.addEventListener("scroll", () => {
+  // El scroll no lo hace la ventana sino #app-scroll, para que la barra del
+  // navegador arranque debajo del navbar en vez de correr por detras.
+  const scroller = document.getElementById("app-scroll");
+
+  // Alto que #app-scroll reserva arriba. Acompaña al navbar cuando se compacta,
+  // asi no queda un hueco entre el menu y el contenido.
+  function setNavHeight(compacto: boolean) {
+    document.documentElement.style.setProperty("--nav-h", compacto ? "3.5rem" : "5rem");
+  }
+
+  scroller?.addEventListener("scroll", () => {
     if (!navbar) return;
-    const scrolled = window.scrollY > 50;
+    const scrolled = scroller.scrollTop > 50;
     navbar.classList.toggle("bg-frigo/80", scrolled);
     navbar.classList.toggle("backdrop-blur-xl", scrolled);
     navbar.classList.toggle("shadow-sm", scrolled);
     navLogo?.classList.toggle("scrolled", scrolled);
     navInner?.classList.toggle("h-20", !scrolled);
     navInner?.classList.toggle("h-14", scrolled);
+    setNavHeight(scrolled);
   });
 
   function toggleMenu() {
@@ -119,7 +129,7 @@ const navLinks = [
       menuToggle?.setAttribute("aria-expanded", "true");
       menuToggle?.setAttribute("aria-label", "Cerrar menú");
       navbar?.classList.add("z-[70]");
-      document.body.style.overflow = "hidden";
+      if (scroller) scroller.style.overflowY = "hidden";
       requestAnimationFrame(() => menuItems?.forEach((item) => item.classList.add("visible")));
       const waFloat = document.getElementById("wa-float");
       if (waFloat) {
@@ -155,7 +165,7 @@ const navLinks = [
       menuToggle?.setAttribute("aria-expanded", "false");
       menuToggle?.setAttribute("aria-label", "Abrir menú de navegación");
       navbar?.classList.remove("z-[70]");
-      document.body.style.overflow = "";
+      if (scroller) scroller.style.overflowY = "";
     }
   }
 

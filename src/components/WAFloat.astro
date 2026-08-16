@@ -32,10 +32,13 @@
   const waBtn = document.getElementById("wa-float");
   const footerBottom = document.getElementById("footer-bottom");
 
-  if (waBtn && footerBottom) {
+  // El scroll lo maneja #app-scroll, no la ventana.
+  const scroller = document.getElementById("app-scroll");
+
+  if (waBtn && footerBottom && scroller) {
     const offset = 24;
 
-    window.addEventListener("scroll", () => {
+    scroller.addEventListener("scroll", () => {
       const lineTop = footerBottom.getBoundingClientRect().top;
       const windowHeight = window.innerHeight;
 

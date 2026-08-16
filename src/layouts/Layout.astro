@@ -1,4 +1,6 @@
 ---
+import NavBar from "../components/NavBar.astro";
+
 interface Props {
   title?: string;
   description?: string;
@@ -134,7 +136,16 @@ const ogImage = new URL("/images/og/og-image.png", Astro.site ?? Astro.url).href
     <a href="#contenido-principal" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:bg-carne focus:text-hueso focus:px-4 focus:py-2 focus:font-display focus:font-semibold focus:uppercase focus:text-sm">
       Ir al contenido principal
     </a>
-    <slot />
+    <NavBar />
+    {/*
+      El scroll ocurre acá adentro y no en el <body>, para que la barra de scroll
+      del navegador empiece debajo del navbar en lugar de correr por detrás.
+      El alto reservado sale de --nav-h, que el propio navbar ajusta cuando se
+      compacta al scrollear.
+    */}
+    <div id="app-scroll">
+      <slot />
+    </div>
     <script is:inline src="/firma-stian/firma-stian.js" defer></script>
   </body>
 </html>
@@ -144,6 +155,33 @@ const ogImage = new URL("/images/og/og-image.png", Astro.site ?? Astro.url).href
   body {
     margin: 0;
     width: 100%;
-    min-height: 100%;
+    height: 100%;
+  }
+
+  /* El body deja de scrollear: de eso se encarga #app-scroll. */
+  body {
+    overflow: hidden;
+  }
+
+  #app-scroll {
+    position: fixed;
+    top: var(--nav-h, 5rem);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    /* Un respiro al saltar a una sección desde el menú. */
+    scroll-padding-top: 1rem;
+    transition: top 0.3s ease;
+    overscroll-behavior: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #app-scroll {
+      scroll-behavior: auto;
+      transition: none;
+    }
   }
 </style>
