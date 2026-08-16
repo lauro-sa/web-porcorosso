@@ -1,5 +1,9 @@
 # Porco Rosso Web V2 - Notas del Proyecto
 
+> **Estado**: publicada en https://b2b.porcorosso.com.ar (16 ago 2026).
+> Operativa de deploy y manejo de leads en [DEPLOY.md](DEPLOY.md).
+> Pendientes priorizados y plan de páginas nuevas en [ROADMAP.md](ROADMAP.md).
+
 ## Contexto General
 
 El dueño de Porco Rosso tiene actualmente una tienda **Shopify** orientada al **consumidor final (B2C)** que no le funciona bien en cuanto a pautas publicitarias ni SEO. Si buscás "cerdo en Buenos Aires" no aparecen a menos que pongas el nombre exacto "Porco Rosso". La tienda Shopify no está bien optimizada.
@@ -13,6 +17,10 @@ Crear una **Landing Page B2B** en un **subdominio** (separada de la tienda Shopi
 2. **Revendedores** — Locales/comercios que quieran revender productos Porco Rosso
 
 > **Dato de escala**: 3.000 madres porcinas en producción.
+>
+> ⚠️ **A confirmar**: la landing publicada dice **1.600 madres**, no 3.000. El dato se
+> usa en el hero, en la franja de cifras y en `llms.txt`. Hay que unificarlo con el
+> número real antes de que se cite en campañas o lo tomen los buscadores.
 
 ## Funcionalidades clave
 
@@ -48,9 +56,10 @@ Crear una **Landing Page B2B** en un **subdominio** (separada de la tienda Shopi
 - [x] Confirmar **perfiles de cliente** objetivo → HoReCa (Hoteles/Restaurantes/Catering) + Revendedores
 - [ ] Confirmar si se usa **Barlow Condensed** o se consigue **Acme Gothic** para títulos
 - [ ] Confirmar las **secciones** que quiere en la landing
-- [ ] Definir **campos exactos** del formulario multi-pasos
-- [ ] Definir cómo quiere recibir los leads (email con Excel, dashboard, CRM, etc.)
-- [ ] Confirmar el **subdominio** a usar
+- [x] Definir **campos exactos** del formulario multi-pasos → 4 pasos, 10 campos
+- [x] Definir cómo quiere recibir los leads → mail + CSV descargable que abre en Excel.
+      Confirmar si quiere sumar otro destinatario además de `hola@porcorosso.com.ar`
+- [x] Confirmar el **subdominio** a usar → `b2b.porcorosso.com.ar`
 - [ ] Confirmar si el slogan principal es "Carne de calidad, hecha con oficio" o "Aquí se cría, se produce & se disfruta en familia"
 - [ ] Revisar si quiere usar más **ilustraciones** de la familia de personajes
 - [ ] Confirmar **productos** a mostrar y sus categorías para el público B2B
