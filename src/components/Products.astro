@@ -4,35 +4,33 @@ import Tag from "./Tag.astro";
 
 const products = [
   {
-    name: "Porcino Premium",
+    name: "Piezas enteras",
     tag: "Producción propia",
-    description: "Nuestra especialidad. 1.600 madres porcinas, trazabilidad de campo a mostrador. Cortes a medida según tu operación.",
-    items: ["Bondiola", "Matambrito", "Costillitas", "Pork Belly", "Solomillo", "Vacío", "Ribs de carré"],
-    image: "/images/productos/bondiola.jpg",
+    description: "Cortes enteros de cerdo con trazabilidad completa. Ideales para desposte propio, elaboración o venta directa en mostrador.",
+    items: ["Bondiola", "Matambrito", "Costillitas", "Pork Belly", "Solomillo", "Vacío", "Ribs de carré", "Carré"],
+    image: "/images/productos/bondiola.webp",
+    width: 1200,
+    height: 941,
     highlighted: true,
   },
   {
-    name: "Vacuno Seleccionado",
-    tag: "Proveedores de confianza",
-    description: "Carne vacuna seleccionada con el mismo criterio que aplicamos a nuestra producción porcina.",
-    items: ["Tapa de asado", "Tira de centro", "Vacío flecha"],
-    image: "/images/productos/tapa-de-asado.jpg",
+    name: "Fraccionadas al vacío",
+    tag: "Listas para tu operación",
+    description: "Cortes fraccionados y envasados al vacío. Listos para recibir, almacenar y usar. Estandarizados para que tu negocio no dependa del azar.",
+    items: ["Bondiola porcionada", "Costillitas rack", "Pork Belly laminado", "Matambrito porcionado", "Cortes a medida"],
+    image: "/images/productos/tapa-de-asado.webp",
+    width: 1200,
+    height: 945,
     highlighted: false,
   },
   {
-    name: "Embutidos & Chacinados",
+    name: "Productos elaborados",
     tag: "Elaboración propia",
-    description: "Producción artesanal con recetas de familia. Ideales para cartas gastronómicas y reventa diferenciada.",
-    items: ["Chorizo bombón", "Morcilla dulce", "Morcilla salada", "Salchicha parrillera"],
-    image: "/images/productos/chorizo-bombón.jpg",
-    highlighted: false,
-  },
-  {
-    name: "Milanesas",
-    tag: "Listas para tu negocio",
-    description: "La síntesis de años de producción porcina. Listas para freidora o plancha, rendimiento garantizado.",
-    items: ["Milanesas de cerdo", "Milanesas de pollo", "Milanesas de carne"],
-    image: "/images/productos/caprichito-3.jpg",
+    description: "Listos para freidora, plancha o parrilla. Elaborados con recetas propias y la misma materia prima de nuestro criadero.",
+    items: ["Milanesas de cerdo", "Milanesas de pollo", "Chorizo bombón", "Morcilla dulce", "Morcilla salada", "Salchicha parrillera"],
+    image: "/images/productos/chorizo-bombon.webp",
+    width: 1200,
+    height: 1591,
     highlighted: false,
   },
 ];
@@ -60,6 +58,8 @@ const products = [
               src={product.image}
               alt={`${product.name} - Cortes de carne Porco Rosso Buenos Aires`}
               class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+              width={product.width}
+              height={product.height}
               loading="lazy"
             />
           </div>
@@ -81,7 +81,7 @@ const products = [
             }`}>
               {product.description}
             </p>
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap gap-2 mb-6">
               {product.items.map((item) => (
                 <span class={`text-xs font-display uppercase tracking-wider px-3 py-1.5 ${
                   product.highlighted
@@ -92,6 +92,16 @@ const products = [
                 </span>
               ))}
             </div>
+            <a
+              href="#contacto"
+              class={`inline-flex items-center gap-2 font-display font-semibold text-sm uppercase tracking-wider transition-colors ${
+                product.highlighted
+                  ? "text-hueso hover:text-hueso/70"
+                  : "text-carne hover:text-carne-dark"
+              }`}
+            >
+              Pedí presupuesto &rarr;
+            </a>
           </div>
         </div>
       ))}

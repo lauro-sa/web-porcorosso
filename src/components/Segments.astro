@@ -9,14 +9,16 @@ const segments = [
     description:
       "Si accedés a nuestros precios mayoristas es porque tenés una unidad de negocio detrás: elaborás tus propios productos y necesitás cortes consistentes, o revendés cortes frescos envasados al vacío y elaborados en tu carnicería. Trabajamos con ese tipo de cliente porque hablamos el mismo idioma y sabemos qué espera de un proveedor.",
     features: [
-      "Abastecimiento los 365 días del año",
-      "Logística ordenada y coordinada",
-      "Trazabilidad clara",
-      "Comunicación directa",
+      "Cortes consistentes para reventa o elaboración propia",
+      "Abastecimiento continuo los 365 días",
+      "Pedidos y facturación automatizados",
+      "Comunicación directa con el equipo comercial",
     ],
     cta: "Soy mayorista",
-    image: "/images/ilustraciones/papa-pig-03.png",
+    image: "/images/ilustraciones/papa-pig-03.webp",
     alt: "Ilustración Papa Pig - Porco Rosso mayorista",
+    width: 600,
+    height: 1009,
   },
   {
     title: "Gastronómicos",
@@ -24,37 +26,41 @@ const segments = [
     description:
       "Trabajamos mucho con gastronómicos porque nuestro servicio encaja bárbaro con la enloquecida dinámica de una cocina: producto parejo, sin desperdicio y sabés que salés de la misma dirección. La consistencia es lo que más valoran de nosotros.",
     features: [
-      "Entregas claras y puntuales",
-      "Logística ordenada",
-      "Pedidos automatizados",
-      "Adaptación puntual a tu operación",
+      "Producto parejo que estandariza tu cocina",
+      "Entregas puntuales con cadena de frío",
+      "Cortes a medida para tu carta",
+      "Adaptación a la dinámica de tu operación",
     ],
     cta: "Soy gastronómico",
-    image: "/images/ilustraciones/papa-pig-03.png",
-    alt: "Ilustración Papa Pig - Porco Rosso gastronómicos",
+    image: "/images/ilustraciones/mama-pig.webp",
+    alt: "Ilustración Mama Pig - Porco Rosso gastronómicos",
+    width: 600,
+    height: 1009,
   },
 ];
 ---
 
-<section id="segmentos" class="py-20 md:py-28 bg-frigo">
+<section id="segmentos" class="py-20 md:py-28 bg-hueso">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <SectionTitle
       tag="¿Con quién trabajamos?"
       title="Reconocé"
       accent="tu operación."
       align="center"
-      description="Ya seas mayorista, consumidor o gastronómico, tenemos la propuesta justa para tu necesidad."
+      description="Ya seas mayorista o gastronómico, tenemos la propuesta justa para tu operación."
     />
 
     <div class="grid md:grid-cols-2 gap-8 mt-12">
       {segments.map((seg) => (
-        <div class="border border-morcilla/10 bg-hueso p-8 md:p-10 flex flex-col">
+        <div class="border border-morcilla/10 bg-frigo p-8 md:p-10 flex flex-col">
           <!-- Ilustración -->
           <div class="flex justify-center mb-6">
             <img
               src={seg.image}
               alt={seg.alt}
               class="h-32 w-auto opacity-70"
+              width={seg.width}
+              height={seg.height}
               loading="lazy"
             />
           </div>

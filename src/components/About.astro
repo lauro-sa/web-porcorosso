@@ -26,58 +26,42 @@ const pillars = [
 ];
 ---
 
-<section id="nosotros" class="py-20 md:py-28 bg-hueso">
+<section id="nosotros" class="py-20 md:py-28 bg-frigo">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-      <!-- Left: Story -->
-      <div>
-        <SectionTitle
-          tag="Buen Provecho!"
-          title="Si remontás vuelo,"
-          accent="guarda con el techo."
-          description="3 productores porcinos, 2 madres y una idea clara. En 2018 nos unimos para buscar nuevas formas de darle valor agregado al cerdo."
-        />
-        <div class="space-y-4 text-morcilla/70 leading-relaxed">
-          <p>
-            Lo que empezó como una sociedad de trabajo se convirtió en una amistad. Y lo que comenzó como un ensayo terminó definiendo nuestra principal unidad de negocio.
-          </p>
-          <p>
-            Sin descuidar la producción, nuestro origen y nuestro respaldo entendimos por qué elegimos este camino: demostrar que un animal bien criado es un producto bien hecho capaz de decir calidad, precio y servicio. Tan cliché como real.
-          </p>
-          <p>
-            Nuestro diferencial está en tener un criadero de 1.600 madres que sostiene todo el modelo y, al mismo tiempo, una estructura mediana que nos permite aggiornarnos fácilmente. Tenemos volumen para ser estables y control para ser consistentes, sin perder la velocidad de una empresa liviana.
-          </p>
-          <p class="font-medium text-morcilla italic">
-            La evidencia del cuidado está en nuestros cortes, en nuestros procesos y en el desarrollo de esta marca que queremos y construimos todos los días. Porque agregar valor no es un slogan, es una necesidad en la Argentina del presente.
-          </p>
-        </div>
-        <!-- Illustration -->
-        <div class="mt-10 max-w-xs">
-          <img
-            src="/images/ilustraciones/papa-pig-01.png"
-            alt="Ilustración Papa Pig - Familia productora Porco Rosso"
-            class="w-full h-auto opacity-80"
-            loading="lazy"
-          />
-        </div>
-      </div>
+    <SectionTitle
+      tag="Nosotros"
+      title="Cadena completa,"
+      accent="control total."
+      align="center"
+      description="Somos una empresa familiar agroindustrial. Criamos, faenamos, despostamos, elaboramos y entregamos. Sin intermediarios, con trazabilidad de campo a mostrador."
+    />
 
-      <!-- Right: Pillars -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {pillars.map((pillar) => (
-          <Card variant="hueso" class="group hover:shadow-lg transition-shadow duration-300">
-            <span class="font-display font-bold text-4xl text-carne/20 group-hover:text-carne/40 transition-colors">
-              {pillar.icon}
-            </span>
-            <h3 class="font-display font-bold text-xl uppercase text-morcilla mt-3 mb-2">
-              {pillar.title}
-            </h3>
-            <p class="text-sm text-morcilla/60 leading-relaxed">
-              {pillar.text}
-            </p>
-          </Card>
-        ))}
-      </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+      {pillars.map((pillar) => (
+        <Card variant="hueso" class="group hover:shadow-lg transition-shadow duration-300">
+          <span class="font-display font-bold text-4xl text-carne/20 group-hover:text-carne/40 transition-colors">
+            {pillar.icon}
+          </span>
+          <h3 class="font-display font-bold text-xl uppercase text-morcilla mt-3 mb-2">
+            {pillar.title}
+          </h3>
+          <p class="text-sm text-morcilla/60 leading-relaxed">
+            {pillar.text}
+          </p>
+        </Card>
+      ))}
+    </div>
+
+    <!-- Illustration -->
+    <div class="mt-12 flex justify-center opacity-60">
+      <img
+        src="/images/ilustraciones/papa-pig-01.webp"
+        alt="Ilustración Papa Pig - Familia productora Porco Rosso"
+        class="h-32 w-auto"
+        width="600"
+        height="600"
+        loading="lazy"
+      />
     </div>
   </div>
 </section>

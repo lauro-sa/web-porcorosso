@@ -4,38 +4,28 @@ import SectionTitle from "./SectionTitle.astro";
 const advantages = [
   {
     number: "01",
-    title: "Precio sin intermediarios",
-    text: "Al ser productores directos, eliminamos costos innecesarios de la cadena.",
+    title: "Integración vertical completa",
+    text: "Eliminamos a los intermediarios y todos aquellos que no aportan valor a la cadena para lograr mejores precios.",
   },
   {
     number: "02",
-    title: "Consistencia garantizada",
-    text: "Misma calidad, mismo corte, misma experiencia. Siempre.",
+    title: "Homogeneidad",
+    text: "Hasta donde el animal permita. Producción propia significa mismos estándares alimentarios y sanitarios: cortes parejos, limitados solo por la anatomía del animal.",
   },
   {
     number: "03",
-    title: "Cortes a medida",
-    text: "Adaptamos el desposte a las necesidades de tu cocina o negocio.",
+    title: "Flexibilidad productiva",
+    text: "Alentamos el desarrollo de productos nuevos. ¿Necesidad de un corte en particular o un grosor específico? Lo podemos desarrollar.",
   },
   {
     number: "04",
-    title: "Volumen asegurado",
-    text: "Producción propia que garantiza stock y continuidad.",
-  },
-  {
-    number: "05",
-    title: "Facturación flexible",
-    text: "Nos adaptamos a tu estructura comercial y administrativa.",
-  },
-  {
-    number: "06",
-    title: "Un solo proveedor",
-    text: "Cerdo, vaca, pollo, embutidos y más. Todo en un solo lugar.",
+    title: "Una operación fluida",
+    text: "Automatismos para cuestiones de logística, pedidos y facturación. Personalizada para cuestiones comerciales y operativas.",
   },
 ];
 ---
 
-<section id="ventajas" class="py-20 md:py-28 bg-morcilla">
+<section id="ventajas" class="py-20 md:py-28 bg-carne">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <SectionTitle
       tag="Ventajas"
@@ -45,16 +35,16 @@ const advantages = [
       description="No somos un frigorífico más. Somos productores con nombre y apellido."
     />
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid sm:grid-cols-2 gap-6">
       {advantages.map((adv) => (
-        <div class="group p-8 md:p-10 border border-hueso/10 hover:border-piel/30 transition-colors duration-300">
-          <span class="font-display font-bold text-3xl text-carne/40 group-hover:text-carne transition-colors">
+        <div class="group p-8 md:p-10 border border-hueso/10 hover:border-hueso/30 transition-colors duration-300">
+          <span class="font-display font-bold text-3xl text-hueso/30 group-hover:text-hueso/60 transition-colors">
             {adv.number}
           </span>
           <h3 class="font-display font-bold text-xl md:text-2xl uppercase text-hueso mt-3 mb-2">
             {adv.title}
           </h3>
-          <p class="text-sm text-hueso/50 leading-relaxed">
+          <p class="text-sm text-hueso/60 leading-relaxed">
             {adv.text}
           </p>
         </div>
@@ -64,9 +54,11 @@ const advantages = [
     <!-- Ilustración decorativa -->
     <div class="mt-12 flex justify-center opacity-15">
       <img
-        src="/images/ilustraciones/nona-pig.png"
+        src="/images/ilustraciones/nona-pig.webp"
         alt="Ilustración Nona Pig - Familia Porco Rosso"
         class="h-40 w-auto"
+        width="600"
+        height="1009"
         loading="lazy"
       />
     </div>

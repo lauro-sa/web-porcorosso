@@ -1,6 +1,6 @@
 ---
 const stats = [
-  { value: "8000", suffix: "+", label: "Kg de cerdo procesado por semana" },
+  { value: "16000", suffix: "+", label: "Kg procesados semanalmente" },
   { value: "1600", suffix: "", label: "Madres en criadero propio" },
   { value: "40", suffix: "+", label: "Clientes B2B activos" },
   { value: "100", suffix: "%", label: "Trazabilidad y cadena propia" },
@@ -26,6 +26,12 @@ const stats = [
 </section>
 
 <script>
+  // Mostrar valores finales inmediatamente para no-JS y evitar flash de "0"
+  document.querySelectorAll(".stat-number").forEach((el) => {
+    const target = parseInt((el as HTMLElement).dataset.target || "0");
+    el.textContent = target.toLocaleString("es-AR");
+  });
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -33,6 +39,7 @@ const stats = [
         const el = entry.target as HTMLElement;
         const target = parseInt(el.dataset.target || "0");
         let current = 0;
+        el.textContent = "0";
         const step = Math.max(1, Math.floor(target / 40));
         const interval = setInterval(() => {
           current += step;
@@ -40,12 +47,12 @@ const stats = [
             current = target;
             clearInterval(interval);
           }
-          el.textContent = current.toString();
+          el.textContent = current.toLocaleString("es-AR");
         }, 30);
         observer.unobserve(el);
       });
     },
-    { threshold: 0.5 }
+    { threshold: 0.3 }
   );
   document.querySelectorAll(".stat-number").forEach((el) => observer.observe(el));
 </script>
