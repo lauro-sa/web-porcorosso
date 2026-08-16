@@ -27,6 +27,11 @@ en Google, campañas pagas (Google Ads y redes) y recomendación en asistentes d
 - [x] Imágenes convertidas a WebP: 2,39 MB → 0,96 MB (−60%). El `dist/` pasó de 3,2 MB a 1,6 MB
 - [x] Corregida imagen rota de "Productos elaborados" (acento NFD en el nombre del archivo)
 - [x] Enlaces a Instagram y a preguntas frecuentes en el pie
+- [x] **Página `/gracias`** con URL propia tras enviar, con `noindex` y fuera del sitemap.
+      Es lo que permite contar la conversión en Google Ads y GA4
+- [x] **Borrador del formulario** en `localStorage`: quien abandona a mitad retoma donde
+      quedó. Compartido entre el formulario de la sección y el del modal, se borra al
+      enviar y caduca solo a los 7 días
 
 ---
 
@@ -80,10 +85,6 @@ Ordenado por relación entre impacto y esfuerzo.
 - [ ] **Páginas por producto** — ver la sección siguiente.
 - [ ] **`Product` / `OfferCatalog` en el JSON-LD** — describir las tres familias de
       producto como catálogo estructurado, no solo como texto.
-- [ ] **Mejorar el rendimiento del formulario** — guardar el progreso en `localStorage`
-      para que quien abandona a mitad de camino pueda retomar.
-- [ ] **Página de "gracias"** con URL propia (`/gracias`) tras enviar el formulario.
-      Hoy el éxito se muestra sin cambiar de URL, y eso complica medir la conversión en Ads.
 - [ ] **`BreadcrumbList`** cuando existan páginas internas.
 - [ ] **Optimizar la imagen de Open Graph** — sigue en PNG a propósito (WhatsApp y
       Facebook no leen WebP de forma fiable), pero se puede comprimir.

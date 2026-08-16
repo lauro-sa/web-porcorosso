@@ -11,5 +11,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
   },
-  integrations: [sitemap()]
+  // /gracias queda fuera del sitemap: es la confirmación de envío, no tiene
+  // valor de búsqueda y no queremos que aparezca suelta en Google.
+  integrations: [sitemap({ filter: (page) => !page.includes("/gracias") })]
 });

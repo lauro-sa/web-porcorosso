@@ -3,12 +3,16 @@ interface Props {
   title?: string;
   description?: string;
   canonicalURL?: string;
+  /** Saca la página del índice de Google. Para páginas sin valor de búsqueda,
+   *  como la confirmación de envío del formulario. */
+  noindex?: boolean;
 }
 
 const {
   title = "Porco Rosso | Proveedor Mayorista de Carne Porcina en CABA y GBA",
   description = "Proveedor mayorista de carne de cerdo para restaurantes, hoteles, carnicerías y gastronomía en CABA y Gran Buenos Aires. Producción propia, integración vertical completa, entregas en Zona Norte, Zona Oeste y Zona Sur del GBA. Pedí tu presupuesto.",
   canonicalURL = Astro.url.href,
+  noindex = false,
 } = Astro.props;
 
 const ogImage = new URL("/images/og/og-image.png", Astro.site ?? Astro.url).href;
@@ -51,7 +55,11 @@ const ogImage = new URL("/images/og/og-image.png", Astro.site ?? Astro.url).href
     <meta name="ICBM" content="-34.6587, -58.6679" />
 
     <!-- Robots -->
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    {noindex ? (
+      <meta name="robots" content="noindex, follow" />
+    ) : (
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    )}
 
     <!-- Fuentes: Montserrat (body) + Barlow Condensed (display, stand-in Acme Gothic) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

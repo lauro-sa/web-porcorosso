@@ -1,0 +1,136 @@
+---
+import Layout from "../layouts/Layout.astro";
+import NavBar from "../components/NavBar.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+/**
+ * Confirmacion de envio del formulario.
+ *
+ * Existe como URL propia para poder medir conversiones: Google Ads y GA4
+ * registran la conversion cuando se carga esta pagina. Con la confirmacion
+ * embebida en la home no habia forma de distinguir a quien consulto de quien
+ * solo miro.
+ *
+ * Va con noindex y fuera del sitemap: no aporta nada en busquedas y no queremos
+ * que aparezca suelta en Google.
+ *
+ * El resumen de la consulta viaja por sessionStorage desde ContactForm, asi que
+ * si alguien entra directo a /gracias la pagina igual funciona, solo que sin el
+ * detalle de lo que envio.
+ */
+---
+
+<Layout
+  title="Consulta enviada | Porco Rosso Mayorista"
+  description="Recibimos tu consulta mayorista. Nos ponemos en contacto a la brevedad."
+  noindex
+>
+  <NavBar />
+  <main id="contenido-principal" class="bg-hueso min-h-dvh flex items-center">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
+
+      <!-- Check animado -->
+      <div class="flex justify-center mb-8">
+        <div class="relative w-20 h-20">
+          <svg class="w-20 h-20" viewBox="0 0 56 56" aria-hidden="true">
+            <circle
+              cx="28" cy="28" r="25" fill="none" stroke="#982c2a" stroke-width="2.5"
+              stroke-dasharray="157"
+              style="animation: success-circle 0.6s ease-out forwards;"
+            />
+          </svg>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div
+              class="w-6 h-3.5 border-b-[3px] border-l-[3px] border-carne"
+              style="animation: success-check 0.4s ease-out 0.4s both;"
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center" style="animation: success-fade-up 0.5s ease-out 0.6s both;">
+        <span class="font-accent text-xs tracking-widest text-carne uppercase">Consulta recibida</span>
+        <h1 class="font-display font-bold uppercase text-4xl md:text-6xl leading-[0.95] text-morcilla mt-3 mb-4">
+          Gracias por<br /><span class="text-carne">escribirnos.</span>
+        </h1>
+        <p class="text-morcilla/60 max-w-md mx-auto">
+          Ya tenemos tu consulta. Nuestro equipo comercial se pone en contacto a la
+          brevedad, en menos de 24 horas hábiles.
+        </p>
+      </div>
+
+      <!-- Resumen de lo enviado, si venimos del formulario -->
+      <div
+        id="resumen-consulta"
+        class="hidden border border-morcilla/10 bg-frigo p-6 mt-10 text-sm"
+        style="animation: success-fade-up 0.5s ease-out 0.8s both;"
+      ></div>
+
+      <!-- Salidas -->
+      <div
+        class="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
+        style="animation: success-fade-up 0.5s ease-out 1s both;"
+      >
+        <a
+          href="https://wa.me/5491140453345?text=Hola%20Porco%20Rosso!%20Acabo%20de%20completar%20el%20formulario%20mayorista"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-carne text-hueso font-display font-semibold uppercase text-sm tracking-wider hover:bg-carne-dark transition-colors"
+        >
+          Escribinos por WhatsApp
+        </a>
+        <a
+          href="/"
+          class="inline-flex items-center justify-center gap-2 px-6 py-3 border border-morcilla/20 text-morcilla font-display font-semibold uppercase text-sm tracking-wider hover:border-carne hover:text-carne transition-colors"
+        >
+          Volver al inicio
+        </a>
+      </div>
+
+      <!-- Ilustracion -->
+      <div class="mt-14 flex justify-center opacity-50">
+        <img
+          src="/images/ilustraciones/pig-pig-01.webp"
+          alt="Ilustración Pig Pig - Porco Rosso"
+          class="h-28 w-auto"
+          width="600"
+          height="600"
+        />
+      </div>
+
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  // El formulario deja el resumen acá antes de redirigir. Se consume una sola
+  // vez: si se recarga la página, ya no aparece.
+  const CLAVE_RESUMEN = "porcorosso:ultima-consulta";
+
+  const contenedor = document.getElementById("resumen-consulta");
+  const guardado = sessionStorage.getItem(CLAVE_RESUMEN);
+
+  if (contenedor && guardado) {
+    try {
+      const datos = JSON.parse(guardado) as Record<string, string>;
+      const filas = Object.entries(datos)
+        .map(
+          ([etiqueta, valor]) => `
+            <div class="py-2 border-b border-morcilla/5 last:border-0">
+              <span class="text-morcilla/40 font-display text-[10px] uppercase tracking-wider block">${etiqueta}</span>
+              <span class="text-morcilla">${valor}</span>
+            </div>`
+        )
+        .join("");
+
+      contenedor.innerHTML =
+        `<div class="font-display text-xs uppercase tracking-wider text-morcilla/40 mb-3">Resumen de tu consulta</div>${filas}`;
+      contenedor.classList.remove("hidden");
+    } catch {
+      // Si el resumen vino corrupto, la página funciona igual sin él.
+    }
+    sessionStorage.removeItem(CLAVE_RESUMEN);
+  }
+</script>

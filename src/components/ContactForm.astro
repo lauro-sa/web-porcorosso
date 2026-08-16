@@ -286,43 +286,6 @@ import SectionTitle from "./SectionTitle.astro";
           </div>
         </form>
 
-        <!-- Success message -->
-        <div id="form-success" class="hidden py-8">
-          <!-- Animated check -->
-          <div class="flex justify-center mb-6">
-            <div class="relative w-16 h-16">
-              <svg class="w-16 h-16" viewBox="0 0 56 56">
-                <circle cx="28" cy="28" r="25" fill="none" stroke="#982c2a" stroke-width="2.5" stroke-dasharray="157" style="animation: success-circle 0.6s ease-out forwards;" />
-              </svg>
-              <div class="absolute inset-0 flex items-center justify-center">
-                <div class="w-5 h-3 border-b-[3px] border-l-[3px] border-carne" style="animation: success-check 0.4s ease-out 0.4s both;"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="text-center" style="animation: success-fade-up 0.5s ease-out 0.6s both;">
-            <div class="font-display font-bold text-2xl uppercase text-carne mb-3">
-              ¡Consulta enviada!
-            </div>
-            <p class="text-morcilla/60 mb-6 text-sm">
-              Nos ponemos en contacto a la brevedad. Tiempo de respuesta: menos de 24 hs hábiles.
-            </p>
-          </div>
-
-          <!-- Data summary -->
-          <div id="form-summary" class="border border-morcilla/10 bg-frigo p-5 mb-6 text-sm" style="animation: success-fade-up 0.5s ease-out 0.8s both;"></div>
-
-          <div class="text-center" style="animation: success-fade-up 0.5s ease-out 1s both;">
-            <a
-              href="https://wa.me/5491140453345?text=Hola%20Porco%20Rosso!%20Acabo%20de%20completar%20el%20formulario%20mayorista"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 text-carne font-display font-semibold uppercase text-sm tracking-wider hover:text-carne-dark transition-colors"
-            >
-              O escribinos por WhatsApp &rarr;
-            </a>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -528,34 +491,6 @@ import SectionTitle from "./SectionTitle.astro";
       </div>
     </form>
 
-    <!-- Modal success -->
-    <div id="modal-success" class="hidden py-6">
-      <!-- Animated check -->
-      <div class="flex justify-center mb-5">
-        <div class="relative w-14 h-14">
-          <svg class="w-14 h-14" viewBox="0 0 56 56">
-            <circle cx="28" cy="28" r="25" fill="none" stroke="#982c2a" stroke-width="2.5" stroke-dasharray="157" style="animation: success-circle 0.6s ease-out forwards;" />
-          </svg>
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="w-5 h-3 border-b-[3px] border-l-[3px] border-carne" style="animation: success-check 0.4s ease-out 0.4s both;"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="text-center" style="animation: success-fade-up 0.5s ease-out 0.6s both;">
-        <div class="font-display font-bold text-xl uppercase text-carne mb-2">¡Consulta enviada!</div>
-        <p class="text-morcilla/60 mb-5 text-sm">Nos ponemos en contacto en menos de 24 hs hábiles.</p>
-      </div>
-
-      <!-- Data summary -->
-      <div id="modal-summary" class="border border-morcilla/10 bg-frigo p-5 mb-5 text-sm" style="animation: success-fade-up 0.5s ease-out 0.8s both;"></div>
-
-      <div class="text-center" style="animation: success-fade-up 0.5s ease-out 1s both;">
-        <a href="https://wa.me/5491140453345?text=Hola%20Porco%20Rosso!%20Acabo%20de%20completar%20el%20formulario%20mayorista" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-carne font-display font-semibold uppercase text-sm tracking-wider hover:text-carne-dark transition-colors">
-          O escribinos por WhatsApp &rarr;
-        </a>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -567,6 +502,111 @@ import SectionTitle from "./SectionTitle.astro";
   // Marca de tiempo de carga: el backend descarta envios instantaneos (bots).
   const FORM_LOADED_AT = Date.now();
 
+  // ====== Borrador: no perder lo cargado si se abandona a mitad ======
+  //
+  // El formulario tiene cuatro pasos y pide bastantes datos, asi que un cierre
+  // accidental o una consulta a mitad de camino significaba empezar de cero.
+  // El borrador vive en localStorage y lo comparten los dos formularios (el de
+  // la seccion y el del modal), que usan los mismos names: se puede empezar en
+  // uno y seguir en el otro.
+  //
+  // Se borra al enviar la consulta y caduca solo a los 7 dias, para no dejar
+  // datos de contacto olvidados en el navegador.
+
+  const BORRADOR_CLAVE = "porcorosso:borrador-consulta";
+  const BORRADOR_DIAS = 7;
+
+  type Borrador = {
+    ts: number;
+    campos: Record<string, string | string[]>;
+    pasos: Record<string, number>;
+  };
+
+  function leerBorrador(): Borrador | null {
+    try {
+      const crudo = localStorage.getItem(BORRADOR_CLAVE);
+      if (!crudo) return null;
+      const datos = JSON.parse(crudo) as Borrador;
+      const vencido = Date.now() - datos.ts > BORRADOR_DIAS * 24 * 60 * 60 * 1000;
+      if (vencido) {
+        localStorage.removeItem(BORRADOR_CLAVE);
+        return null;
+      }
+      return datos;
+    } catch {
+      return null;
+    }
+  }
+
+  function limpiarBorrador() {
+    try {
+      localStorage.removeItem(BORRADOR_CLAVE);
+    } catch {
+      // Navegador con almacenamiento bloqueado: no hay nada que limpiar.
+    }
+  }
+
+  function guardarBorrador(form: HTMLFormElement, formId: string, paso: number) {
+    try {
+      const previo = leerBorrador();
+      const campos: Record<string, string | string[]> = { ...(previo?.campos ?? {}) };
+
+      for (const [clave, valor] of new FormData(form).entries()) {
+        if (clave === "sitio_web") continue; // el honeypot no se guarda
+        if (clave === "productos") continue; // se rearma entero mas abajo
+        campos[clave] = String(valor);
+      }
+
+      // Los checkboxes desmarcados no aparecen en FormData, asi que destildar uno
+      // no se notaria si solo mirasemos las entradas. La seleccion se rearma
+      // entera leyendo el formulario.
+      const productos = Array.from(
+        form.querySelectorAll<HTMLInputElement>("input[name='productos']:checked")
+      ).map((el) => el.value);
+      if (productos.length) campos.productos = productos;
+      else delete campos.productos;
+
+      localStorage.setItem(
+        BORRADOR_CLAVE,
+        JSON.stringify({
+          ts: Date.now(),
+          campos,
+          pasos: { ...(previo?.pasos ?? {}), [formId]: paso },
+        } satisfies Borrador)
+      );
+    } catch {
+      // Si el navegador bloquea localStorage, el formulario sigue funcionando.
+    }
+  }
+
+  function restaurarBorrador(form: HTMLFormElement, formId: string): number {
+    const datos = leerBorrador();
+    if (!datos) return 1;
+
+    for (const [clave, valor] of Object.entries(datos.campos)) {
+      if (Array.isArray(valor)) {
+        form
+          .querySelectorAll<HTMLInputElement>(`input[name='${clave}']`)
+          .forEach((el) => (el.checked = valor.includes(el.value)));
+        continue;
+      }
+      const campo = form.querySelector<HTMLInputElement | HTMLSelectElement>(
+        `[name='${clave}']`
+      );
+      if (!campo) continue;
+      if (campo instanceof HTMLInputElement && campo.type === "radio") {
+        const elegido = form.querySelector<HTMLInputElement>(
+          `input[name='${clave}'][value='${valor}']`
+        );
+        if (elegido) elegido.checked = true;
+      } else {
+        campo.value = valor;
+      }
+    }
+
+    return datos.pasos?.[formId] ?? 1;
+  }
+
   // ====== Shared form logic ======
   function initMultiStepForm(config: {
     formId: string;
@@ -577,13 +617,10 @@ import SectionTitle from "./SectionTitle.astro";
     progressId: string;
     labelId: string;
     titleId: string;
-    successId: string;
     progressContainerClass: string;
     errorPrefix: string;
-    summaryId: string;
   }) {
     const form = document.getElementById(config.formId) as HTMLFormElement;
-    const success = document.getElementById(config.successId);
     const steps = form?.querySelectorAll(`.${config.stepClass}`) as NodeListOf<HTMLElement>;
     const btnPrev = document.getElementById(config.prevId) as HTMLButtonElement;
     const btnNext = document.getElementById(config.nextId) as HTMLButtonElement;
@@ -595,7 +632,10 @@ import SectionTitle from "./SectionTitle.astro";
     if (!form || !steps.length) return;
 
     const totalSteps = steps.length;
-    let currentStep = 1;
+    // Si hay un borrador guardado, se repueblan los campos y se vuelve al paso
+    // donde había quedado.
+    const pasoGuardado = restaurarBorrador(form, config.formId);
+    let currentStep = Math.min(Math.max(pasoGuardado, 1), totalSteps);
     const stepTitles = ["Tipo de cliente", "Tu negocio", "Qué necesitás", "Datos de contacto"];
 
     function updateUI() {
@@ -642,11 +682,19 @@ import SectionTitle from "./SectionTitle.astro";
 
     btnNext?.addEventListener("click", () => {
       if (!validateStep(currentStep)) return;
-      if (currentStep < totalSteps) { currentStep++; updateUI(); }
+      if (currentStep < totalSteps) {
+        currentStep++;
+        updateUI();
+        guardarBorrador(form, config.formId, currentStep);
+      }
     });
 
     btnPrev?.addEventListener("click", () => {
-      if (currentStep > 1) { currentStep--; updateUI(); }
+      if (currentStep > 1) {
+        currentStep--;
+        updateUI();
+        guardarBorrador(form, config.formId, currentStep);
+      }
     });
 
     // Aviso de fallo de envío, con WhatsApp como salida alternativa para no
@@ -712,50 +760,52 @@ import SectionTitle from "./SectionTitle.astro";
         return;
       }
 
-      // Build summary
-      const summaryEl = document.getElementById(config.summaryId);
-      if (summaryEl) {
-        const labels: Record<string, string> = {
-          tipo_cliente: "Tipo de negocio",
-          empresa: "Negocio",
-          zona: "Zona",
-          productos: "Productos",
-          volumen: "Volumen",
-          frecuencia: "Frecuencia",
-          nombre: "Contacto",
-          telefono: "Teléfono",
-          email: "Email",
-          mensaje: "Mensaje",
-        };
-        const valueLabels: Record<string, string> = {
-          "piezas-enteras": "Piezas enteras",
-          "fraccionadas-vacio": "Fraccionadas al vacío",
-          "elaborados": "Productos elaborados",
-        };
-        const rows = Object.entries(data)
-          .filter(([key, v]) => {
-            if (key === "recaptcha_token" || key === "sitio_web" || key === "tiempo_ms") return false;
-            if (Array.isArray(v)) return v.length > 0;
-            return v && String(v).trim() !== "";
-          })
-          .map(([key, value]) => {
-            const label = labels[key] || key;
-            const val = Array.isArray(value) ? value.map(v => valueLabels[v] || v).join(", ") : (valueLabels[String(value)] || String(value));
-            return `<div class="py-1.5 border-b border-morcilla/5 last:border-0">
-              <span class="text-morcilla/40 font-display text-[10px] uppercase tracking-wider block">${label}</span>
-              <span class="text-morcilla text-sm">${val}</span>
-            </div>`;
-          })
-          .join("");
-        summaryEl.innerHTML = `<div class="font-display text-xs uppercase tracking-wider text-morcilla/40 mb-2">Resumen de tu consulta</div>${rows}`;
+      // Resumen legible para mostrar en /gracias
+      const labels: Record<string, string> = {
+        tipo_cliente: "Tipo de negocio",
+        empresa: "Negocio",
+        zona: "Zona",
+        productos: "Productos",
+        volumen: "Volumen",
+        frecuencia: "Frecuencia",
+        nombre: "Contacto",
+        telefono: "Teléfono",
+        email: "Email",
+        mensaje: "Mensaje",
+      };
+      const valueLabels: Record<string, string> = {
+        "piezas-enteras": "Piezas enteras",
+        "fraccionadas-vacio": "Fraccionadas al vacío",
+        "elaborados": "Productos elaborados",
+      };
+      const resumen: Record<string, string> = {};
+      for (const [key, value] of Object.entries(data)) {
+        if (key === "recaptcha_token" || key === "sitio_web" || key === "tiempo_ms") continue;
+        const val = Array.isArray(value)
+          ? value.map((v) => valueLabels[v] || v).join(", ")
+          : valueLabels[String(value)] || String(value);
+        if (val.trim() !== "") resumen[labels[key] || key] = val;
       }
 
-      btnSubmit.disabled = false;
-      btnSubmit.textContent = "Enviar consulta";
-      form.classList.add("hidden");
-      form.closest("div")?.querySelector(`.${config.progressContainerClass}`)?.classList.add("hidden");
-      success?.classList.remove("hidden");
+      try {
+        sessionStorage.setItem("porcorosso:ultima-consulta", JSON.stringify(resumen));
+      } catch {
+        // Si el navegador bloquea sessionStorage, /gracias funciona igual sin resumen.
+      }
+
+      // El borrador ya no hace falta: la consulta salió.
+      limpiarBorrador();
+
+      // Redirección a una URL propia. Es lo que permite contar la conversión en
+      // Google Ads y GA4; con la confirmación embebida no había forma de
+      // distinguir a quien consultó de quien solo miró la página.
+      window.location.assign("/gracias");
     });
+
+    // Cada cambio actualiza el borrador. "input" cubre lo que se tipea y
+    // "change" los radios, checkboxes y selects.
+    form.addEventListener("input", () => guardarBorrador(form, config.formId, currentStep));
+    form.addEventListener("change", () => guardarBorrador(form, config.formId, currentStep));
 
     updateUI();
   }
@@ -770,10 +820,8 @@ import SectionTitle from "./SectionTitle.astro";
     progressId: "progress-bar",
     labelId: "step-label",
     titleId: "step-title",
-    successId: "form-success",
     progressContainerClass: "form-progress",
     errorPrefix: "step",
-    summaryId: "form-summary",
   });
 
   // ====== Init modal form ======
@@ -786,10 +834,8 @@ import SectionTitle from "./SectionTitle.astro";
     progressId: "modal-progress-bar",
     labelId: "modal-step-label",
     titleId: "modal-step-title",
-    successId: "modal-success",
     progressContainerClass: "modal-progress",
     errorPrefix: "modal-step",
-    summaryId: "modal-summary",
   });
 
   // ====== Modal open/close ======
