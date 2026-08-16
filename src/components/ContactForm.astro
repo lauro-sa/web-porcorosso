@@ -845,20 +845,16 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
   const modalBackdrop = document.getElementById("modal-backdrop");
   const modalClose = document.getElementById("modal-close");
 
-  // Con el modal abierto se frena el scroll de fondo. Lo que scrollea es
-  // #app-scroll, no el body.
-  const appScroll = document.getElementById("app-scroll");
-
   function openModal() {
     modal?.classList.remove("opacity-0", "pointer-events-none");
     modal?.classList.add("opacity-100", "pointer-events-auto");
-    if (appScroll) appScroll.style.overflowY = "hidden";
+    document.body.style.overflow = "hidden";
   }
 
   function closeModal() {
     modal?.classList.add("opacity-0", "pointer-events-none");
     modal?.classList.remove("opacity-100", "pointer-events-auto");
-    if (appScroll) appScroll.style.overflowY = "";
+    document.body.style.overflow = "";
   }
 
   modalClose?.addEventListener("click", closeModal);

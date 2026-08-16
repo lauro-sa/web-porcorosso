@@ -32,10 +32,6 @@ const stats = [
     el.textContent = target.toLocaleString("es-AR");
   });
 
-  // root apunta a #app-scroll: el contador tiene que dispararse cuando la cifra
-  // entra en el area que scrollea, no en la ventana entera.
-  const scroller = document.getElementById("app-scroll");
-
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -56,7 +52,7 @@ const stats = [
         observer.unobserve(el);
       });
     },
-    { threshold: 0.3, root: scroller }
+    { threshold: 0.3 }
   );
   document.querySelectorAll(".stat-number").forEach((el) => observer.observe(el));
 </script>

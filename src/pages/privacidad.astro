@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import NavBar from "../components/NavBar.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 
@@ -22,8 +23,9 @@ const actualizado = "16 de agosto de 2026";
   title="Política de Privacidad | Porco Rosso Mayorista"
   description="Cómo Porco Rosso recolecta, usa y protege los datos personales que dejás en el formulario de contacto mayorista."
 >
+  <NavBar />
   <main id="contenido-principal" class="bg-frigo">
-    <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20">
+    <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
       <span class="font-accent text-xs tracking-widest text-carne uppercase">Legales</span>
       <h1 class="font-display font-bold uppercase text-4xl md:text-6xl leading-[0.95] text-morcilla mt-3 mb-4">
         Política de<br /><span class="text-carne">privacidad</span>

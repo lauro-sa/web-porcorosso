@@ -37,11 +37,8 @@ en Google, campañas pagas (Google Ads y redes) y recomendación en asistentes d
       pasó de 153 KB a 29 KB
 - [x] **Teléfono B2B propio**: +54 9 11 7271-4251, el WhatsApp Business con el que se
       maneja el canal mayorista. Reemplaza al anterior en todo el sitio
-- [x] **Barra de scroll debajo del navbar**: el scroll pasó del `<body>` a un contenedor
-      `#app-scroll` que arranca debajo del menú, así la barra del navegador no corre por
-      detrás. De paso, los saltos a `#productos` o `#nosotros` ya no quedan tapados.
-      Efecto colateral a tener en cuenta: en iPhone la barra de direcciones de Safari ya
-      no se colapsa al scrollear, porque el que scrollea no es el documento
+- [x] **`scroll-padding-top`**: los saltos a `#productos`, `#nosotros`, etc. ya no quedan
+      escondidos detrás del navbar fijo
 
 ---
 
