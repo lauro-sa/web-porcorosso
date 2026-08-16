@@ -1,4 +1,7 @@
 ---
+import { Image } from "astro:assets";
+import logoHueso from "../assets/images/logos/logo-hueso-01.webp";
+
 const currentYear = new Date().getFullYear();
 ---
 
@@ -7,12 +10,12 @@ const currentYear = new Date().getFullYear();
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 items-start">
       <!-- Logo & tagline -->
       <div class="sm:col-span-2 lg:col-span-1">
-        <img
-          src="/images/logos/logo-hueso-01.webp"
+        <Image
+          src={logoHueso}
           alt="Porco Rosso - Empresa familiar agroindustrial"
           class="h-14 w-auto mb-4"
-          width="400"
-          height="175"
+          widths={[128, 256]}
+          sizes="128px"
           loading="lazy"
         />
         <p class="text-hueso/40 text-sm leading-relaxed max-w-xs">
@@ -41,7 +44,7 @@ const currentYear = new Date().getFullYear();
           Contacto
         </h3>
         <ul class="space-y-2">
-          <li><a href="tel:+5491140453345" class="text-sm text-hueso/40 hover:text-hueso transition-colors">+54 9 11-4045-3345</a></li>
+          <li><a href="tel:+5491172714251" class="text-sm text-hueso/40 hover:text-hueso transition-colors">+54 9 11 7271-4251</a></li>
           <li><a href="mailto:hola@porcorosso.com.ar" class="text-sm text-hueso/40 hover:text-hueso transition-colors">hola@porcorosso.com.ar</a></li>
           <li><a href="https://porcorosso.com.ar" target="_blank" rel="noopener noreferrer" class="text-sm text-hueso/40 hover:text-hueso transition-colors">porcorosso.com.ar</a></li>
           <li><a href="https://www.instagram.com/porcorossoba" target="_blank" rel="noopener noreferrer" class="text-sm text-hueso/40 hover:text-hueso transition-colors">Instagram</a></li>

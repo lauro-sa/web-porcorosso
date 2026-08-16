@@ -1,7 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import NavBar from "../components/NavBar.astro";
+import { Image } from "astro:assets";
 import Footer from "../components/Footer.astro";
+import pigPig01 from "../assets/images/ilustraciones/pig-pig-01.webp";
 import "../styles/global.css";
 
 /**
@@ -73,7 +75,7 @@ import "../styles/global.css";
         style="animation: success-fade-up 0.5s ease-out 1s both;"
       >
         <a
-          href="https://wa.me/5491140453345?text=Hola%20Porco%20Rosso!%20Acabo%20de%20completar%20el%20formulario%20mayorista"
+          href="https://wa.me/5491172714251?text=Hola%20Porco%20Rosso!%20Acabo%20de%20completar%20el%20formulario%20mayorista"
           target="_blank"
           rel="noopener noreferrer"
           class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-carne text-hueso font-display font-semibold uppercase text-sm tracking-wider hover:bg-carne-dark transition-colors"
@@ -90,12 +92,13 @@ import "../styles/global.css";
 
       <!-- Ilustracion -->
       <div class="mt-14 flex justify-center opacity-50">
-        <img
-          src="/images/ilustraciones/pig-pig-01.webp"
+        <Image
+          src={pigPig01}
           alt="Ilustración Pig Pig - Porco Rosso"
           class="h-28 w-auto"
-          width="600"
-          height="600"
+          widths={[112, 224]}
+          sizes="112px"
+          loading="lazy"
         />
       </div>
 

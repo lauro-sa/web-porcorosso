@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import SectionTitle from "./SectionTitle.astro";
+import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
 ---
 
 <section id="contacto" class="py-20 md:py-28 bg-morcilla">
@@ -18,8 +20,8 @@ import SectionTitle from "./SectionTitle.astro";
         <div class="space-y-6 mt-8">
           <div>
             <h4 class="font-display font-bold uppercase text-sm text-hueso mb-1">Teléfono</h4>
-            <a href="tel:+5491140453345" class="text-piel hover:text-hueso transition-colors">
-              +54 9 11-4045-3345
+            <a href="tel:+5491172714251" class="text-piel hover:text-hueso transition-colors">
+              +54 9 11 7271-4251
             </a>
           </div>
           <div>
@@ -40,7 +42,7 @@ import SectionTitle from "./SectionTitle.astro";
 
         <!-- Illustration -->
         <div class="mt-10 max-w-[200px] hidden lg:block">
-          <img src="/images/ilustraciones/pig-pig-02.webp" alt="Ilustración Pig Pig - Porco Rosso contacto mayorista" class="w-full h-auto opacity-60" width="600" height="600" loading="lazy" />
+          <Image src={pigPig02} alt="Ilustración Pig Pig - Porco Rosso contacto mayorista" class="w-full h-auto opacity-60" widths={[200, 400]} sizes="200px" loading="lazy" />
         </div>
       </div>
 
@@ -706,7 +708,7 @@ import SectionTitle from "./SectionTitle.astro";
         aviso.id = `${config.formId}-error-envio`;
         aviso.setAttribute("role", "alert");
         aviso.className = "mt-4 p-4 bg-carne/10 border border-carne/30 text-sm text-morcilla";
-        aviso.innerHTML = `No pudimos enviar tu consulta en este momento. Probá de nuevo en un rato o escribinos por <a href="https://wa.me/5491140453345?text=Hola%20Porco%20Rosso!%20Quiero%20info%20mayorista" target="_blank" rel="noopener noreferrer" class="text-carne font-semibold underline">WhatsApp</a>.`;
+        aviso.innerHTML = `No pudimos enviar tu consulta en este momento. Probá de nuevo en un rato o escribinos por <a href="https://wa.me/5491172714251?text=Hola%20Porco%20Rosso!%20Quiero%20info%20mayorista" target="_blank" rel="noopener noreferrer" class="text-carne font-semibold underline">WhatsApp</a>.`;
         btnSubmit.parentElement?.insertAdjacentElement("afterend", aviso);
       }
       aviso.classList.remove("hidden");
