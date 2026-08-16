@@ -40,7 +40,7 @@ import SectionTitle from "./SectionTitle.astro";
 
         <!-- Illustration -->
         <div class="mt-10 max-w-[200px] hidden lg:block">
-          <img src="/images/ilustraciones/pig-pig-02.png" alt="Ilustración Pig Pig - Porco Rosso contacto mayorista" class="w-full h-auto opacity-60" loading="lazy" />
+          <img src="/images/ilustraciones/pig-pig-02.webp" alt="Ilustración Pig Pig - Porco Rosso contacto mayorista" class="w-full h-auto opacity-60" width="600" height="600" loading="lazy" />
         </div>
       </div>
 
@@ -58,6 +58,8 @@ import SectionTitle from "./SectionTitle.astro";
         </div>
 
         <form id="contact-form">
+          <!-- Honeypot: invisible para personas, tentador para bots -->
+          <input type="text" name="sitio_web" tabindex="-1" autocomplete="off" aria-hidden="true" class="absolute w-px h-px -left-[9999px] opacity-0" />
           <!-- PASO 1: Tipo de cliente -->
           <div class="form-step" data-step="1">
             <p class="text-morcilla/60 mb-6">¿Qué tipo de negocio tenés?</p>
@@ -135,31 +137,28 @@ import SectionTitle from "./SectionTitle.astro";
 
           <!-- PASO 3: Qué necesitás -->
           <div class="form-step hidden" data-step="3">
-            <p class="text-morcilla/60 mb-6">¿Qué productos te interesan?</p>
-            <div class="grid grid-cols-2 gap-3 mb-6">
+            <p class="text-morcilla/60 mb-6">¿Qué te interesa?</p>
+            <div class="grid gap-3 mb-6">
               <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
-                <input type="checkbox" name="productos" value="porcino" class="pr-check" />
-                <span class="text-sm text-morcilla">Porcino</span>
+                <input type="checkbox" name="productos" value="piezas-enteras" class="pr-check" />
+                <div>
+                  <span class="text-sm font-display font-bold uppercase text-morcilla">Piezas enteras</span>
+                  <p class="text-xs text-morcilla/50 mt-0.5">Cortes enteros para desposte o venta directa</p>
+                </div>
               </label>
               <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
-                <input type="checkbox" name="productos" value="vacuno" class="pr-check" />
-                <span class="text-sm text-morcilla">Vacuno</span>
+                <input type="checkbox" name="productos" value="fraccionadas-vacio" class="pr-check" />
+                <div>
+                  <span class="text-sm font-display font-bold uppercase text-morcilla">Fraccionadas al vacío</span>
+                  <p class="text-xs text-morcilla/50 mt-0.5">Cortes porcionados y envasados, listos para usar</p>
+                </div>
               </label>
               <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
-                <input type="checkbox" name="productos" value="embutidos" class="pr-check" />
-                <span class="text-sm text-morcilla">Embutidos</span>
-              </label>
-              <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
-                <input type="checkbox" name="productos" value="milanesas" class="pr-check" />
-                <span class="text-sm text-morcilla">Milanesas</span>
-              </label>
-              <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
-                <input type="checkbox" name="productos" value="pollo" class="pr-check" />
-                <span class="text-sm text-morcilla">Pollo</span>
-              </label>
-              <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
-                <input type="checkbox" name="productos" value="todos" class="pr-check" />
-                <span class="text-sm text-morcilla">Todo el catálogo</span>
+                <input type="checkbox" name="productos" value="elaborados" class="pr-check" />
+                <div>
+                  <span class="text-sm font-display font-bold uppercase text-morcilla">Productos elaborados</span>
+                  <p class="text-xs text-morcilla/50 mt-0.5">Milanesas, chorizo, morcilla y más</p>
+                </div>
               </label>
             </div>
 
@@ -373,6 +372,8 @@ import SectionTitle from "./SectionTitle.astro";
     </div>
 
     <form id="modal-form">
+      <!-- Honeypot: invisible para personas, tentador para bots -->
+      <input type="text" name="sitio_web" tabindex="-1" autocomplete="off" aria-hidden="true" class="absolute w-px h-px -left-[9999px] opacity-0" />
       <!-- PASO 1 -->
       <div class="modal-step" data-step="1">
         <p class="text-morcilla/60 mb-5 text-sm">¿Qué tipo de negocio tenés?</p>
@@ -432,31 +433,28 @@ import SectionTitle from "./SectionTitle.astro";
 
       <!-- PASO 3 -->
       <div class="modal-step hidden" data-step="3">
-        <p class="text-morcilla/60 mb-5 text-sm">¿Qué productos te interesan?</p>
-        <div class="grid grid-cols-2 gap-2.5 mb-5">
+        <p class="text-morcilla/60 mb-5 text-sm">¿Qué te interesa?</p>
+        <div class="grid gap-2.5 mb-5">
           <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
-            <input type="checkbox" name="productos" value="porcino" class="pr-check" />
-            <span class="text-sm text-morcilla">Porcino</span>
+            <input type="checkbox" name="productos" value="piezas-enteras" class="pr-check" />
+            <div>
+              <span class="text-sm font-display font-bold uppercase text-morcilla">Piezas enteras</span>
+              <p class="text-xs text-morcilla/50 mt-0.5">Cortes enteros para desposte o venta directa</p>
+            </div>
           </label>
           <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
-            <input type="checkbox" name="productos" value="vacuno" class="pr-check" />
-            <span class="text-sm text-morcilla">Vacuno</span>
+            <input type="checkbox" name="productos" value="fraccionadas-vacio" class="pr-check" />
+            <div>
+              <span class="text-sm font-display font-bold uppercase text-morcilla">Fraccionadas al vacío</span>
+              <p class="text-xs text-morcilla/50 mt-0.5">Cortes porcionados y envasados, listos para usar</p>
+            </div>
           </label>
           <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
-            <input type="checkbox" name="productos" value="embutidos" class="pr-check" />
-            <span class="text-sm text-morcilla">Embutidos</span>
-          </label>
-          <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
-            <input type="checkbox" name="productos" value="milanesas" class="pr-check" />
-            <span class="text-sm text-morcilla">Milanesas</span>
-          </label>
-          <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
-            <input type="checkbox" name="productos" value="pollo" class="pr-check" />
-            <span class="text-sm text-morcilla">Pollo</span>
-          </label>
-          <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
-            <input type="checkbox" name="productos" value="todos" class="pr-check" />
-            <span class="text-sm text-morcilla">Todo</span>
+            <input type="checkbox" name="productos" value="elaborados" class="pr-check" />
+            <div>
+              <span class="text-sm font-display font-bold uppercase text-morcilla">Productos elaborados</span>
+              <p class="text-xs text-morcilla/50 mt-0.5">Milanesas, chorizo, morcilla y más</p>
+            </div>
           </label>
         </div>
         <div class="space-y-5">
@@ -562,9 +560,12 @@ import SectionTitle from "./SectionTitle.astro";
 </div>
 
 <script>
-  // ====== CONFIG: Reemplazar cuando tengas el backend listo ======
+  // ====== CONFIG ======
   const RECAPTCHA_SITE_KEY = "RECAPTCHA_SITE_KEY_HERE"; // Reemplazar con tu site key de Google reCAPTCHA v3
-  const FORM_ENDPOINT = ""; // Reemplazar con la URL de tu API/backend (ej: "https://tu-api.com/contact")
+  const FORM_ENDPOINT = "/contacto.php"; // Receptor PHP en el mismo hosting (public/contacto.php)
+
+  // Marca de tiempo de carga: el backend descarta envios instantaneos (bots).
+  const FORM_LOADED_AT = Date.now();
 
   // ====== Shared form logic ======
   function initMultiStepForm(config: {
@@ -648,9 +649,25 @@ import SectionTitle from "./SectionTitle.astro";
       if (currentStep > 1) { currentStep--; updateUI(); }
     });
 
+    // Aviso de fallo de envío, con WhatsApp como salida alternativa para no
+    // perder el contacto si el servidor no responde.
+    function mostrarErrorEnvio() {
+      let aviso = document.getElementById(`${config.formId}-error-envio`);
+      if (!aviso) {
+        aviso = document.createElement("div");
+        aviso.id = `${config.formId}-error-envio`;
+        aviso.setAttribute("role", "alert");
+        aviso.className = "mt-4 p-4 bg-carne/10 border border-carne/30 text-sm text-morcilla";
+        aviso.innerHTML = `No pudimos enviar tu consulta en este momento. Probá de nuevo en un rato o escribinos por <a href="https://wa.me/5491140453345?text=Hola%20Porco%20Rosso!%20Quiero%20info%20mayorista" target="_blank" rel="noopener noreferrer" class="text-carne font-semibold underline">WhatsApp</a>.`;
+        btnSubmit.parentElement?.insertAdjacentElement("afterend", aviso);
+      }
+      aviso.classList.remove("hidden");
+    }
+
     form?.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (!validateStep(currentStep)) return;
+      document.getElementById(`${config.formId}-error-envio`)?.classList.add("hidden");
 
       // Disable submit button while processing
       btnSubmit.disabled = true;
@@ -675,19 +692,24 @@ import SectionTitle from "./SectionTitle.astro";
         console.warn("reCAPTCHA not available:", err);
       }
 
-      // Send to backend
-      if (FORM_ENDPOINT) {
-        try {
-          await fetch(FORM_ENDPOINT, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-          });
-        } catch (err) {
-          console.warn("Form endpoint not available yet:", err);
-        }
-      } else {
-        console.log("Form data (backend not configured yet):", data);
+      // Señales anti-spam que valida el backend
+      data["tiempo_ms"] = String(Date.now() - FORM_LOADED_AT);
+
+      // Envío al backend. Si no llega, no mostramos éxito: el lead se perdería
+      // sin que el visitante lo sepa.
+      try {
+        const respuesta = await fetch(FORM_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
+      } catch (err) {
+        console.error("No se pudo enviar la consulta:", err);
+        mostrarErrorEnvio();
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = "Enviar consulta";
+        return;
       }
 
       // Build summary
@@ -705,15 +727,20 @@ import SectionTitle from "./SectionTitle.astro";
           email: "Email",
           mensaje: "Mensaje",
         };
+        const valueLabels: Record<string, string> = {
+          "piezas-enteras": "Piezas enteras",
+          "fraccionadas-vacio": "Fraccionadas al vacío",
+          "elaborados": "Productos elaborados",
+        };
         const rows = Object.entries(data)
           .filter(([key, v]) => {
-            if (key === "recaptcha_token") return false;
+            if (key === "recaptcha_token" || key === "sitio_web" || key === "tiempo_ms") return false;
             if (Array.isArray(v)) return v.length > 0;
             return v && String(v).trim() !== "";
           })
           .map(([key, value]) => {
             const label = labels[key] || key;
-            const val = Array.isArray(value) ? value.join(", ") : String(value);
+            const val = Array.isArray(value) ? value.map(v => valueLabels[v] || v).join(", ") : (valueLabels[String(value)] || String(value));
             return `<div class="py-1.5 border-b border-morcilla/5 last:border-0">
               <span class="text-morcilla/40 font-display text-[10px] uppercase tracking-wider block">${label}</span>
               <span class="text-morcilla text-sm">${val}</span>
