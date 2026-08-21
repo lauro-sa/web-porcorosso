@@ -30,6 +30,10 @@ const ogImage = new URL("/images/og/og-image.png", Astro.site ?? Astro.url).href
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
 
+    <!-- Verificacion de propiedad en Google Search Console. No borrar: si se
+         quita, Google puede perder la verificacion del sitio. -->
+    <meta name="google-site-verification" content="lgPJT8WueGHlc8s4eeppfkUBO4E8HXGTNq5jsqsj0kA" />
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
