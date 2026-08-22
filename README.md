@@ -1,46 +1,39 @@
-# Astro Starter Kit: Basics
+# Porco Rosso — Landing B2B
+
+Sitio mayorista de Porco Rosso, productor porcino argentino. Capta consultas de
+restaurantes, hoteles, carnicerías y distribuidoras en CABA y Gran Buenos Aires.
+
+**En producción:** https://b2b.porcorosso.com.ar
+
+> 🤖 **¿Sos un agente de IA?** Empezá por **[AGENTS.md](AGENTS.md)**.
+
+## Arrancar
 
 ```sh
-npm create astro@latest -- --template basics
+npm install
+npm run dev      # http://localhost:4321
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+| Comando | Qué hace |
+|---|---|
+| `npm run dev` | Servidor de desarrollo |
+| `npm run build` | Genera `dist/` |
+| `npm run preview` | Previsualiza el build |
 
-## 🚀 Project Structure
+Requiere Node 22.12 o superior.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Stack
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+Astro 6 estático + Tailwind CSS v4. El sitio se compila a HTML plano y se sirve
+desde Hostinger; el único código que corre en el servidor es
+[public/contacto.php](public/contacto.php), que recibe los leads del formulario.
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Documentación
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Archivo | Para qué |
+|---|---|
+| [AGENTS.md](AGENTS.md) | Punto de entrada: stack, reglas del repo y trampas conocidas |
+| [ROADMAP.md](ROADMAP.md) | Qué falta, priorizado, con el informe de auditoría SEO/GEO |
+| [DEPLOY.md](DEPLOY.md) | Cómo publicar y cómo llegan los leads |
+| [NOTAS-PROYECTO.md](NOTAS-PROYECTO.md) | Origen del proyecto y decisiones con el cliente |
+| [RTM-BRAND.md](RTM-BRAND.md) | Marca: paleta, tipografías y tono |
