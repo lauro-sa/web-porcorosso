@@ -120,6 +120,12 @@ de cifras y en `llms.txt`. No cambiarlo sin confirmación del titular.
 
 *Última actualización: 21 de agosto de 2026.*
 
+⚠️ **El repo está adelantado a producción.** El color de la barra de estado de iOS
+(`theme-color`, en `NavBar.astro` y `Layout.astro`) está commiteado pero **no
+publicado**: quedó pendiente de probarse en un iPhone real antes de subirlo. Son 7
+archivos de diferencia, entre ellos `index.html`. Para publicarlo, buildear y
+sincronizar según [DEPLOY.md](DEPLOY.md).
+
 **Publicado y funcionando:** el sitio, el formulario que manda los leads a mail y
 planilla, `/gracias`, `/privacidad`, las preguntas frecuentes, `llms.txt` y las
 imágenes responsive.
