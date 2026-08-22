@@ -20,6 +20,21 @@ archivos por SSH. El servidor no necesita Node: solo sirve HTML, CSS, imágenes 
 La clave pública está autorizada en hPanel → Avanzado → Acceso SSH, con el nombre
 `claude-code-deploy`.
 
+⚠️ **La clave privada no está en el repo y nunca debe estarlo.** Vive solo en la
+máquina desde la que se viene publicando. Si trabajás desde otra computadora, o sos
+un agente sin acceso a ese archivo, **no vas a poder desplegar**: podés hacer
+cambios y commitearlos, pero publicar requiere una clave nueva.
+
+Para habilitar otra máquina, generá un par nuevo y subí la pública al panel:
+
+```bash
+ssh-keygen -t ed25519 -f ~/.ssh/hostinger_porcorosso -C "deploy-porcorosso" -N ""
+cat ~/.ssh/hostinger_porcorosso.pub
+```
+
+Esa clave pública se pega en hPanel → Avanzado → Acceso SSH → Claves SSH. Después
+de eso, el comando de publicación de abajo funciona igual.
+
 ## Publicar cambios
 
 ```bash

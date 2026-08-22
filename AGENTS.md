@@ -116,6 +116,51 @@ Google Ads), así que no se puede pautar todavía.
 información pública de la empresa dice **3.000**. Aparece en el hero, en la franja
 de cifras y en `llms.txt`. No cambiarlo sin confirmación del titular.
 
+## Dónde quedó todo
+
+*Última actualización: 21 de agosto de 2026.*
+
+**Publicado y funcionando:** el sitio, el formulario que manda los leads a mail y
+planilla, `/gracias`, `/privacidad`, las preguntas frecuentes, `llms.txt` y las
+imágenes responsive.
+
+**En curso, esperando a Google:** la propiedad de Search Console está verificada y
+el sitemap enviado, pero Google todavía no lo rastreó. Es normal en un sitio nuevo;
+tarda días. **No reenviar el sitemap**, reenviarlo reinicia la cola.
+
+**Lo próximo, en orden:**
+
+1. Crear el **Perfil de Empresa de Google** — depende del titular, es gratis y tarda
+   días en verificarse. Es lo que más mueve la aguja: define si aparecen en
+   búsquedas locales y es la fuente que más citan los asistentes de IA.
+2. Instalar **GA4 y la etiqueta de Google Ads** — falta que el titular pase los IDs.
+   Es el último bloqueante para poder pautar. `/gracias` ya está lista para marcarse
+   como conversión.
+3. Crear las **páginas por segmento y por producto** — esto sí se puede hacer sin
+   depender de nadie, y es lo que más mueve el SEO a mediano plazo. El plan completo
+   está en [ROADMAP.md](ROADMAP.md).
+
+## Antes de terminar tu sesión
+
+**Todos los que trabajen acá dejan registro. Sin excepción.** Si no queda escrito,
+el que venga después no tiene forma de saberlo y repite trabajo o rompe algo.
+
+Antes de cerrar, hacé estas cuatro cosas:
+
+1. **Actualizá [ROADMAP.md](ROADMAP.md).** Marcá lo que completaste y agregá lo
+   nuevo que haya aparecido. Si una tarea quedó a medias, escribí explícitamente
+   hasta dónde llegaste y qué falta.
+2. **Actualizá la sección "Dónde quedó todo"** de este archivo, con la fecha. Es lo
+   primero que lee el que llega: tiene que reflejar el presente, no el pasado.
+3. **Commiteá explicando por qué**, no qué. El "qué" ya se ve en el diff; lo que se
+   pierde es la razón. El historial de git es la bitácora detallada del proyecto.
+4. **Si tropezaste con algo inesperado**, agregalo a "Reglas que no son obvias" acá
+   arriba. Cada una de esas reglas está porque alguien perdió tiempo con eso antes.
+
+Si dejás trabajo sin publicar, decilo. Que el código esté commiteado no significa
+que esté en producción: son dos pasos distintos, y [DEPLOY.md](DEPLOY.md) explica
+cómo verificar que estén alineados.
+
 ## Mapa de documentos
 
 | Archivo | Para qué |

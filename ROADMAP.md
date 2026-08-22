@@ -52,8 +52,13 @@ Nada de esto se puede hacer sin información que solo tiene el dueño del negoci
       Sin esto no aparecen en el mapa ni en las búsquedas locales, y además es la
       fuente que más citan los asistentes de IA cuando alguien pregunta por proveedores
       de una zona. Requiere verificación, que suele tardar días.
-- [ ] **Google Search Console** — verificar la propiedad del subdominio para ver
-      posiciones, errores de rastreo y qué consultas traen visitas.
+- [x] **Google Search Console** — propiedad verificada con el archivo
+      `public/google7cd04a9cd3102cbd.html`. El sitemap se envió el 21/8/2026 y
+      quedó en estado "No se ha podido obtener", que es lo normal en una
+      propiedad recién creada: Google lo encoló y todavía no lo rastreó. El
+      servidor lo entrega bien (200, `application/xml`, sin bloqueo a Googlebot),
+      así que no hay nada que arreglar. **No reenviar el sitemap**: reenviarlo
+      reinicia la cola. Si en una semana sigue igual, revisar.
 - [ ] **Google Analytics 4 + etiqueta de Google Ads** — hace falta el ID de medición
       y el ID de conversión. Sin esto, Google Ads compra clics a ciegas: no puede
       optimizar hacia quien realmente consulta, ni hacer remarketing.
