@@ -23,6 +23,11 @@ const ogImage = new URL("/images/og/og-image.png", Astro.site ?? Astro.url).href
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- iOS pinta la barra de estado (hora, wifi, bateria) con este color, no
+         con lo que se ve debajo. El navbar lo va actualizando al scrollear para
+         que acompañe el fondo translucido. Ver el script de NavBar.astro. -->
+    <meta name="theme-color" content="#f3e3cc" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

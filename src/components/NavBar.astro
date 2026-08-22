@@ -98,8 +98,64 @@ const navLinks = [
   const navLogo = document.getElementById("nav-logo");
   const navInner = document.getElementById("nav-inner");
 
+  // ---- Barra de estado de iOS ----
+  // Safari pinta la barra de estado (hora, wifi, bateria) con el theme-color,
+  // no con lo que se ve debajo. Como el navbar es fixed y translucido, Safari no
+  // lo "ve": la barra quedaba del color del body y se cortaba contra el navbar.
+  // Asi que calculamos a mano el color que el navbar muestra de verdad -frigo al
+  // 80% sobre el fondo que tenga detras- y se lo pasamos a Safari.
+  // El blur no se puede replicar: la barra de estado es del navegador, no nuestra.
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  const NAV_RGB = [244, 242, 242]; // --color-frigo
+  const NAV_ALPHA = 0.8;           // bg-frigo/80
+  let navAlpha = 0;                // 0 arriba de todo, NAV_ALPHA al scrollear
+  let alphaAnim = 0;
+  let ultimoColor = "";
+  let themeTick = false;
+
+  /** Primer fondo opaco justo debajo de la barra de estado, salteando el navbar. */
+  function fondoDetrasDelNav() {
+    const capas = document.elementsFromPoint(Math.floor(window.innerWidth / 2), 1);
+    for (const capa of capas) {
+      if (navbar?.contains(capa)) continue;
+      const rgba = getComputedStyle(capa).backgroundColor.match(/[\d.]+/g);
+      if (rgba && (rgba.length < 4 || Number(rgba[3]) === 1)) {
+        return [Number(rgba[0]), Number(rgba[1]), Number(rgba[2])];
+      }
+    }
+    return NAV_RGB;
+  }
+
+  function pintarThemeColor() {
+    if (!themeMeta) return;
+    const fondo = fondoDetrasDelNav();
+    const hex = fondo
+      .map((c, i) => Math.round(NAV_RGB[i] * navAlpha + c * (1 - navAlpha)))
+      .map((c) => c.toString(16).padStart(2, "0"))
+      .join("");
+    if (hex === ultimoColor) return;
+    ultimoColor = hex;
+    themeMeta.setAttribute("content", "#" + hex);
+  }
+
+  /** Acompaña los 300ms de transicion del navbar en vez de saltar de golpe. */
+  function animarNavAlpha(destino: number) {
+    cancelAnimationFrame(alphaAnim);
+    const desde = navAlpha;
+    const inicio = performance.now();
+    const paso = (ahora: number) => {
+      const t = Math.min((ahora - inicio) / 300, 1);
+      navAlpha = desde + (destino - desde) * t;
+      pintarThemeColor();
+      if (t < 1) alphaAnim = requestAnimationFrame(paso);
+    };
+    alphaAnim = requestAnimationFrame(paso);
+  }
+
   // Scroll effect
-  window.addEventListener("scroll", () => {
+  let scrolledPrev: boolean | null = null;
+
+  function aplicarScroll(animar = true) {
     if (!navbar) return;
     const scrolled = window.scrollY > 50;
     navbar.classList.toggle("bg-frigo/80", scrolled);
@@ -108,7 +164,33 @@ const navLinks = [
     navLogo?.classList.toggle("scrolled", scrolled);
     navInner?.classList.toggle("h-20", !scrolled);
     navInner?.classList.toggle("h-14", scrolled);
+
+    if (scrolled === scrolledPrev) return;
+    const primeraVez = scrolledPrev === null;
+    scrolledPrev = scrolled;
+    const destino = scrolled ? NAV_ALPHA : 0;
+    // Al cargar (o si el navegador restaura el scroll) no hay nada que animar.
+    if (animar && !primeraVez) {
+      animarNavAlpha(destino);
+    } else {
+      navAlpha = destino;
+      pintarThemeColor();
+    }
+  }
+
+  window.addEventListener("scroll", () => {
+    aplicarScroll();
+    // El fondo detras del navbar cambia al pasar de seccion, pero medirlo en cada
+    // evento de scroll es caro: lo hacemos una vez por frame.
+    if (themeTick) return;
+    themeTick = true;
+    requestAnimationFrame(() => {
+      themeTick = false;
+      pintarThemeColor();
+    });
   });
+
+  aplicarScroll(false);
 
   function toggleMenu() {
     menuOpen = !menuOpen;
@@ -159,7 +241,12 @@ const navLinks = [
     }
   }
 
-  menuToggle?.addEventListener("click", toggleMenu);
+  menuToggle?.addEventListener("click", () => {
+    toggleMenu();
+    // El overlay del menu tapa la pantalla entera: recalculamos cuando termina
+    // su fade de 300ms, para que la barra de estado siga al color que quede.
+    setTimeout(pintarThemeColor, 300);
+  });
   mobileLinks?.forEach((link) => link.addEventListener("click", () => {
     if (menuOpen) toggleMenu();
   }));
