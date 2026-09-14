@@ -17,22 +17,24 @@ const segments = [
       "Pedidos y facturación automatizados",
       "Comunicación directa con el equipo comercial",
     ],
-    cta: "Soy mayorista",
+    cta: "Ver propuesta mayorista",
+    href: "/mayoristas/",
     image: papaPig03,
     alt: "Ilustración Papa Pig - Porco Rosso mayorista",
   },
   {
     title: "Gastronómicos",
-    subtitle: "02 — Restaurantes, Bares & Cocinas",
+    subtitle: "02 — Hoteles, Restaurantes & Catering",
     description:
       "Trabajamos mucho con gastronómicos porque nuestro servicio encaja bárbaro con la enloquecida dinámica de una cocina: producto parejo, sin desperdicio y sabés que salés de la misma dirección. La consistencia es lo que más valoran de nosotros.",
     features: [
-      "Producto parejo que estandariza tu cocina",
+      "Desayuno, buffet, carta, banquetes y eventos",
+      "Cortes al gramaje que define tu cocina",
       "Entregas puntuales con cadena de frío",
-      "Cortes a medida para tu carta",
-      "Adaptación a la dinámica de tu operación",
+      "Producto parejo que estandariza el costo por plato",
     ],
-    cta: "Soy gastronómico",
+    cta: "Ver propuesta gastronómica",
+    href: "/gastronomicos/",
     image: mamaPig,
     alt: "Ilustración Mama Pig - Porco Rosso gastronómicos",
   },
@@ -46,7 +48,7 @@ const segments = [
       title="Reconocé"
       accent="tu operación."
       align="center"
-      description="Ya seas mayorista o gastronómico, tenemos la propuesta justa para tu operación."
+      description="Ya tengas una carnicería, una distribuidora, un hotel o un restaurante, tenemos la propuesta justa para tu operación."
     />
 
     <div class="grid md:grid-cols-2 gap-8 mt-12">
@@ -85,10 +87,18 @@ const segments = [
             ))}
           </ul>
 
-          <!-- CTA -->
-          <Button href="#contacto" variant="primary" size="lg" class="w-full text-center">
+          <!-- CTA: lleva a la pagina del segmento, que responde con el detalle
+               y el vocabulario de ese publico. El atajo al formulario queda
+               debajo para quien ya se decidio. -->
+          <Button href={seg.href} variant="primary" size="lg" class="w-full text-center">
             {seg.cta}
           </Button>
+          <a
+            href="#contacto"
+            class="mt-3 block text-center font-display font-semibold text-xs uppercase tracking-wider text-morcilla/50 hover:text-carne transition-colors"
+          >
+            O pedí presupuesto ahora
+          </a>
         </div>
       ))}
     </div>

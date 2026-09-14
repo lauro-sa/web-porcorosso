@@ -1,0 +1,50 @@
+---
+/**
+ * Miga de pan para las paginas internas.
+ *
+ * Emite el `BreadcrumbList` que Google usa para mostrar la ruta en el
+ * resultado de busqueda en vez de la URL cruda, y que de paso le dice a los
+ * modelos de lenguaje que esta pagina es una rama de la landing, no un sitio
+ * suelto. Las URLs del JSON-LD tienen que ser absolutas.
+ */
+
+interface Props {
+  /** El ultimo item es la pagina actual: se muestra pero no se enlaza. */
+  items: { label: string; href?: string }[];
+}
+
+const { items } = Astro.props;
+const base = Astro.site ?? new URL("/", Astro.url);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: items.map((item, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: item.label,
+    ...(item.href ? { item: new URL(item.href, base).href } : {}),
+  })),
+};
+---
+
+<nav aria-label="Miga de pan" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 md:pt-32">
+  <ol class="flex flex-wrap items-center gap-2 font-display text-xs uppercase tracking-wider">
+    {items.map((item, i) => (
+      <li class="flex items-center gap-2">
+        {item.href ? (
+          <a href={item.href} class="text-morcilla/40 hover:text-carne transition-colors">
+            {item.label}
+          </a>
+        ) : (
+          <span class="text-morcilla/70" aria-current="page">{item.label}</span>
+        )}
+        {i < items.length - 1 && (
+          <span class="text-morcilla/25" aria-hidden="true">/</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

@@ -3,6 +3,11 @@ import { Image } from "astro:assets";
 import logoHueso from "../assets/images/logos/logo-hueso-01.webp";
 
 const currentYear = new Date().getFullYear();
+
+/** Mismo criterio que el NavBar: desde una pagina interna, el ancla suelta no
+ *  lleva a ningun lado. Ver el comentario en NavBar.astro. */
+const enHome = Astro.url.pathname === "/";
+const aSeccion = (id: string) => (enHome ? `#${id}` : `/#${id}`);
 ---
 
 <footer class="bg-morcilla pt-12 md:pt-16 pb-4">
@@ -30,11 +35,13 @@ const currentYear = new Date().getFullYear();
           Secciones
         </h3>
         <ul class="space-y-2">
-          <li><a href="#nosotros" class="text-sm text-hueso/40 hover:text-hueso transition-colors">Nosotros</a></li>
-          <li><a href="#productos" class="text-sm text-hueso/40 hover:text-hueso transition-colors">Productos</a></li>
-          <li><a href="#ventajas" class="text-sm text-hueso/40 hover:text-hueso transition-colors">Ventajas</a></li>
-          <li><a href="#preguntas" class="text-sm text-hueso/40 hover:text-hueso transition-colors">Preguntas frecuentes</a></li>
-          <li><a href="#contacto" class="text-sm text-hueso/40 hover:text-hueso transition-colors">Contacto</a></li>
+          <li><a href="/mayoristas/" class="text-sm text-hueso/40 hover:text-hueso transition-colors">Venta mayorista</a></li>
+          <li><a href="/gastronomicos/" class="text-sm text-hueso/40 hover:text-hueso transition-colors">Hoteles y restaurantes</a></li>
+          <li><a href={aSeccion("productos")} class="text-sm text-hueso/40 hover:text-hueso transition-colors">Productos</a></li>
+          <li><a href={aSeccion("nosotros")} class="text-sm text-hueso/40 hover:text-hueso transition-colors">Nosotros</a></li>
+          <li><a href={aSeccion("ventajas")} class="text-sm text-hueso/40 hover:text-hueso transition-colors">Ventajas</a></li>
+          <li><a href={aSeccion("preguntas")} class="text-sm text-hueso/40 hover:text-hueso transition-colors">Preguntas frecuentes</a></li>
+          <li><a href={aSeccion("contacto")} class="text-sm text-hueso/40 hover:text-hueso transition-colors">Contacto</a></li>
         </ul>
       </div>
 
@@ -70,7 +77,7 @@ const currentYear = new Date().getFullYear();
         &copy; {currentYear} Porco Rosso&reg;. Todos los derechos reservados.
       </p>
       <p class="text-xs text-hueso/20">
-        <a href="/privacidad" class="hover:text-hueso/50 transition-colors">Política de privacidad</a>
+        <a href="/privacidad/" class="hover:text-hueso/50 transition-colors">Política de privacidad</a>
         <span class="mx-2" aria-hidden="true">&middot;</span>
         Buenos Aires, Argentina
       </p>

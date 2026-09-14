@@ -1,0 +1,412 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import NavBar from "../components/NavBar.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import Button from "../components/Button.astro";
+import Tag from "../components/Tag.astro";
+import Faq from "../components/Faq.astro";
+import ContactForm from "../components/ContactForm.astro";
+import Footer from "../components/Footer.astro";
+import WAFloat from "../components/WAFloat.astro";
+import mamaPig from "../assets/images/ilustraciones/mama-pig.webp";
+import bondiola from "../assets/images/productos/bondiola.webp";
+import "../styles/global.css";
+
+/**
+ * Pagina de segmento: gastronomicos, con foco en hoteleria.
+ *
+ * Por que existe: la home habla de "restaurantes, bares y cocinas" y menciona
+ * hoteles al pasar. Una busqueda tipica del comprador hotelero -"proveedor de
+ * carne de cerdo para hoteles en CABA"- no tenia ninguna pagina que la
+ * respondiera, y el vocabulario del rubro (buffet, desayuno, banquete,
+ * gramaje) no aparecia una sola vez en el sitio. Esta pagina cubre esa
+ * intencion de busqueda y le da a los modelos de lenguaje una fuente
+ * inequivoca que citar cuando alguien pregunta a quien comprarle.
+ *
+ * REGLA DE CONTENIDO: aca no se afirma nada que no este confirmado por el
+ * titular. Pedido minimo, plazos de entrega, dias de reparto por zona, medios
+ * de pago y condicion fiscal siguen pendientes en ROADMAP.md: cuando esten,
+ * cada uno entra como pregunta frecuente de esta pagina, que es justo lo
+ * primero que pregunta un jefe de compras de hotel.
+ */
+
+const perfiles = [
+  {
+    title: "Hoteles",
+    text: "Desayuno, buffet, banquetes y el restaurante del hotel, con un mismo proveedor para todos los servicios y un solo interlocutor comercial.",
+  },
+  {
+    title: "Restaurantes y bares",
+    text: "Cortes parejos para que un plato de la carta salga siempre igual, sin recalcular gramajes ni rehacer el costeo cada semana.",
+  },
+  {
+    title: "Catering y eventos",
+    text: "Volúmenes que suben y bajan según el calendario. Producto porcionado y envasado al vacío, listo para recibir y almacenar.",
+  },
+  {
+    title: "Cocinas centrales",
+    text: "Producción en serie que necesita materia prima homogénea y trazable, con la misma especificación en cada entrega.",
+  },
+];
+
+/** Servicios de un hotel y que corte resuelve cada uno.
+ *  El uso culinario es criterio gastronomico general; lo que se afirma de la
+ *  empresa (produccion propia, corte a medida, vacio) si esta confirmado. */
+const servicios = [
+  {
+    number: "01",
+    title: "Desayuno y buffet",
+    text: "El servicio más repetitivo del hotel y el que menos tolera faltantes. Producto de porción pareja, que se repone rápido y rinde igual todos los días.",
+    cortes: ["Panceta", "Salchicha parrillera", "Chorizo bombón", "Morcilla dulce"],
+  },
+  {
+    number: "02",
+    title: "Carta del restaurante",
+    text: "El plato insignia necesita un corte que no cambie de una entrega a la otra. Definimos la especificación una vez y la repetimos.",
+    cortes: ["Bondiola", "Solomillo", "Carré", "Pork Belly"],
+  },
+  {
+    number: "03",
+    title: "Banquetes y eventos",
+    text: "Cubiertos contados y tiempos de cocina cerrados. Piezas de rendimiento previsible y porcionado uniforme para emplatar en serie.",
+    cortes: ["Bondiola", "Costillitas", "Ribs de carré", "Matambrito"],
+  },
+  {
+    number: "04",
+    title: "Room service y comedor de personal",
+    text: "Servicios de bajo margen donde el costo por porción manda. Elaborados propios listos para plancha, horno o freidora.",
+    cortes: ["Milanesas de cerdo", "Milanesas de pollo", "Salchicha parrillera", "Morcilla salada"],
+  },
+];
+
+const cortes = [
+  { corte: "Bondiola", uso: "Braseado largo, horno, plato principal de carta y banquete", formato: "Pieza entera o porcionada al vacío" },
+  { corte: "Carré", uso: "Chuletas y racks para carta", formato: "Pieza entera o porcionada al vacío" },
+  { corte: "Ribs de carré", uso: "Costillar para parrilla y horno", formato: "Pieza entera o porcionada al vacío" },
+  { corte: "Costillitas", uso: "Parrilla, horno, servicio de banquete", formato: "Pieza entera o porcionada al vacío" },
+  { corte: "Pork Belly", uso: "Cocción lenta, laminado para entrada y tapeo", formato: "Pieza entera o laminado al vacío" },
+  { corte: "Solomillo", uso: "Plato principal de porción individual", formato: "Pieza entera o porcionada al vacío" },
+  { corte: "Matambrito", uso: "Parrilla, horno, arrollados", formato: "Pieza entera o porcionada al vacío" },
+  { corte: "Vacío de cerdo", uso: "Parrilla y cocción lenta", formato: "Pieza entera" },
+  { corte: "Elaborados propios", uso: "Desayuno, buffet, comedor de personal", formato: "Milanesas, chorizo bombón, morcillas y salchicha parrillera" },
+];
+
+const operacion = [
+  {
+    title: "Producimos lo que entregamos",
+    text: "Porco Rosso cría en criadero propio, faena, desposta y elabora. Entre el animal y la cocina del hotel no hay un intermediario que cambie de origen según la semana.",
+  },
+  {
+    title: "Cortes a medida",
+    text: "El desposte y el porcionado se adaptan a la ficha técnica de cada cocina: grosor, gramaje y formato se acuerdan con el equipo comercial al armar el pedido.",
+  },
+  {
+    title: "Cadena de frío propia",
+    text: "La distribución se hace con logística propia y frío ininterrumpido hasta la puerta del establecimiento, en CABA y en Zona Norte, Oeste y Sur del GBA.",
+  },
+  {
+    title: "Trazabilidad completa",
+    text: "Cada entrega es rastreable hasta el criadero. Es la documentación que pide cualquier auditoría de proveedores de un hotel.",
+  },
+];
+
+const faqsGastronomicos = [
+  {
+    q: "¿Porco Rosso provee carne de cerdo a hoteles en CABA?",
+    a: "Sí. Porco Rosso abastece hoteles en la Ciudad Autónoma de Buenos Aires y en el Gran Buenos Aires, con entregas propias y cadena de frío ininterrumpida. Cubre los distintos servicios del hotel: desayuno y buffet, el restaurante, banquetes y eventos, room service y comedor de personal.",
+  },
+  {
+    q: "¿Qué cortes de cerdo conviene pedir para un buffet de hotel?",
+    a: "Para desayuno y buffet, Porco Rosso recomienda producto de porción pareja y reposición rápida: panceta, salchicha parrillera, chorizo bombón y morcilla dulce. Para banquetes y menús de evento, piezas de rendimiento previsible como bondiola, costillitas, ribs de carré y matambrito, porcionadas al gramaje que defina la cocina.",
+  },
+  {
+    q: "¿Porco Rosso hace cortes al gramaje que pide la cocina?",
+    a: "Sí. Porco Rosso adapta el desposte y el porcionado a la ficha técnica de cada cliente: grosor, peso por porción y formato de envasado. La especificación se acuerda una vez con el equipo comercial y se repite en cada entrega, que es lo que permite estandarizar el costo por plato.",
+  },
+  {
+    q: "¿Porco Rosso entrega envasado al vacío?",
+    a: "Sí. Porco Rosso entrega cortes fraccionados y envasados al vacío, listos para recibir y almacenar sin manipulación adicional en la cocina. También entrega piezas enteras para las cocinas que despostan por su cuenta.",
+  },
+  {
+    q: "¿Porco Rosso es productor o revende carne de terceros?",
+    a: "Porco Rosso es productor. Cría los animales en criadero propio, faena, desposta, elabora y distribuye con logística propia. No compra materia prima a terceros, así que el origen y el estándar del producto no cambian de una entrega a otra.",
+  },
+  {
+    q: "¿Qué zonas cubre el reparto de Porco Rosso?",
+    a: "Porco Rosso entrega en la Ciudad Autónoma de Buenos Aires y en el Gran Buenos Aires, cubriendo Zona Norte, Zona Oeste y Zona Sur, con logística propia y cadena de frío.",
+  },
+  {
+    q: "¿Cómo pide un hotel un presupuesto a Porco Rosso?",
+    a: "Completando el formulario de esta página, que toma el tipo de establecimiento, la zona, los cortes de interés y el volumen semanal estimado, o escribiendo por WhatsApp al +54 9 11 7271-4251. El equipo comercial responde con una propuesta armada sobre el consumo real del establecimiento.",
+  },
+];
+
+const title = "Proveedor de Carne de Cerdo para Hoteles y Restaurantes en CABA | Porco Rosso";
+const description =
+  "Porco Rosso abastece hoteles, restaurantes y catering en CABA y GBA con carne de cerdo de producción propia: cortes a medida al gramaje de tu cocina, envasado al vacío, cadena de frío y logística propia. Pedí presupuesto.";
+
+/** Con barra final a proposito: el servidor redirige la version sin barra
+ *  con un 301, y tanto la canonica como el sitemap tienen que apuntar a
+ *  la URL que responde 200 directo. */
+const canonical = new URL("/gastronomicos/", Astro.site ?? Astro.url).href;
+
+/** Service + catalogo: le dice a buscadores y modelos que esto es un servicio
+ *  de abastecimiento gastronomico con area de cobertura, no solo una pagina. */
+const schemaServicio = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Abastecimiento de carne de cerdo para hoteles, restaurantes y catering",
+  serviceType: "Proveedor mayorista de carne porcina para gastronomía",
+  description:
+    "Provisión de carne de cerdo de producción propia para hoteles, restaurantes, bares, catering y cocinas centrales en CABA y Gran Buenos Aires, con cortes a medida, envasado al vacío, cadena de frío y logística propia.",
+  url: canonical,
+  provider: {
+    "@type": "LocalBusiness",
+    name: "Porco Rosso",
+    telephone: "+5491172714251",
+    email: "hola@porcorosso.com.ar",
+    url: "https://b2b.porcorosso.com.ar",
+  },
+  areaServed: [
+    { "@type": "City", name: "Ciudad Autónoma de Buenos Aires" },
+    { "@type": "AdministrativeArea", name: "Gran Buenos Aires" },
+  ],
+  audience: {
+    "@type": "BusinessAudience",
+    name: "Hoteles, restaurantes, bares, servicios de catering y cocinas centrales",
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Cortes de cerdo para gastronomía",
+    itemListElement: cortes.map((c) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Product",
+        name: c.corte,
+        description: `${c.uso}. Formato: ${c.formato.toLowerCase()}.`,
+        category: "Carne porcina",
+      },
+    })),
+  },
+};
+---
+
+<Layout title={title} description={description} canonicalURL={canonical}>
+  <NavBar />
+  <main id="contenido-principal" class="bg-hueso">
+    <Breadcrumb items={[{ label: "Inicio", href: "/" }, { label: "Gastronómicos" }]} />
+
+    <!-- Hero -->
+    <section class="relative overflow-hidden">
+      <div class="absolute right-0 bottom-0 w-1/3 opacity-10 pointer-events-none hidden lg:block">
+        <Image src={mamaPig} alt="" aria-hidden="true" class="w-full h-auto" widths={[300, 500]} sizes="(max-width: 1024px) 0px, 33vw" loading="lazy" />
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 md:pb-24 relative z-10">
+        <div class="max-w-3xl">
+          <span class="font-accent text-sm tracking-widest text-carne mb-6 block">
+            HOTELES &middot; RESTAURANTES &middot; CATERING &middot; CABA Y GBA
+          </span>
+
+          <h1 class="font-display font-bold uppercase text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.92] text-morcilla mb-6">
+            Carne de cerdo<br />
+            para <span class="text-carne">hoteles</span> y<br />
+            restaurantes.
+          </h1>
+
+          <p class="text-lg md:text-xl text-morcilla/70 max-w-2xl mb-8 leading-relaxed">
+            Somos productores. Criamos, faenamos, despostamos y entregamos con logística
+            propia en CABA y el Gran Buenos Aires. Cortamos al gramaje que necesita tu
+            cocina y entregamos al vacío, listo para recibir.
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <Button href="#contacto" variant="primary" size="lg">
+              Pedir presupuesto
+            </Button>
+            <Button
+              href="https://wa.me/5491172714251?text=Hola%20Porco%20Rosso!%20Consulto%20por%20abastecimiento%20para%20gastronomia"
+              variant="outline"
+              size="lg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WhatsApp comercial
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Perfiles -->
+    <section class="py-20 md:py-28 bg-frigo">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionTitle
+          tag="A quién abastecemos"
+          title="Cocinas que no pueden"
+          accent="quedarse sin producto."
+          align="center"
+          description="Cada operación gastronómica tiene su propia exigencia. Estas son las que trabajamos todos los días."
+        />
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+          {perfiles.map((p) => (
+            <div class="border border-morcilla/10 bg-hueso p-6 md:p-8 flex flex-col">
+              <h3 class="font-display font-bold text-xl md:text-2xl uppercase text-morcilla mb-3">
+                {p.title}
+              </h3>
+              <p class="text-sm text-morcilla/60 leading-relaxed">{p.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Servicios del hotel -->
+    <section id="servicios" class="py-20 md:py-28 bg-morcilla">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionTitle
+          tag="Servicio por servicio"
+          title="Un hotel no compra cerdo:"
+          accent="compra soluciones."
+          dark
+          description="El desayuno, la carta, el banquete y el comedor de personal tienen exigencias distintas. Estos son los cortes con los que se resuelve cada uno."
+        />
+
+        <div class="grid md:grid-cols-2 gap-6 mt-12">
+          {servicios.map((s) => (
+            <div class="group p-8 md:p-10 border border-hueso/10 hover:border-hueso/30 transition-colors duration-300">
+              <span class="font-display font-bold text-3xl text-hueso/30 group-hover:text-hueso/60 transition-colors">
+                {s.number}
+              </span>
+              <h3 class="font-display font-bold text-xl md:text-2xl uppercase text-hueso mt-3 mb-2">
+                {s.title}
+              </h3>
+              <p class="text-sm text-hueso/60 leading-relaxed mb-5">{s.text}</p>
+              <div class="flex flex-wrap gap-2">
+                {s.cortes.map((c) => (
+                  <span class="text-xs font-display uppercase tracking-wider px-3 py-1.5 bg-hueso/10 text-hueso/80">
+                    {c}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Cortes y formatos -->
+    <section id="cortes" class="py-20 md:py-28 bg-hueso">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-3 gap-10 lg:gap-16 items-start">
+          <div class="lg:col-span-1">
+            <SectionTitle
+              tag="Cortes y formatos"
+              title="Qué pedimos"
+              accent="que nos pidas."
+              description="Todos los cortes salen de producción propia y pueden entregarse como pieza entera o porcionados y envasados al vacío."
+            />
+            <div class="hidden lg:block">
+              <Image
+                src={bondiola}
+                alt="Bondiola de cerdo Porco Rosso para hoteles y restaurantes en Buenos Aires"
+                class="w-full h-auto object-cover"
+                widths={[400, 640]}
+                sizes="(max-width: 1024px) 0px, 400px"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <div class="lg:col-span-2 overflow-x-auto">
+            <table class="w-full min-w-[34rem] border-collapse text-left">
+              <thead>
+                <tr class="border-b-2 border-morcilla/15">
+                  <th class="font-display font-bold text-xs uppercase tracking-wider text-morcilla/60 pb-3 pr-4">Corte</th>
+                  <th class="font-display font-bold text-xs uppercase tracking-wider text-morcilla/60 pb-3 pr-4">Uso en cocina</th>
+                  <th class="font-display font-bold text-xs uppercase tracking-wider text-morcilla/60 pb-3">Formato de entrega</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cortes.map((c) => (
+                  <tr class="border-b border-morcilla/10">
+                    <td class="py-4 pr-4 font-display font-semibold uppercase text-sm text-morcilla align-top whitespace-nowrap">
+                      {c.corte}
+                    </td>
+                    <td class="py-4 pr-4 text-sm text-morcilla/65 leading-relaxed align-top">{c.uso}</td>
+                    <td class="py-4 text-sm text-morcilla/65 leading-relaxed align-top">{c.formato}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <p class="mt-6 text-sm text-morcilla/50 leading-relaxed">
+              ¿Necesitás un corte que no está en la lista, o un grosor y un gramaje
+              específicos? Los desarrollamos.
+              <a href="#contacto" class="text-carne hover:underline font-semibold">Contanos qué necesitás</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Operación -->
+    <section class="py-20 md:py-28 bg-frigo">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionTitle
+          tag="Cómo trabajamos"
+          title="Lo que un jefe de compras"
+          accent="necesita saber."
+          align="center"
+        />
+
+        <div class="grid sm:grid-cols-2 gap-6 mt-12">
+          {operacion.map((o) => (
+            <div class="bg-hueso border border-morcilla/10 p-8 md:p-10">
+              <h3 class="font-display font-bold text-xl md:text-2xl uppercase text-morcilla mb-3">
+                {o.title}
+              </h3>
+              <p class="text-morcilla/60 leading-relaxed">{o.text}</p>
+            </div>
+          ))}
+        </div>
+
+        <!-- Puente al otro segmento -->
+        <div class="mt-12 border border-morcilla/10 bg-hueso p-8 md:p-10 flex flex-col md:flex-row md:items-center gap-6 justify-between">
+          <div>
+            <Tag variant="carne">¿No es tu caso?</Tag>
+            <h3 class="font-display font-bold text-2xl uppercase text-morcilla mt-3 mb-1">
+              Si revendés o elaborás, mirá la propuesta mayorista
+            </h3>
+            <p class="text-morcilla/60 leading-relaxed">
+              Carnicerías, distribuidoras y elaboradores tienen su propia página.
+            </p>
+          </div>
+          <Button href="/mayoristas/" variant="outline" size="lg" class="flex-shrink-0">
+            Ver mayoristas
+          </Button>
+        </div>
+      </div>
+    </section>
+
+    <Faq
+      faqs={faqsGastronomicos}
+      tag="Preguntas de gastronómicos"
+      title="Lo que preguntan"
+      accent="antes de comprar."
+      description="Si tu duda no está acá, escribinos y te respondemos directamente por WhatsApp."
+      bg="hueso"
+    />
+
+    <ContactForm />
+  </main>
+  <Footer />
+  <WAFloat />
+
+  <!-- JSON-LD fuera del head, igual que el FAQPage de Faq.astro: los
+       rastreadores lo leen igual y el Layout no necesita un slot extra. -->
+  <script type="application/ld+json" set:html={JSON.stringify(schemaServicio)} />
+</Layout>

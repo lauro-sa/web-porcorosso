@@ -14,9 +14,22 @@ import SectionTitle from "./SectionTitle.astro";
  * Solo se incluyen respuestas verificables con datos publicos de la empresa.
  * Las preguntas comerciales pendientes de confirmar (pedido minimo, plazos,
  * medios de pago, condicion fiscal) estan listadas en ROADMAP.md.
+ *
+ * El componente acepta su propio juego de preguntas para que cada pagina de
+ * segmento responda las de su publico. Sin props, muestra las de la home.
  */
 
-const faqs = [
+interface Props {
+  faqs?: { q: string; a: string }[];
+  tag?: string;
+  title?: string;
+  accent?: string;
+  description?: string;
+  /** Fondo alterno, para cuando la seccion de arriba ya es bg-frigo. */
+  bg?: "frigo" | "hueso";
+}
+
+const FAQS_HOME = [
   {
     q: "¿Qué es Porco Rosso?",
     a: "Porco Rosso es una empresa familiar agroindustrial argentina que produce y comercializa carne porcina al por mayor. Está integrada verticalmente: cría los animales en criadero propio, faena, desposta, elabora y entrega con logística propia. Abastece a carnicerías, distribuidoras, elaboradores, restaurantes, hoteles y servicios de catering en CABA y el Gran Buenos Aires.",
@@ -58,16 +71,25 @@ const faqs = [
     a: "Esta página es el canal mayorista de Porco Rosso, orientado a negocios que compran por volumen. Para compras de consumidor final, Porco Rosso tiene una tienda online propia en porcorosso.com.ar.",
   },
 ];
+
+const {
+  faqs = FAQS_HOME,
+  tag = "Preguntas frecuentes",
+  title = "Lo que suelen",
+  accent = "preguntarnos.",
+  description = "Si tu duda no está acá, escribinos y te respondemos directamente por WhatsApp.",
+  bg = "frigo",
+} = Astro.props;
 ---
 
-<section id="preguntas" class="py-20 md:py-28 bg-frigo">
+<section id="preguntas" class={`py-20 md:py-28 ${bg === "hueso" ? "bg-hueso" : "bg-frigo"}`}>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     <SectionTitle
-      tag="Preguntas frecuentes"
-      title="Lo que suelen"
-      accent="preguntarnos."
+      tag={tag}
+      title={title}
+      accent={accent}
       align="center"
-      description="Si tu duda no está acá, escribinos y te respondemos directamente por WhatsApp."
+      description={description}
     />
 
     <div class="mt-12 border-t border-morcilla/10">

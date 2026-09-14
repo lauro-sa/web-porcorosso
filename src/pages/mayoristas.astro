@@ -1,0 +1,373 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import NavBar from "../components/NavBar.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import Button from "../components/Button.astro";
+import Tag from "../components/Tag.astro";
+import Faq from "../components/Faq.astro";
+import ContactForm from "../components/ContactForm.astro";
+import Footer from "../components/Footer.astro";
+import WAFloat from "../components/WAFloat.astro";
+import papaPig03 from "../assets/images/ilustraciones/papa-pig-03.webp";
+import chorizoBombon from "../assets/images/productos/chorizo-bombon.webp";
+import "../styles/global.css";
+
+/**
+ * Pagina de segmento: mayoristas (carnicerias, distribuidoras, elaboradores).
+ *
+ * Es el par de /gastronomicos. Hasta ahora los dos publicos convivian en la
+ * home y competian por las mismas palabras: una pagina que habla de hoteles y
+ * de carnicerias a la vez no rankea bien para ninguno de los dos, y le da a
+ * un modelo de lenguaje una respuesta ambigua sobre a quien abastece la
+ * empresa. Separados, cada uno tiene su intencion de busqueda y su destino
+ * de campana en Ads.
+ *
+ * REGLA DE CONTENIDO: no se afirma nada sin confirmar. Pedido minimo, plazos,
+ * dias de reparto, medios de pago y condicion fiscal (factura A) siguen
+ * pendientes en ROADMAP.md; son las primeras preguntas de una carniceria y
+ * cuando esten confirmadas entran como preguntas frecuentes de esta pagina.
+ */
+
+const perfiles = [
+  {
+    title: "Carnicerías",
+    text: "Cortes parejos para mostrador y producto envasado al vacío listo para exhibir, con reposición constante los 365 días.",
+  },
+  {
+    title: "Distribuidoras",
+    text: "Piezas enteras y volumen sostenido, con la misma especificación entrega tras entrega para poder revender sin sorpresas.",
+  },
+  {
+    title: "Elaboradores",
+    text: "Materia prima homogénea y trazable para chacinados, comidas elaboradas y desposte propio.",
+  },
+  {
+    title: "Autoservicios",
+    text: "Producto de rotación con presentación uniforme para góndola de frescos y freezer.",
+  },
+];
+
+const modos = [
+  {
+    number: "01",
+    title: "Reventa en mostrador",
+    text: "Piezas enteras para despostar en el local, con el rendimiento previsible que da trabajar siempre con el mismo origen.",
+    cortes: ["Bondiola", "Carré", "Costillitas", "Matambrito"],
+  },
+  {
+    number: "02",
+    title: "Reventa envasada",
+    text: "Cortes fraccionados y envasados al vacío, listos para recibir, almacenar y poner en exhibición sin manipulación adicional.",
+    cortes: ["Bondiola porcionada", "Costillitas rack", "Pork Belly laminado", "Matambrito porcionado"],
+  },
+  {
+    number: "03",
+    title: "Elaboración propia",
+    text: "Materia prima con el mismo estándar sanitario y alimentario en cada partida, porque sale de un solo criadero.",
+    cortes: ["Piezas enteras", "Recortes", "Cortes a medida"],
+  },
+  {
+    number: "04",
+    title: "Reventa de elaborados",
+    text: "Nuestra línea terminada con receta propia, para sumar a la oferta del local sin montar producción.",
+    cortes: ["Milanesas de cerdo", "Chorizo bombón", "Morcilla dulce", "Morcilla salada", "Salchicha parrillera"],
+  },
+];
+
+const operacion = [
+  {
+    title: "Integración vertical completa",
+    text: "Porco Rosso cría, faena, desposta, elabora y distribuye. Sacar del medio a quien no aporta valor a la cadena es lo que permite sostener el precio mayorista.",
+  },
+  {
+    title: "Producto homogéneo",
+    text: "Mismo criadero, mismos estándares sanitarios y alimentarios: cortes parejos, limitados solo por la anatomía del animal.",
+  },
+  {
+    title: "Abastecimiento continuo",
+    text: "Producción propia todo el año, para que el mostrador no dependa de la disponibilidad que tenga un intermediario esa semana.",
+  },
+  {
+    title: "Operación sin fricción",
+    text: "Pedidos y facturación automatizados, y una línea directa con el equipo comercial para lo que necesite criterio humano.",
+  },
+];
+
+const faqsMayoristas = [
+  {
+    q: "¿Dónde comprar carne de cerdo por mayor en Buenos Aires?",
+    a: "Porco Rosso vende carne de cerdo por mayor en CABA y el Gran Buenos Aires, con entrega propia en Zona Norte, Zona Oeste y Zona Sur. Es productor con criadero propio, no un intermediario: cría, faena, desposta, elabora y distribuye. La planta y el almacén están en Martín Fierro 3361, Complejo Thays Local 17, Ituzaingó, Provincia de Buenos Aires.",
+  },
+  {
+    q: "¿Porco Rosso le vende a carnicerías?",
+    a: "Sí. Las carnicerías son uno de los perfiles principales de Porco Rosso, junto con distribuidoras, elaboradores y autoservicios. Pueden comprar piezas enteras para despostar en el local o cortes ya fraccionados y envasados al vacío para exhibir y vender directamente.",
+  },
+  {
+    q: "¿Qué diferencia hay entre comprarle a un productor y a un distribuidor?",
+    a: "Un distribuidor compra a distintos frigoríficos según la disponibilidad y el precio de cada semana, así que el origen del producto cambia. Porco Rosso es productor: toda la carne sale del mismo criadero propio, con los mismos estándares sanitarios y alimentarios, y es rastreable hasta el animal. Eso hace que el rendimiento del corte sea previsible partida tras partida.",
+  },
+  {
+    q: "¿Porco Rosso entrega piezas enteras o solo cortes fraccionados?",
+    a: "Las dos cosas. Porco Rosso entrega piezas enteras para quien desposta por su cuenta, y cortes fraccionados y envasados al vacío para quien prefiere recibir el producto listo para almacenar y vender. También desarrolla cortes a medida según el formato de venta del local.",
+  },
+  {
+    q: "¿Porco Rosso vende productos elaborados para reventa?",
+    a: "Sí. Porco Rosso elabora con receta propia y la materia prima de su criadero: milanesas de cerdo y de pollo, chorizo bombón, morcilla dulce, morcilla salada y salchicha parrillera. Es una línea terminada que un local puede sumar a su oferta sin montar producción propia.",
+  },
+  {
+    q: "¿Cuánto tarda en llegar un pedido mayorista?",
+    a: "La distribución la hace Porco Rosso con logística propia y cadena de frío ininterrumpida en CABA y el Gran Buenos Aires. Los días de reparto y el plazo se coordinan con el equipo comercial según la zona y la frecuencia de compra de cada cliente.",
+  },
+  {
+    q: "¿Cómo se abre una cuenta mayorista con Porco Rosso?",
+    a: "Completando el formulario de esta página, que toma el tipo de negocio, la zona, los productos de interés y el volumen estimado, o escribiendo por WhatsApp al +54 9 11 7271-4251. El equipo comercial responde con una propuesta y las condiciones de trabajo.",
+  },
+];
+
+const title = "Carne de Cerdo por Mayor en Buenos Aires | Proveedor para Carnicerías | Porco Rosso";
+const description =
+  "Porco Rosso vende carne de cerdo por mayor a carnicerías, distribuidoras, elaboradores y autoservicios en CABA y GBA. Productor con criadero propio: piezas enteras, cortes al vacío y elaborados. Pedí presupuesto mayorista.";
+
+/** Con barra final a proposito: el servidor redirige la version sin barra
+ *  con un 301, y tanto la canonica como el sitemap tienen que apuntar a
+ *  la URL que responde 200 directo. */
+const canonical = new URL("/mayoristas/", Astro.site ?? Astro.url).href;
+
+const schemaServicio = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Venta mayorista de carne de cerdo para carnicerías, distribuidoras y elaboradores",
+  serviceType: "Proveedor mayorista de carne porcina",
+  description:
+    "Venta al por mayor de carne de cerdo de producción propia para carnicerías, distribuidoras, elaboradores y autoservicios en CABA y Gran Buenos Aires. Piezas enteras, cortes fraccionados al vacío y productos elaborados con receta propia.",
+  url: canonical,
+  provider: {
+    "@type": "LocalBusiness",
+    name: "Porco Rosso",
+    telephone: "+5491172714251",
+    email: "hola@porcorosso.com.ar",
+    url: "https://b2b.porcorosso.com.ar",
+  },
+  areaServed: [
+    { "@type": "City", name: "Ciudad Autónoma de Buenos Aires" },
+    { "@type": "AdministrativeArea", name: "Gran Buenos Aires" },
+  ],
+  audience: {
+    "@type": "BusinessAudience",
+    name: "Carnicerías, distribuidoras, elaboradores y autoservicios",
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Carne de cerdo al por mayor",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Product",
+          name: "Piezas enteras de cerdo",
+          description:
+            "Bondiola, matambrito, costillitas, pork belly, solomillo, vacío, ribs de carré y carré, con trazabilidad completa desde el criadero.",
+          category: "Carne porcina",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Product",
+          name: "Cortes fraccionados envasados al vacío",
+          description:
+            "Cortes porcionados y envasados al vacío, listos para recibir, almacenar y exhibir.",
+          category: "Carne porcina",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Product",
+          name: "Productos elaborados",
+          description:
+            "Milanesas de cerdo y de pollo, chorizo bombón, morcilla dulce, morcilla salada y salchicha parrillera, con receta y elaboración propia.",
+          category: "Chacinados y elaborados",
+        },
+      },
+    ],
+  },
+};
+---
+
+<Layout title={title} description={description} canonicalURL={canonical}>
+  <NavBar />
+  <main id="contenido-principal" class="bg-hueso">
+    <Breadcrumb items={[{ label: "Inicio", href: "/" }, { label: "Mayoristas" }]} />
+
+    <!-- Hero -->
+    <section class="relative overflow-hidden">
+      <div class="absolute right-0 bottom-0 w-1/3 opacity-10 pointer-events-none hidden lg:block">
+        <Image src={papaPig03} alt="" aria-hidden="true" class="w-full h-auto" widths={[300, 500]} sizes="(max-width: 1024px) 0px, 33vw" loading="lazy" />
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 md:pb-24 relative z-10">
+        <div class="max-w-3xl">
+          <span class="font-accent text-sm tracking-widest text-carne mb-6 block">
+            CARNICERÍAS &middot; DISTRIBUIDORAS &middot; ELABORADORES &middot; CABA Y GBA
+          </span>
+
+          <h1 class="font-display font-bold uppercase text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.92] text-morcilla mb-6">
+            Carne de cerdo<br />
+            <span class="text-carne">por mayor</span><br />
+            en Buenos Aires.
+          </h1>
+
+          <p class="text-lg md:text-xl text-morcilla/70 max-w-2xl mb-8 leading-relaxed">
+            Comprás directo al productor. Criadero propio, faena, desposte y elaboración
+            bajo el mismo techo, y entrega con logística propia en CABA y el Gran Buenos
+            Aires. Sin un intermediario que cambie el origen cada semana.
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <Button href="#contacto" variant="primary" size="lg">
+              Pedir presupuesto
+            </Button>
+            <Button
+              href="https://wa.me/5491172714251?text=Hola%20Porco%20Rosso!%20Consulto%20por%20compra%20mayorista"
+              variant="outline"
+              size="lg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WhatsApp mayorista
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Perfiles -->
+    <section class="py-20 md:py-28 bg-frigo">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionTitle
+          tag="A quién le vendemos"
+          title="Negocios que revenden"
+          accent="o transforman."
+          align="center"
+          description="Si accedés a nuestros precios mayoristas es porque tenés una unidad de negocio detrás. Estas son las que trabajamos."
+        />
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+          {perfiles.map((p) => (
+            <div class="border border-morcilla/10 bg-hueso p-6 md:p-8 flex flex-col">
+              <h3 class="font-display font-bold text-xl md:text-2xl uppercase text-morcilla mb-3">
+                {p.title}
+              </h3>
+              <p class="text-sm text-morcilla/60 leading-relaxed">{p.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Modos de trabajo -->
+    <section id="formatos" class="py-20 md:py-28 bg-morcilla">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionTitle
+          tag="Formatos de compra"
+          title="Cuatro maneras"
+          accent="de trabajar con nosotros."
+          dark
+          description="Según cómo vendas, el producto sale de otra manera. Estas son las combinaciones más pedidas."
+        />
+
+        <div class="grid md:grid-cols-2 gap-6 mt-12">
+          {modos.map((m) => (
+            <div class="group p-8 md:p-10 border border-hueso/10 hover:border-hueso/30 transition-colors duration-300">
+              <span class="font-display font-bold text-3xl text-hueso/30 group-hover:text-hueso/60 transition-colors">
+                {m.number}
+              </span>
+              <h3 class="font-display font-bold text-xl md:text-2xl uppercase text-hueso mt-3 mb-2">
+                {m.title}
+              </h3>
+              <p class="text-sm text-hueso/60 leading-relaxed mb-5">{m.text}</p>
+              <div class="flex flex-wrap gap-2">
+                {m.cortes.map((c) => (
+                  <span class="text-xs font-display uppercase tracking-wider px-3 py-1.5 bg-hueso/10 text-hueso/80">
+                    {c}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Operación -->
+    <section class="py-20 md:py-28 bg-hueso">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-3 gap-10 lg:gap-16 items-start">
+          <div class="lg:col-span-1">
+            <SectionTitle
+              tag="Por qué directo al productor"
+              title="Menos manos,"
+              accent="mejor precio."
+            />
+            <div class="hidden lg:block">
+              <Image
+                src={chorizoBombon}
+                alt="Chorizo bombón Porco Rosso, elaboración propia para reventa mayorista"
+                class="w-full h-auto object-cover"
+                widths={[400, 640]}
+                sizes="(max-width: 1024px) 0px, 400px"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <div class="lg:col-span-2 grid sm:grid-cols-2 gap-6">
+            {operacion.map((o) => (
+              <div class="bg-frigo border border-morcilla/10 p-6 md:p-8">
+                <h3 class="font-display font-bold text-lg md:text-xl uppercase text-morcilla mb-3">
+                  {o.title}
+                </h3>
+                <p class="text-sm text-morcilla/60 leading-relaxed">{o.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Puente al otro segmento -->
+        <div class="mt-12 border border-morcilla/10 bg-frigo p-8 md:p-10 flex flex-col md:flex-row md:items-center gap-6 justify-between">
+          <div>
+            <Tag variant="carne">¿No es tu caso?</Tag>
+            <h3 class="font-display font-bold text-2xl uppercase text-morcilla mt-3 mb-1">
+              Si tenés cocina, mirá la propuesta gastronómica
+            </h3>
+            <p class="text-morcilla/60 leading-relaxed">
+              Hoteles, restaurantes, bares y catering tienen su propia página.
+            </p>
+          </div>
+          <Button href="/gastronomicos/" variant="outline" size="lg" class="flex-shrink-0">
+            Ver gastronómicos
+          </Button>
+        </div>
+      </div>
+    </section>
+
+    <Faq
+      faqs={faqsMayoristas}
+      tag="Preguntas de mayoristas"
+      title="Lo que preguntan"
+      accent="antes de abrir cuenta."
+      description="Si tu duda no está acá, escribinos y te respondemos directamente por WhatsApp."
+    />
+
+    <ContactForm />
+  </main>
+  <Footer />
+  <WAFloat />
+
+  <!-- JSON-LD fuera del head, igual que el FAQPage de Faq.astro: los
+       rastreadores lo leen igual y el Layout no necesita un slot extra. -->
+  <script type="application/ld+json" set:html={JSON.stringify(schemaServicio)} />
+</Layout>
