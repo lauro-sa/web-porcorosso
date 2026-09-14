@@ -219,6 +219,16 @@ crédito promocional vence el **6 de noviembre de 2026**: hasta que la medición
 publicada, encender la campaña sería pautar a ciegas. Ver [ADS.md](ADS.md).
 Para subirlo, buildear y sincronizar según [DEPLOY.md](DEPLOY.md).
 
+**Todo está commiteado en `main`, pero la rama quedó adelante de `origin/main`: falta
+pushear** (verificar con `git status -sb`). Un push necesita terminal y credenciales de
+GitHub, así que no lo puede hacer el asistente que opera Google Ads desde el navegador,
+por más contexto del proyecto que tenga.
+
+**El único bloqueante de todo lo demás son los IDs de las tres conversiones de Google
+Ads.** Cuando el titular los pase: pegarlos en
+[Medicion.astro](src/components/Medicion.astro), buildear, publicar. Recién ahí la
+campaña puede encenderse sin pautar a ciegas.
+
 Sin publicar:
 
 - El color de la barra de estado de iOS (`theme-color`, en `NavBar.astro`,
