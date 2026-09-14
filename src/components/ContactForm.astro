@@ -745,6 +745,16 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
       // Señales anti-spam que valida el backend
       data["tiempo_ms"] = String(Date.now() - FORM_LOADED_AT);
 
+      // Identificador del clic de Google Ads, si el visitante llegó por un
+      // anuncio. Lo captura y persiste Medicion.astro al aterrizar. Va al CSV
+      // para poder subir conversiones sin conexión cuando un lead se convierte
+      // en cliente. Ver el comentario largo en ese componente.
+      const clicAds = (window as any).prClic?.();
+      if (clicAds) {
+        data["gclid"] = clicAds.id;
+        data["gclid_ts"] = String(clicAds.ts);
+      }
+
       // Envío al backend. Si no llega, no mostramos éxito: el lead se perdería
       // sin que el visitante lo sepa.
       try {
@@ -801,7 +811,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
       // Redirección a una URL propia. Es lo que permite contar la conversión en
       // Google Ads y GA4; con la confirmación embebida no había forma de
       // distinguir a quien consultó de quien solo miró la página.
-      window.location.assign("/gracias");
+      window.location.assign("/gracias/");
     });
 
     // Cada cambio actualiza el borrador. "input" cubre lo que se tipea y

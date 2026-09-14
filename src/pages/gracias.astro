@@ -108,6 +108,14 @@ import "../styles/global.css";
 </Layout>
 
 <script>
+  // Esta carga de página es la conversión: es el único punto del sitio donde
+  // consta que alguien completó el formulario de verdad. La cuenta el
+  // componente Medicion.astro, que además engancha solo los clics a WhatsApp y
+  // a los teléfonos. Mientras no haya IDs cargados ahí, esto no hace nada.
+  // En Google Ads conviene configurar esta conversión como "una por clic", así
+  // recargar la página no la cuenta dos veces.
+  window.prConversion?.("formulario");
+
   // El formulario deja el resumen acá antes de redirigir. Se consume una sola
   // vez: si se recarga la página, ya no aparece.
   const CLAVE_RESUMEN = "porcorosso:ultima-consulta";
