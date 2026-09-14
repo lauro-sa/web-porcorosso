@@ -1,7 +1,8 @@
 # Guía para agentes de IA
 
-Punto de entrada para cualquier asistente (Claude Code, Cursor, ChatGPT, Copilot,
-Codex) que trabaje en este repo. **Leelo antes de tocar nada.**
+Punto de entrada para cualquier asistente que trabaje en este proyecto —Claude,
+ChatGPT, Grok, Gemini, Copilot, Cursor, Codex, el que sea— tenga acceso al repo o no.
+**Leelo antes de tocar nada.**
 
 > Si venís a hacer un cambio y no sabés por dónde empezar: leé este archivo entero,
 > después [ROADMAP.md](ROADMAP.md) para saber qué falta, y [DEPLOY.md](DEPLOY.md)
@@ -15,6 +16,42 @@ distribuidoras) en CABA y Gran Buenos Aires. **No es una tienda ni apunta a
 consumidor final.**
 
 Vive en **https://b2b.porcorosso.com.ar**
+
+## El registro va todo a un solo lugar
+
+**Este repo es el único lugar donde queda el registro del proyecto. Sin excepción,
+y sin importar en qué asistente se haya hecho el trabajo.**
+
+No vale dejarlo en el historial de un chat. Los chats se pierden, se cierran, se
+rompen o quedan en una cuenta que el que viene después no tiene. Ya pasó dos veces
+con el borrador de la campaña de Google Ads: se corrompió, hubo que rehacerlo de
+cero, y lo único que se salvó fue lo que estaba escrito acá.
+
+### Dónde va cada cosa
+
+| Si trabajaste en… | Escribí en |
+|---|---|
+| Código del sitio | El código, con el porqué en los comentarios, y el commit |
+| Qué falta o quedó a medias | [ROADMAP.md](ROADMAP.md) |
+| Google Ads: palabras clave, negativas, anuncios, presupuesto, decisiones | [ADS.md](ADS.md) |
+| Publicación, servidor, manejo de leads | [DEPLOY.md](DEPLOY.md) |
+| Algo inesperado que costó tiempo descubrir | "Reglas que no son obvias", acá abajo |
+| Estado general al cerrar la sesión | "Dónde quedó todo", acá abajo |
+
+### Si no tenés acceso al repo
+
+Es el caso de un asistente que corre en el navegador —por ejemplo el que opera la
+cuenta de Google Ads— o de cualquier chat web. No podés escribir los archivos, pero
+**la regla te sigue aplicando igual**: el trabajo tiene que terminar acá.
+
+Cerrá tu sesión entregando el registro **listo para pegar**: en Markdown, diciendo
+explícitamente en qué archivo y bajo qué sección va. El titular lo pega, o se lo pasa
+al asistente que sí tiene el repo. Lo que no sirve es dejarlo suelto en la
+conversación y confiar en que alguien se acuerde.
+
+Y al revés: si arrancás una sesión sin acceso al repo, pedí que te peguen
+[AGENTS.md](AGENTS.md), [ROADMAP.md](ROADMAP.md) y [ADS.md](ADS.md) antes de opinar.
+Casi todo lo que vas a proponer ya está decidido ahí, con el motivo al lado.
 
 ## Stack
 
@@ -228,7 +265,9 @@ tarda días. **No reenviar el sitemap**, reenviarlo reinicia la cola.
 ## Antes de terminar tu sesión
 
 **Todos los que trabajen acá dejan registro. Sin excepción.** Si no queda escrito,
-el que venga después no tiene forma de saberlo y repite trabajo o rompe algo.
+el que venga después no tiene forma de saberlo y repite trabajo o rompe algo. Vale
+para cualquier asistente, con repo o sin repo: ver "El registro va todo a un solo
+lugar" arriba.
 
 Antes de cerrar, hacé estas cuatro cosas:
 
