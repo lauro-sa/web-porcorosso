@@ -2,15 +2,32 @@
 import { Image } from "astro:assets";
 import logoMorcilla from "../assets/images/logos/logo-morcilla-01.webp";
 
+/**
+ * Las secciones viven en la home, asi que desde una pagina interna el ancla
+ * suelta (#productos) no lleva a ningun lado: hay que anteponerle la barra.
+ * En la home se deja el ancla pelada para no recargar la pagina y conservar
+ * el scroll suave.
+ */
+const enHome = Astro.url.pathname === "/";
+const aSeccion = (id: string) => (enHome ? `#${id}` : `/#${id}`);
+
 const navLinks = [
-  { label: "Nosotros", href: "#nosotros" },
-  { label: "Productos", href: "#productos" },
-  { label: "Ventajas", href: "#ventajas" },
-  { label: "Contacto", href: "#contacto" },
+  { label: "Mayoristas", href: "/mayoristas/" },
+  { label: "Gastronómicos", href: "/gastronomicos/" },
+  { label: "Productos", href: aSeccion("productos") },
+  { label: "Nosotros", href: aSeccion("nosotros") },
+  { label: "Contacto", href: aSeccion("contacto") },
 ];
 ---
 
 <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+  <!-- Velo del navbar en mobile. Son varias capas y no una sola porque el blur
+       tiene que crecer de a poco: ver el <style> del final. -->
+  <div id="nav-veil" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+    <i></i>
+  </div>
+
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div id="nav-inner" class="flex items-center justify-between h-20 transition-all duration-300">
       <!-- Logo -->
@@ -27,7 +44,7 @@ const navLinks = [
       </a>
 
       <!-- Desktop Nav -->
-      <div class="hidden md:flex items-center gap-8">
+      <div class="hidden md:flex items-center gap-6 lg:gap-8">
         {navLinks.map((link) => (
           <a
             href={link.href}
@@ -37,7 +54,7 @@ const navLinks = [
           </a>
         ))}
         <a
-          href="#contacto"
+          href={aSeccion("contacto")}
           data-open-form
           class="ml-2 px-5 py-2.5 bg-carne text-hueso font-display font-semibold text-sm uppercase tracking-wider hover:bg-carne-dark transition-colors duration-200 cursor-pointer"
         >
@@ -77,7 +94,7 @@ const navLinks = [
     </a>
   ))}
   <a
-    href="#contacto"
+    href={aSeccion("contacto")}
     data-open-form
     class="menu-item mt-4 px-8 py-3 bg-carne text-hueso font-display font-semibold text-lg uppercase tracking-wider cursor-pointer"
     style={`--delay: ${navLinks.length * 80}ms`}
@@ -98,99 +115,28 @@ const navLinks = [
   const navLogo = document.getElementById("nav-logo");
   const navInner = document.getElementById("nav-inner");
 
-  // ---- Barra de estado de iOS ----
-  // Safari pinta la barra de estado (hora, wifi, bateria) con el theme-color,
-  // no con lo que se ve debajo. Como el navbar es fixed y translucido, Safari no
-  // lo "ve": la barra quedaba del color del body y se cortaba contra el navbar.
-  // Asi que calculamos a mano el color que el navbar muestra de verdad -frigo al
-  // 80% sobre el fondo que tenga detras- y se lo pasamos a Safari.
-  // El blur no se puede replicar: la barra de estado es del navegador, no nuestra.
-  const themeMeta = document.querySelector('meta[name="theme-color"]');
-  const NAV_RGB = [244, 242, 242]; // --color-frigo
-  const NAV_ALPHA = 0.8;           // bg-frigo/80
-  let navAlpha = 0;                // 0 arriba de todo, NAV_ALPHA al scrollear
-  let alphaAnim = 0;
-  let ultimoColor = "";
-  let themeTick = false;
-
-  /** Primer fondo opaco justo debajo de la barra de estado, salteando el navbar. */
-  function fondoDetrasDelNav() {
-    const capas = document.elementsFromPoint(Math.floor(window.innerWidth / 2), 1);
-    for (const capa of capas) {
-      if (navbar?.contains(capa)) continue;
-      const rgba = getComputedStyle(capa).backgroundColor.match(/[\d.]+/g);
-      if (rgba && (rgba.length < 4 || Number(rgba[3]) === 1)) {
-        return [Number(rgba[0]), Number(rgba[1]), Number(rgba[2])];
-      }
-    }
-    return NAV_RGB;
-  }
-
-  function pintarThemeColor() {
-    if (!themeMeta) return;
-    const fondo = fondoDetrasDelNav();
-    const hex = fondo
-      .map((c, i) => Math.round(NAV_RGB[i] * navAlpha + c * (1 - navAlpha)))
-      .map((c) => c.toString(16).padStart(2, "0"))
-      .join("");
-    if (hex === ultimoColor) return;
-    ultimoColor = hex;
-    themeMeta.setAttribute("content", "#" + hex);
-  }
-
-  /** Acompaña los 300ms de transicion del navbar en vez de saltar de golpe. */
-  function animarNavAlpha(destino: number) {
-    cancelAnimationFrame(alphaAnim);
-    const desde = navAlpha;
-    const inicio = performance.now();
-    const paso = (ahora: number) => {
-      const t = Math.min((ahora - inicio) / 300, 1);
-      navAlpha = desde + (destino - desde) * t;
-      pintarThemeColor();
-      if (t < 1) alphaAnim = requestAnimationFrame(paso);
-    };
-    alphaAnim = requestAnimationFrame(paso);
-  }
-
   // Scroll effect
-  let scrolledPrev: boolean | null = null;
+  // A lo largo de estos primeros pixeles el velo de mobile pasa de nada a pleno.
+  const RECORRIDO_VELO = 90;
 
-  function aplicarScroll(animar = true) {
+  function aplicarScroll() {
     if (!navbar) return;
-    const scrolled = window.scrollY > 50;
-    navbar.classList.toggle("bg-frigo/80", scrolled);
-    navbar.classList.toggle("backdrop-blur-xl", scrolled);
-    navbar.classList.toggle("shadow-sm", scrolled);
+    const y = window.scrollY;
+    const scrolled = y > 50;
+    // Con prefijo md: en mobile el fondo lo pone el velo degradado de abajo.
+    navbar.classList.toggle("md:bg-frigo/80", scrolled);
+    navbar.classList.toggle("md:backdrop-blur-xl", scrolled);
+    navbar.classList.toggle("md:shadow-sm", scrolled);
     navLogo?.classList.toggle("scrolled", scrolled);
     navInner?.classList.toggle("h-20", !scrolled);
     navInner?.classList.toggle("h-14", scrolled);
-
-    if (scrolled === scrolledPrev) return;
-    const primeraVez = scrolledPrev === null;
-    scrolledPrev = scrolled;
-    const destino = scrolled ? NAV_ALPHA : 0;
-    // Al cargar (o si el navegador restaura el scroll) no hay nada que animar.
-    if (animar && !primeraVez) {
-      animarNavAlpha(destino);
-    } else {
-      navAlpha = destino;
-      pintarThemeColor();
-    }
+    // El velo no se prende de golpe: acompaña al scroll (ver el <style>).
+    navbar.style.setProperty("--veil", String(Math.min(y / RECORRIDO_VELO, 1)));
   }
 
-  window.addEventListener("scroll", () => {
-    aplicarScroll();
-    // El fondo detras del navbar cambia al pasar de seccion, pero medirlo en cada
-    // evento de scroll es caro: lo hacemos una vez por frame.
-    if (themeTick) return;
-    themeTick = true;
-    requestAnimationFrame(() => {
-      themeTick = false;
-      pintarThemeColor();
-    });
-  });
-
-  aplicarScroll(false);
+  window.addEventListener("scroll", aplicarScroll);
+  // Tambien al cargar, por si el navegador restaura la pagina ya scrolleada.
+  aplicarScroll();
 
   function toggleMenu() {
     menuOpen = !menuOpen;
@@ -241,18 +187,101 @@ const navLinks = [
     }
   }
 
-  menuToggle?.addEventListener("click", () => {
-    toggleMenu();
-    // El overlay del menu tapa la pantalla entera: recalculamos cuando termina
-    // su fade de 300ms, para que la barra de estado siga al color que quede.
-    setTimeout(pintarThemeColor, 300);
-  });
+  menuToggle?.addEventListener("click", toggleMenu);
   mobileLinks?.forEach((link) => link.addEventListener("click", () => {
     if (menuOpen) toggleMenu();
   }));
 </script>
 
 <style>
+  /* ---- Velo del navbar en mobile ----
+     Una sola capa con backdrop-filter no alcanza. El blur tiene un radio fijo,
+     asi que donde termina la capa el fondo pasa de golpe de borroso a nitido, y
+     eso se lee como una linea aunque el color venga bajando suave. Y si se
+     desvanece con mascara es peor: queda un 30% de imagen muy borrosa encima de
+     un 70% nitida, o sea una imagen fantasma.
+
+     Por eso van cuatro capas de blur apiladas, cada una con mas radio que la
+     anterior y viviendo en una banda mas alta. Los backdrop-filter se acumulan,
+     asi que arriba se suman todos y el fondo queda bien desenfocado, y hacia
+     abajo van saliendo de a uno hasta que el fondo vuelve a estar nitido. El
+     radio baja de a poco en vez de cortarse: no hay borde de foco.
+
+     El <i> es el color, aparte de las capas de blur para que cada uno caiga a su
+     ritmo. Se sostiene en un 30% casi hasta el final: si baja a cero deja de
+     leerse como blur y pasa a verse un degrade de color.
+
+     En desktop no corre: ahi no hay barra de estado que empalmar y el nav sigue
+     con el translucido de siempre, que maneja el script de arriba. */
+  #nav-veil {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    #nav-veil {
+      display: block;
+      position: absolute;
+      inset: 0 0 -0.75rem 0;
+      z-index: -1;
+      pointer-events: none;
+      /* La opacidad la maneja el script, atada a cuanto scrolleaste: el velo va
+         apareciendo mientras bajas en vez de prenderse de golpe al cruzar un
+         umbral. Sin transition a proposito, porque el movimiento ya lo da el
+         scroll; una transition encima lo dejaria yendo atras del dedo. */
+      opacity: var(--veil, 0);
+    }
+
+    #nav-veil span,
+    #nav-veil i {
+      position: absolute;
+      inset: 0;
+      display: block;
+    }
+
+    /* Las cuatro bandas de blur, de mas radio arriba a menos abajo. Se pisan a
+       proposito: si no se solaparan se veria el escalon entre banda y banda. */
+    #nav-veil span:nth-child(1) {
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 26%, transparent 48%);
+      mask-image: linear-gradient(to bottom, #000 0%, #000 26%, transparent 48%);
+    }
+
+    #nav-veil span:nth-child(2) {
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 68%);
+      mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 68%);
+    }
+
+    #nav-veil span:nth-child(3) {
+      -webkit-backdrop-filter: blur(3px);
+      backdrop-filter: blur(3px);
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 84%);
+      mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 84%);
+    }
+
+    #nav-veil span:nth-child(4) {
+      -webkit-backdrop-filter: blur(1.5px);
+      backdrop-filter: blur(1.5px);
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+    }
+
+    /* El color, encima de todas las capas de blur. */
+    #nav-veil i {
+      background: linear-gradient(
+        to bottom,
+        var(--color-frigo) 0%,
+        var(--color-frigo) 30%,
+        color-mix(in srgb, var(--color-frigo) 70%, transparent) 55%,
+        color-mix(in srgb, var(--color-frigo) 45%, transparent) 74%,
+        color-mix(in srgb, var(--color-frigo) 30%, transparent) 90%,
+        transparent 100%
+      );
+    }
+  }
+
   /* Logo scroll effect */
   .nav-logo {
     transition:

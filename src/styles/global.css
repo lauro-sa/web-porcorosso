@@ -54,6 +54,15 @@ html {
 
 body {
   font-family: var(--font-body);
+  /* Este es el color que Safari en iOS usa para pintar la barra de estado (la
+     franja de la hora, wifi y bateria). Comprobado a mano en el simulador: el
+     background del <html> y el meta theme-color no la tocan, el del <body> si.
+     Va en frigo para empalmar con el velo del navbar, que arranca de este mismo
+     color. Se probo cambiarlo por JS -hueso arriba de todo, frigo al scrollear-
+     y no sirve: Safari aplica un solo cambio de color por carga y despues
+     congela la franja, asi que al volver arriba quedaba blanca igual.
+     Ojo si se cambia: no es solo el fondo de la pagina, arrastra la barra de
+     estado. */
   background-color: var(--color-frigo);
   color: var(--color-morcilla);
   -webkit-font-smoothing: antialiased;
