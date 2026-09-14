@@ -107,6 +107,18 @@ Nada de esto se puede hacer sin información que solo tiene el dueño del negoci
       conviene que sea el correcto y el mismo en todos lados.
 - [ ] **Pedido mínimo mayorista** — no está publicado en ningún lado. Es de las primeras
       preguntas de un comprador B2B y hoy queda sin responder.
+- [ ] **¿Venden media res?** El sitio **no dice "media res" ni una vez**, pero
+      `"media res de cerdo"` es palabra clave cargada en Ads y el titular mandó
+      **siete variantes** de ese término (14/09/2026), o sea que da por hecho que se
+      vende. Es el hueco de contenido más grande que hay hoy: se está por pagar
+      clics de una búsqueda que la landing no responde. Confirmar y, si va, escribirlo.
+- [ ] **¿Abastecen comedores, colegios, empresas y eventos?** El titular pidió
+      palabras clave para esos cuatro segmentos. El sitio no dice *colegio*,
+      *escuela* ni *institucional* ni una vez. Si los abastecen, es contenido
+      nuevo; si no, esas palabras clave no se cargan.
+- [ ] **¿Se dice "pechito" y "matambre", o solo "matambrito"?** El sitio nombra
+      *matambrito* y no nombra *pechito*. Son búsquedas distintas en concordancia
+      de frase: no se capturan entre sí.
 - [ ] **Plazos de entrega** y días de reparto por zona.
 - [ ] **Medios de pago y condiciones** (cuenta corriente, plazos, contado).
 - [ ] **Condición fiscal / facturación** (si emiten factura A).
@@ -166,6 +178,13 @@ se gaste antes de que la medición esté publicada no se puede analizar ni recup
 Ordenado por relación entre impacto y esfuerzo.
 
 - [ ] **Páginas por producto** — ver la sección siguiente.
+- [ ] **Cerrar la brecha entre lo que se puja y lo que el sitio dice.** Cruce del
+      14/09/2026 (ver [ADS.md](ADS.md), "Revisión de la lista que pasó el titular"):
+      hay palabras clave cargadas cuya intención la landing no responde con esas
+      palabras. Google cobra más caro el clic cuando la página no coincide con la
+      búsqueda, así que esto **sube el CPC antes de encender**. No se arregla
+      pegando listas de palabras —eso es relleno y Google lo penaliza—, se arregla
+      escribiendo el contenido que falta. Depende de los datos de arriba.
 - [ ] **`Product` / `OfferCatalog` en la home** — las páginas de segmento ya emiten su
       catálogo; falta describir las tres familias de producto en la home, donde hoy son
       solo texto.

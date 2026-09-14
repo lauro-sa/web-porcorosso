@@ -315,6 +315,164 @@ concordancia amplia. Se cargan igual porque cuestan cero y protegen de eso.
 ⚠️ **Nunca aceptar la recomendación "Aplicar todas" de concordancia amplia.** Google la
 ofrece de forma insistente. Convierte las 32 frases en amplia y abre la puerta a todo.
 
+## Revisión de la lista que pasó el titular (14/09/2026)
+
+El titular mandó 32 palabras clave positivas y 62 negativas, con un comentario:
+que **mencionábamos mucho carne vacuna**. Se cruzaron una por una contra las 33
+que ya estaban. Lo que sigue es el resultado, con lo que conviene tomar y lo que
+no.
+
+### Primero, el comentario: la impresión es entendible pero el dato no la sostiene
+
+Medido sobre el repo:
+
+| Dónde | Menciones de vacuno, vaca, novillo, ternera o res |
+|---|---|
+| Todo el sitio (`.astro` + `llms.txt`) | **0** |
+| Las 33 palabras clave | **0** |
+
+La única proteína no porcina que nombra el sitio es **pollo**, cinco veces, y
+siempre por las *milanesas de pollo*, que son producto del catálogo.
+
+De las 33 palabras clave, **32 dicen cerdo, porcina o chancho**. La única que no
+lo dice es `"mayorista de carnes"`.
+
+De dónde sale entonces la impresión: de la **lista de negativas**, donde aparecen
+`ternera`, `novillo`, `cordero`, y de la sección "Las que se decidió NO poner",
+que discute largo `vaca` y `vacuna`. Leído sin el contexto, parece que se estaban
+usando, cuando en realidad se estaba decidiendo si excluirlas.
+
+### La contradicción que conviene mirar antes de cargar nada
+
+El pedido es sacar lo vacuno. Pero **11 de las 32 palabras que propone no dicen
+cerdo en ningún lado**:
+
+```
+proveedor gastronomico            proveedor de carnes caba
+abastecimiento de carne para restaurantes                 cortes porcionados para restaurantes
+carne envasada al vacio proveedor proveedor de alimentos para colegios
+proveedor de carne para comedores abastecimiento de carne para empresas
+proveedor de carne para eventos   proveedor de carne para catering
+proveedor de carne para restaurantes
+```
+
+`"proveedor gastronomico"` y `"proveedor de alimentos para colegios"` ni siquiera
+dicen carne. Son exactamente las que traen al que busca proveedor multi-proteína
+—o sea, tráfico vacuno—. Las cuatro últimas ya estaban y se aceptaron a
+conciencia: el que busca "proveedor de carne para hoteles" es cliente aunque no
+escriba cerdo. Pero **no se puede pedir sacar lo vacuno y sumar genéricas de
+carne a la vez**: son la misma puerta.
+
+Si la prioridad es que no entre nada vacuno, la vía correcta **no es la negativa
+`vacuna`**: es no cargar las genéricas, y filtrar por informe de términos de
+búsqueda, que es reversible y no adivina.
+
+### Positivas: 17 son nuevas, 15 ya estaban cubiertas
+
+En concordancia de frase, una palabra clave captura toda búsqueda que la
+contenga. Por eso 15 de las 32 ya entran con lo cargado y **volver a cargarlas no
+suma alcance**, solo divide el histórico:
+
+| Propone | Ya la captura |
+|---|---|
+| `comprar media res de cerdo` | `"media res de cerdo"` |
+| `precio media res de cerdo` | `"media res de cerdo"` |
+| `bondiola de cerdo por mayor` | `"cerdo por mayor"` |
+| `pechito de cerdo por mayor` | `"cerdo por mayor"` |
+| `matambre de cerdo por mayor` | `"cerdo por mayor"` |
+| `carre de cerdo por mayor` | `"cerdo por mayor"` |
+| `solomillo de cerdo por mayor` | `"cerdo por mayor"` |
+| `venta de cerdo por mayor` | `"cerdo por mayor"` |
+
+Las otras siete son idénticas a una que ya existe.
+
+**Las 17 que sí son nuevas**, ordenadas por lo que aportan:
+
+*Valen la pena, son intención mayorista clara:*
+
+```
+"distribuidor de cerdo"            "distribuidora de carne de cerdo"
+"medias reses de cerdo"            "media res porcina"
+"cerdo entero por kilo"            "costillar de cerdo mayorista"
+"cortes de cerdo al vacio"         "carne envasada al vacio proveedor"
+```
+
+*Segmento institucional, que hoy la campaña no cubre:*
+
+```
+"proveedor de carne para comedores"    "proveedor de carne para eventos"
+"abastecimiento de carne para empresas"
+"proveedor de alimentos para colegios"
+```
+
+⚠️ **Antes de cargar estas cuatro hay que confirmar con el titular que
+efectivamente abastecen comedores, colegios y eventos.** Si no lo hacen, es pagar
+por clics que no se pueden atender. El sitio hoy no dice *colegio*, *escuela* ni
+*institucional* ni una vez.
+
+*Flojas, cargar solo si sobra presupuesto:*
+
+```
+"res de cerdo"          demasiado amplia: capta "media res" pero también ruido
+"proveedor gastronomico" no dice ni carne ni cerdo
+"proveedor de carnes caba"  genérica de carne
+"abastecimiento de carne para restaurantes"  genérica de carne
+"cortes porcionados para restaurantes"       genérica de carne
+```
+
+### Negativas: cuatro no hay que poner
+
+Estas ya estaban decididas y el motivo sigue vigente. Cargarlas apaga clientes
+reales:
+
+| Negativa que propone | Por qué no |
+|---|---|
+| **pollo** | El catálogo vende **milanesas de pollo**: están en la home, en `/mayoristas/` y en `/gastronomicos/`. Bloquea a quien busque "milanesas de pollo por mayor", que es un cliente que ya compra. |
+| **delivery** | Un restaurante de delivery es cliente. |
+| **oferta** | Un comprador mayorista busca ofertas y precios. `"precio por kilo"` como frase ya filtra al consumidor final. |
+| **lechones** | Plausible que se pida. Alcanza con `"lechones vivos"`, que es cría y no consumo. |
+
+Sobre **vaca / vacuna / vacuno**: se habían sacado a propósito, porque bloquean al
+gastronómico multi-proteína que busca "proveedor de carne vacuna y porcina" y
+compraría cerdo igual. Es decisión comercial del titular, no técnica: si las
+quiere puestas, se ponen. Pero conviene que sepa que **con las genéricas de carne
+cargadas al mismo tiempo, el efecto neto es contradictorio**.
+
+### Negativas nuevas que sí suman
+
+Ninguna de estas estaba, ninguna anula palabra clave propia. Verificado una por
+una:
+
+```
+freezer  "para el freezer"  familiar  promo  calorias  calorías  usado
+cachorro  mascota  "hueso para perro"  criadero  "semen porcino"
+"jamon iberico"  "jamon serrano"  bellota  "cerca mio"  "asado de tira"
+curriculum  vacante  imagenes  dibujo
+```
+
+`cachorro`, `mascota` y `"hueso para perro"` son un hueco que no se había visto:
+hay búsquedas reales de hueso porcino para perros y no son clientes.
+
+`"jamon iberico"` y `"jamon serrano"` son **mejores que el `jamon` suelto que hoy
+está cargado**: el suelto bloquearía a quien busque jamón de cerdo local. Conviene
+sacar `jamon` y `jamón` sueltos y dejar solo las dos frases.
+
+### ⚠️ Cargar las frases como frases, nunca descompuestas
+
+El chequeo dio **cero choques** con las 33 actuales *si se cargan tal como están
+escritas*. Pero si alguien parte una frase en palabras sueltas, cuatro de ellas
+arrasan la campaña entera:
+
+| Si se carga suelta | Anula |
+|---|---|
+| `cerdo` | 25 palabras clave, o sea casi todas |
+| `porcina` | `"proveedor de carne porcina"`, `"carne porcina por mayor"` |
+| `porcino` | `"frigorifico porcino"` |
+| `carniceria` | `"carne de cerdo para carniceria"` |
+
+Vienen de `"cerdo vivo"`, `"genetica porcina"`, `"semen porcino"` y
+`"carniceria cerca"`. Las cuatro van entre comillas, sí o sí.
+
 ## Anuncio
 
 15 títulos (máx. 30 caracteres) y 4 descripciones (máx. 90), verificados contra los
