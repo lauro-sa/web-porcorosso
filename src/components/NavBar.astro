@@ -11,11 +11,12 @@ import logoMorcilla from "../assets/images/logos/logo-morcilla-01.webp";
 const enHome = Astro.url.pathname === "/";
 const aSeccion = (id: string) => (enHome ? `#${id}` : `/#${id}`);
 
+// En la rama produccion, sin las paginas de segmento: el titular quiere una
+// sola landing hasta que autorice subirlas. En main estan los enlaces.
 const navLinks = [
-  { label: "Mayoristas", href: "/mayoristas/" },
-  { label: "Gastronómicos", href: "/gastronomicos/" },
-  { label: "Productos", href: aSeccion("productos") },
   { label: "Nosotros", href: aSeccion("nosotros") },
+  { label: "Productos", href: aSeccion("productos") },
+  { label: "Ventajas", href: aSeccion("ventajas") },
   { label: "Contacto", href: aSeccion("contacto") },
 ];
 ---
