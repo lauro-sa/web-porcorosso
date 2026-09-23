@@ -53,6 +53,33 @@ Y al revés: si arrancás una sesión sin acceso al repo, pedí que te peguen
 [AGENTS.md](AGENTS.md), [ROADMAP.md](ROADMAP.md) y [ADS.md](ADS.md) antes de opinar.
 Casi todo lo que vas a proponer ya está decidido ahí, con el motivo al lado.
 
+## Qué está online y qué estás viendo en local
+
+Son dos versiones distintas, y confundirlas ya generó dudas:
+
+| Dónde | Qué versión | Tiene las páginas `/mayoristas/` y `/gastronomicos/` |
+|---|---|---|
+| **https://b2b.porcorosso.com.ar** (online) | La rama **`produccion`** | No (dan 404) |
+| **`npm run dev`** en la carpeta del repo (`localhost:4321`) | La rama **`main`** | Sí |
+
+`main` es donde se trabaja y va **adelantada**: tiene cosas hechas que el titular
+todavía no autorizó a publicar. `produccion` es exactamente lo que está online. El
+titular quiere por ahora **una sola landing**; las páginas de segmento se suben cuando
+lo autorice.
+
+Para ver en local exactamente lo que está online:
+
+```bash
+git worktree add ../porcorosso-online produccion
+cd ../porcorosso-online && ln -s ../web-porcorosso/node_modules node_modules
+npx astro dev --port 4322   # abrir localhost:4322
+# al terminar: rm node_modules && cd .. && git -C web-porcorosso worktree remove porcorosso-online
+```
+
+Si no tenés terminal (un chat en el navegador): lo que está online es lo que ves en
+https://b2b.porcorosso.com.ar, y nada más. Que algo esté en el código no quiere decir
+que esté publicado.
+
 ## Stack
 
 - **Astro 6** con `output: static`. Sin adapter, sin SSR: son archivos HTML planos.
@@ -151,6 +178,11 @@ Cada una salió de un problema real:
     nítida, o sea un fantasma. Por eso `#nav-veil` apila cuatro capas de blur
     decreciente más una de color aparte. Si lo simplificás a una sola capa vuelve
     la línea. Medido: el velo le saca el 96% del detalle al contenido de atrás.
+
+12. **`localhost` no es producción.** `npm run dev` muestra `main`, que va adelantada
+    a lo publicado. Lo que está online es la rama `produccion`. Ver "Qué está online y
+    qué estás viendo en local", arriba. Y no publicar `main` entero sin autorización
+    del titular: subiría las páginas de segmento.
 
 ## Cómo llegan los leads
 
