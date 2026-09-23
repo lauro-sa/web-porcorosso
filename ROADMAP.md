@@ -69,7 +69,7 @@ en Google, campañas pagas (Google Ads y redes) y recomendación en asistentes d
       contacto. Si el navegador no redirige, queda un botón. Si el servidor falla,
       el aviso de error ofrece el mismo mensaje por WhatsApp. El botón de
       `/gracias/` no se mide como lead de WhatsApp, para no contar dos conversiones
-      por la misma consulta. **Falta publicarlo**
+      por la misma consulta. **Publicado el 22/09/2026** desde la rama `produccion`
 - [x] **`scroll-padding-top`**: los saltos a `#productos`, `#nosotros`, etc. ya no quedan
       escondidos detrás del navbar fijo
 

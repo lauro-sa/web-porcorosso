@@ -220,31 +220,18 @@ de cifras y en `llms.txt`. No cambiarlo sin confirmación del titular.
 
 *Última actualización: 22 de septiembre de 2026.*
 
-🔴 **El titular dice que la campaña ya empezó a gastar, pero producción sigue sin
-nada de lo de abajo** (comprobado el 22/09: `/mayoristas/` y `/gastronomicos/` dan
-404 y no hay etiqueta de Google). O sea, se está pautando a ciegas y, si algún anuncio
-apunta a una página de segmento, a una URL que no existe. Publicar es lo más urgente.
+**Producción no es `main`: es la rama `produccion`.** El titular quiere mantener por
+ahora **una sola landing** y subir las páginas de segmento más adelante, cuando lo
+autorice. Por eso el 22/09 se publicó desde `produccion`, que sale de `43a07f0` (lo que
+estaba online) y suma solo la consulta por WhatsApp. **No publicar `main` entero sin
+autorización del titular**: subiría `/mayoristas/`, `/gastronomicos/` y todo lo de abajo.
+Cómo publicar un cambio suelto: ver "Publicar solo una parte" en [DEPLOY.md](DEPLOY.md).
 
-⚠️ **El repo está adelantado a producción, y ahora eso tiene fecha límite.** Nada de lo
-de abajo está publicado. La primera campaña de Google Ads está armada y pausada, y el
-crédito promocional vence el **6 de noviembre de 2026**: hasta que la medición no esté
-publicada, encender la campaña sería pautar a ciegas. Ver [ADS.md](ADS.md).
-Para subirlo, buildear y sincronizar según [DEPLOY.md](DEPLOY.md).
+⚠️ La campaña ya empezó a gastar (según el titular, 22/09) y producción **no tiene
+medición**: Google Ads no ve los leads. Los anuncios van a la home, que funciona.
 
-**Lo commiteado hasta el 14/09 ya está pusheado**; lo del 22/09 quedó commiteado
-local (verificar con `git status -sb`). Un push necesita terminal y credenciales de
-GitHub, así que no lo puede hacer el asistente que opera Google Ads desde el navegador,
-por más contexto del proyecto que tenga.
+Sin publicar (está en `main`, no en `produccion`):
 
-**El único bloqueante de todo lo demás son los IDs de las tres conversiones de Google
-Ads.** Cuando el titular los pase: pegarlos en
-[Medicion.astro](src/components/Medicion.astro), buildear, publicar. Recién ahí la
-campaña puede encenderse sin pautar a ciegas.
-
-Sin publicar:
-
-- La **consulta del formulario abierta en WhatsApp** con los datos en viñetas
-  (22/09/2026). Ver "Cómo llegan los leads".
 - El color de la barra de estado de iOS (`theme-color`, en `NavBar.astro`,
   `Layout.astro` y `global.css`). Quedó pendiente de probarse en un iPhone real.
 - Las páginas **`/mayoristas/` y `/gastronomicos/`**, con el navbar, el pie y la
@@ -264,7 +251,8 @@ una lista, con un teléfono inventado —o sea que el modelo ni leyó el sitio�
 nombraba hoteles al pasar y no decía *buffet*, *desayuno*, *banquete* ni *gramaje* una
 sola vez. Ahora hay una página que responde esa intención de búsqueda exacta.
 
-**Publicado y funcionando:** el sitio, el formulario que manda los leads a mail y
+**Publicado y funcionando:** la consulta del formulario abierta en WhatsApp con los
+datos en viñetas (22/09/2026, desde `produccion`), el sitio, el formulario que manda los leads a mail y
 planilla, `/gracias`, `/privacidad`, las preguntas frecuentes, `llms.txt` y las
 imágenes responsive.
 
