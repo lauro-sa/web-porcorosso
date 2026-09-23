@@ -71,20 +71,22 @@ const atajos = [
       <div class="grid md:grid-cols-[1fr_auto] gap-16 items-center">
 
         <div>
-          <!-- Version celular del 404: numero y abuela juntos, arriba del titulo. -->
-          <div aria-hidden="true" class="md:hidden select-none mb-2">
-            <div class="relative inline-block">
-            <span class="block font-display font-bold leading-[0.8] tracking-tight text-carne/15 text-[min(48vw,22dvh)]">
-              404
-            </span>
-            <Image
-              src={nonaPig}
-              alt=""
-              class="absolute left-full -ml-8 -bottom-1 h-[min(9rem,18dvh)] w-auto max-w-none"
-              widths={[96, 192]}
-              sizes="96px"
-              loading="eager"
-            />
+          <!-- Version celular del 404: numero centrado a lo ancho y la abuela
+               parada delante del 0, con los pies en la base del numero. Apoyada
+               sobre el ultimo 4 tapaba medio digito y parecia un error. -->
+          <div aria-hidden="true" class="md:hidden select-none mb-4 flex justify-center">
+            <div class="relative">
+              <span class="block font-display font-bold leading-[0.78] tracking-tight text-carne/15 text-[min(58vw,26dvh)]">
+                404
+              </span>
+              <Image
+                src={nonaPig}
+                alt=""
+                class="absolute left-1/2 -translate-x-1/2 bottom-0 h-[min(9.5rem,19dvh)] w-auto max-w-none"
+                widths={[96, 192]}
+                sizes="96px"
+                loading="eager"
+              />
             </div>
           </div>
 
