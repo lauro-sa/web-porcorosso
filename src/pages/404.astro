@@ -1,10 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import NavBar from "../components/NavBar.astro";
 import Footer from "../components/Footer.astro";
 import Button from "../components/Button.astro";
 import { Image } from "astro:assets";
 import nonaPig from "../assets/images/ilustraciones/nona-pig.webp";
+import logoMorcilla from "../assets/images/logos/logo-morcilla-01.webp";
 import "../styles/global.css";
 
 /**
@@ -17,6 +17,9 @@ import "../styles/global.css";
  * Astro la genera como dist/404.html, y el servidor la sirve por la regla
  * ErrorDocument de public/.htaccess. Sin esa regla, Hostinger sigue mostrando
  * la suya. Va con noindex y queda fuera del sitemap.
+ *
+ * Sin el navbar completo, a proposito: con el menu del sitio arriba parecia una
+ * seccion mas y no un error. Solo el logo, que lleva al inicio.
  *
  * Los enlaces van con barra delante (/#productos): desde /404 el ancla suelta
  * no llevaria a ningun lado.
@@ -35,13 +38,37 @@ const atajos = [
   description="La página que buscás no existe. Porco Rosso, proveedor mayorista de carne de cerdo en CABA y GBA."
   noindex
 >
-  <NavBar />
-  <main id="contenido-principal" class="bg-hueso min-h-dvh flex items-center">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20 w-full">
+  <header class="absolute top-0 left-0 w-full z-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center">
+      <a href="/" aria-label="Porco Rosso, ir al inicio">
+        <Image
+          src={logoMorcilla}
+          alt="Porco Rosso - Proveedor mayorista de carne porcina"
+          class="h-12 w-auto"
+          widths={[110, 220]}
+          sizes="110px"
+          loading="eager"
+        />
+      </a>
+    </div>
+  </header>
+  <main id="contenido-principal" class="relative overflow-hidden bg-hueso min-h-dvh flex items-center">
+    <!-- El 404 es el protagonista: gigante y semitransparente, detras del texto.
+         Es decorativo; el codigo lo anuncia el titulo de la pagina. -->
+    <div
+      aria-hidden="true"
+      class="pointer-events-none select-none absolute inset-0 flex items-center justify-center"
+    >
+      <span class="font-display font-bold leading-none tracking-tight text-carne/15 text-[48vw] md:text-[38vw] xl:text-[34rem]">
+        404
+      </span>
+    </div>
+
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20 w-full">
       <div class="grid md:grid-cols-[1fr_auto] gap-10 md:gap-16 items-center">
 
         <div>
-          <span class="font-accent text-xs tracking-widest text-carne uppercase">Error 404</span>
+          <span class="font-accent text-xs tracking-widest text-carne uppercase">Página no encontrada</span>
           <h1 class="font-display font-bold uppercase text-5xl md:text-7xl leading-[0.9] text-morcilla mt-3 mb-5">
             Este corte<br /><span class="text-carne">no lo tenemos.</span>
           </h1>
