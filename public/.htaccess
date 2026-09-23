@@ -1,0 +1,4 @@
+# Pagina de error propia (src/pages/404.astro). Sin esta regla, Hostinger
+# muestra su pagina generica en ingles. La ruta es absoluta desde la raiz del
+# subdominio b2b.
+ErrorDocument 404 /404.html
