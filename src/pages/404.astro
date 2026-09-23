@@ -71,26 +71,26 @@ const atajos = [
       <div class="grid md:grid-cols-[1fr_auto] gap-16 items-center">
 
         <div>
-          <!-- Version celular del 404: numero centrado a lo ancho y la abuela
-               parada delante del 0, con los pies en la base del numero. Apoyada
-               sobre el ultimo 4 tapaba medio digito y parecia un error. -->
-          <div aria-hidden="true" class="md:hidden select-none mb-4 flex justify-center">
-            <div class="relative">
-              <span class="block font-display font-bold leading-[0.78] tracking-tight text-carne/15 text-[min(58vw,26dvh)]">
-                404
-              </span>
-              <Image
-                src={nonaPig}
-                alt=""
-                class="absolute left-1/2 -translate-x-1/2 bottom-0 h-[min(9.5rem,19dvh)] w-auto max-w-none"
-                widths={[96, 192]}
-                sizes="96px"
-                loading="eager"
-              />
-            </div>
+          <!-- Version celular del 404: numero y abuela uno al lado del otro,
+               apoyados sobre la misma linea y sin pisarse. Se probaron
+               superpuestos y no funciona: encima del numero el relleno blanco del
+               dibujo tapa los digitos, y con el titulo encima el 404 no se lee.
+               Se dimensiona por el alto (dvh) para entrar sin scroll. -->
+          <div aria-hidden="true" class="md:hidden select-none flex items-end gap-3 mb-4">
+            <span class="block font-display font-bold leading-[0.74] tracking-tight text-carne/20 text-[min(52vw,23dvh)]">
+              404
+            </span>
+            <Image
+              src={nonaPig}
+              alt=""
+              class="h-[min(9rem,19dvh)] w-auto"
+              widths={[86, 172]}
+              sizes="86px"
+              loading="eager"
+            />
           </div>
 
-          <span class="relative font-accent text-xs tracking-widest text-carne uppercase">Página no encontrada</span>
+          <span class="font-accent text-xs tracking-widest text-carne uppercase">Página no encontrada</span>
           <h1 class="font-display font-bold uppercase text-[min(3rem,6.5dvh)] md:text-7xl leading-[0.9] text-morcilla mt-2 md:mt-3 mb-3 md:mb-5">
             Este corte<br /><span class="text-carne">no lo tenemos.</span>
           </h1>
@@ -111,7 +111,7 @@ const atajos = [
             </a>
           </div>
 
-          <nav aria-label="Secciones del sitio" class="mt-6 pt-4 md:mt-12 md:pt-6 border-t border-morcilla/10 max-w-md">
+          <nav aria-label="Secciones del sitio" class="mt-6 pt-4 md:mt-12 md:pt-6 border-t border-morcilla/10 max-w-md [@media(max-height:600px)]:hidden">
             <h2 class="font-display text-xs uppercase tracking-wider text-morcilla/40 mb-2 md:mb-3">
               O andá directo a
             </h2>
