@@ -70,6 +70,8 @@ en Google, campañas pagas (Google Ads y redes) y recomendación en asistentes d
       el aviso de error ofrece el mismo mensaje por WhatsApp. El botón de
       `/gracias/` no se mide como lead de WhatsApp, para no contar dos conversiones
       por la misma consulta. **Publicado el 22/09/2026**
+- [x] **Página de error propia** (22/09/2026) — antes una URL inexistente mostraba la
+      página genérica de Hostinger, en inglés y sin marca. Publicada
 - [x] **`scroll-padding-top`**: los saltos a `#productos`, `#nosotros`, etc. ya no quedan
       escondidos detrás del navbar fijo
 
