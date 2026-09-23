@@ -1,4 +1,5 @@
 ---
+import { enlaceWhatsApp } from "../lib/whatsapp";
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import NavBar from "../components/NavBar.astro";
@@ -231,7 +232,7 @@ const schemaServicio = {
               Pedir presupuesto
             </Button>
             <Button
-              href="https://wa.me/5491172714251?text=Hola%20Porco%20Rosso!%20Consulto%20por%20compra%20mayorista"
+              href={enlaceWhatsApp("¡Hola Porco Rosso! Quiero consultar por compra mayorista para mi negocio.")}
               variant="outline"
               size="lg"
               target="_blank"

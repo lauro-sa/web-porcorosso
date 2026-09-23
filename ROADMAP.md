@@ -136,6 +136,18 @@ Nada de esto se puede hacer sin información que solo tiene el dueño del negoci
       **siete variantes** de ese término (14/09/2026), o sea que da por hecho que se
       vende. Es el hueco de contenido más grande que hay hoy: se está por pagar
       clics de una búsqueda que la landing no responde. Confirmar y, si va, escribirlo.
+- [ ] **Pista para la de arriba (media res) y la de abajo (comedores) (22/09/2026):** el mensaje de
+      bienvenida automático del WhatsApp Business de la empresa ofrece "medias
+      reses" y pregunta si el negocio es "colegio/comedor". O sea que la empresa
+      probablemente vende las dos cosas, aunque el sitio no las nombre. Confirmar con
+      el titular antes de escribirlo. Ese mensaje no sale del sitio: se configura en
+      la app de WhatsApp Business.
+- [ ] **El mensaje de bienvenida de WhatsApp repregunta lo que el formulario ya
+      mandó** (tipo de negocio, zona, qué necesita). Sugerencia al titular: sumarle
+      "Si nos escribiste desde el formulario de la web, ya tenemos tus datos: te
+      respondemos en breve". Del lado del sitio, desde el 22/09/2026 el mensaje del
+      formulario termina con una firma en cursiva ("Enviado desde el formulario de la
+      web B2B de Porco Rosso"), para que quien atiende lo reconozca.
 - [ ] **¿Abastecen comedores, colegios, empresas y eventos?** El titular pidió
       palabras clave para esos cuatro segmentos. El sitio no dice *colegio*,
       *escuela* ni *institucional* ni una vez. Si los abastecen, es contenido
