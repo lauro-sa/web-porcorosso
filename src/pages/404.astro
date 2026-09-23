@@ -79,10 +79,10 @@ const atajos = [
                Superpuesta al numero no funcionaba: su relleno blanco tapaba los
                digitos. Todo se dimensiona por el alto (dvh) ademas del ancho. -->
           <div aria-hidden="true" class="md:hidden select-none relative mb-5">
-            <span class="block font-display font-bold leading-[0.7] tracking-tight text-carne/20 text-[min(46vw,23dvh)]">
+            <span id="numero-404" class="block w-fit font-display font-bold leading-[0.7] tracking-tight text-carne/20 text-[min(46vw,23dvh)]">
               404
             </span>
-            <span class="colgada absolute right-0 -top-[26%]">
+            <span id="abuela-colgada" class="colgada absolute right-0 -top-[26%]">
               <span class="absolute bottom-full left-1/2 -translate-x-1/2 translate-y-1 w-px h-[100dvh] bg-morcilla/30"></span>
               <Image
                 src={nonaPig}
@@ -149,19 +149,115 @@ const atajos = [
 </Layout>
 
 <style>
-  /* Balanceo de pendulo: la abuela oscila desde donde esta atado el hilo,
-     arriba de la pantalla, no desde sus pies. Por eso el eje esta 100dvh
-     por encima y el angulo es chico: a esa distancia un grado ya es un vaiven
-     visible. */
+  /* La abuela oscila desde donde esta atado el hilo, arriba de la pantalla,
+     no desde sus pies: por eso el eje esta 100dvh por encima. El movimiento
+     lo maneja el script de abajo. */
   .colgada {
     transform-origin: 50% -100dvh;
-    animation: balanceo 3.6s ease-in-out infinite;
+    will-change: transform;
   }
-  @keyframes balanceo {
-    0%, 100% { transform: rotate(-1deg); }
-    50% { transform: rotate(1deg); }
+
+  /* Cuando la abuela choca contra el ultimo 4, el numero se enciende de
+     golpe y vuelve a su semitransparencia, con un temblor corto. */
+  .golpe {
+    animation: golpe 0.7s ease-out;
   }
-  @media (prefers-reduced-motion: reduce) {
-    .colgada { animation: none; }
+  @keyframes golpe {
+    0% { color: color-mix(in srgb, var(--color-carne) 75%, transparent); transform: translateX(-4px); }
+    15% { transform: translateX(3px); }
+    30% { transform: translateX(-2px); }
+    45% { transform: translateX(0); }
+    100% { color: color-mix(in srgb, var(--color-carne) 20%, transparent); }
   }
 </style>
+
+<script>
+  // Pendulo de la abuela colgada (solo celular).
+  //
+  // Es una simulacion y no una animacion CSS porque la gracia esta en que no
+  // sea regular: en cada pasada por el centro se sortea una fuerza nueva, y
+  // segun cuanta le toque llega o no a tocar el ultimo 4. Si lo toca, rebota
+  // y el 404 se enciende (clase .golpe). El choque se detecta midiendo las
+  // cajas en pantalla, asi funciona igual en cualquier ancho.
+  //
+  // Angulo positivo = hacia la izquierda, hacia el numero: con el eje arriba,
+  // rotar en sentido horario lleva los pies hacia la izquierda.
+
+  const abuela = document.getElementById("abuela-colgada");
+  const numero = document.getElementById("numero-404");
+  const sinMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (abuela && numero && !sinMovimiento) {
+    const PERIODO = 3.4; // segundos por vaiven completo
+    const w = (2 * Math.PI) / PERIODO;
+
+    // Cuantos grados tiene que abrirse el pendulo para tocar el 4. Depende
+    // del ancho y del alto de la pantalla, asi que se mide en vez de fijarlo:
+    // se toma la distancia libre con la abuela quieta y se pasa a angulo con
+    // el radio del pendulo (el eje esta 100dvh arriba de sus pies, y la parte
+    // que choca es la falda, que cabeza abajo queda cerca de los pies).
+    let anguloTope = 1.5;
+    const medirTope = () => {
+      const previo = abuela.style.transform;
+      abuela.style.transform = "none";
+      const a = abuela.getBoundingClientRect();
+      const n = numero.getBoundingClientRect();
+      abuela.style.transform = previo;
+      const libre = a.left + a.width * 0.14 - n.right;
+      const radio = window.innerHeight + a.height * 0.15;
+      if (libre > 0 && radio > 0) anguloTope = (Math.atan(libre / radio) * 180) / Math.PI;
+    };
+    // Cada ida se sortea entre la mitad y 1,4 veces lo necesario para llegar:
+    // mas o menos la mitad de las veces lo toca y la otra mitad se queda corta.
+    const sortear = () => Math.max(0.5, anguloTope * (0.5 + Math.random() * 0.9));
+    medirTope();
+    window.addEventListener("resize", medirTope);
+
+    let angulo = 0;
+    let velocidad = w * sortear();
+    let anterior = performance.now();
+    let ultimoGolpe = 0;
+
+    const chocaConElNumero = () => {
+      const a = abuela.getBoundingClientRect();
+      const n = numero.getBoundingClientRect();
+      // La imagen tiene margen vacio a los costados del dibujo.
+      return a.left + a.width * 0.14 <= n.right;
+    };
+
+    const paso = (ahora: number) => {
+      // Mas de 50 ms entre cuadros es una pestaña que volvio de segundo plano:
+      // no se integra ese salto.
+      const dt = Math.min((ahora - anterior) / 1000, 0.05);
+      anterior = ahora;
+
+      // Solo corre si la version celular esta visible.
+      if (abuela.offsetParent !== null) {
+        const antes = angulo;
+        velocidad += -w * w * angulo * dt;
+        angulo += velocidad * dt;
+
+        // Al cruzar el centro se sortea la fuerza de la proxima ida.
+        if ((antes < 0) !== (angulo < 0)) {
+          velocidad = Math.sign(velocidad) * w * sortear();
+        }
+
+        if (velocidad > 0 && chocaConElNumero()) {
+          velocidad = -velocidad * 0.55; // rebote que pierde fuerza
+          if (ahora - ultimoGolpe > 400) {
+            ultimoGolpe = ahora;
+            numero.classList.remove("golpe");
+            void numero.offsetWidth; // reinicia la animacion si ya estaba
+            numero.classList.add("golpe");
+          }
+        }
+
+        abuela.style.transform = `rotate(${angulo}deg)`;
+      }
+      requestAnimationFrame(paso);
+    };
+
+    numero.addEventListener("animationend", () => numero.classList.remove("golpe"));
+    requestAnimationFrame(paso);
+  }
+</script>
