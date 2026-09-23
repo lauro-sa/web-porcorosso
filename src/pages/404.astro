@@ -175,27 +175,37 @@ const atajos = [
   // Pendulo de la abuela colgada (solo celular).
   //
   // Es una simulacion y no una animacion CSS porque la gracia esta en que no
-  // sea regular: en cada pasada por el centro se sortea una fuerza nueva, y
-  // segun cuanta le toque llega o no a tocar el ultimo 4. Si lo toca, rebota
-  // y el 404 se enciende (clase .golpe). El choque se detecta midiendo las
-  // cajas en pantalla, asi funciona igual en cualquier ancho.
+  // sea regular: a veces llega a tocar el ultimo 4 y a veces no. Si lo toca,
+  // rebota y el 404 se enciende (clase .golpe).
+  //
+  // Dos cosas que ya se probaron y no andaban:
+  // - Cambiar la fuerza de golpe al pasar por el centro se sentia como un
+  //   tiron. Ahora la fuerza nueva se aplica de a poco, como quien empuja un
+  //   columpio: cada vuelta se sortea una amplitud objetivo y la real se va
+  //   acercando.
+  // - Detectar el choque con el rectangulo de la imagen hacia que "chocara"
+  //   la esquina vacia, con aire entre el dibujo y el numero. Ahora se usa la
+  //   silueta real del dibujo (SILUETA) y el borde real de tinta del 4.
   //
   // Angulo positivo = hacia la izquierda, hacia el numero: con el eje arriba,
   // rotar en sentido horario lleva los pies hacia la izquierda.
+
+  // Borde izquierdo del dibujo girado 180 grados, en 40 franjas horizontales
+  // de arriba a abajo, como fraccion del ancho de la imagen (null = franja sin
+  // dibujo). Medido de nona-pig.webp: si se cambia la ilustracion, remedir.
+  const SILUETA = [null,null,null,0.273,0.32,0.262,0.222,0.173,0.173,0.173,0.175,0.178,0.182,0.187,0.19,0.198,0.205,0.213,0.225,0.252,0.312,0.313,0.282,0.28,0.308,0.352,0.378,0.418,0.398,0.403,0.408,0.438,null,null,null,null,null,null,null,null];
 
   const abuela = document.getElementById("abuela-colgada");
   const numero = document.getElementById("numero-404");
   const sinMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (abuela && numero && !sinMovimiento) {
-    const PERIODO = 3.4; // segundos por vaiven completo
+    const PERIODO = 3.8; // segundos por vaiven completo
     const w = (2 * Math.PI) / PERIODO;
+    const RAD = Math.PI / 180;
 
-    // Cuantos grados tiene que abrirse el pendulo para tocar el 4. Depende
-    // del ancho y del alto de la pantalla, asi que se mide en vez de fijarlo:
-    // se toma la distancia libre con la abuela quieta y se pasa a angulo con
-    // el radio del pendulo (el eje esta 100dvh arriba de sus pies, y la parte
-    // que choca es la falda, que cabeza abajo queda cerca de los pies).
+    // Angulo exacto en el que la silueta toca la tinta del ultimo 4. Se mide
+    // con todo quieto y se recalcula si cambia el tamaño de la pantalla.
     let anguloTope = 1.5;
     const medirTope = () => {
       const previo = abuela.style.transform;
@@ -203,27 +213,63 @@ const atajos = [
       const a = abuela.getBoundingClientRect();
       const n = numero.getBoundingClientRect();
       abuela.style.transform = previo;
-      const libre = a.left + a.width * 0.14 - n.right;
-      const radio = window.innerHeight + a.height * 0.15;
-      if (libre > 0 && radio > 0) anguloTope = (Math.atan(libre / radio) * 180) / Math.PI;
+
+      // Borde de tinta del ultimo 4: donde arranca ese caracter mas lo que
+      // mide su tinta. El ancho de la caja del texto incluye el espaciado y
+      // el aire propio de la letra, que dejaban una separacion visible.
+      let tintaDerecha = n.right;
+      const texto = numero.firstChild;
+      const i = texto?.textContent?.lastIndexOf("4") ?? -1;
+      if (texto && i >= 0) {
+        const rango = document.createRange();
+        rango.setStart(texto, i);
+        rango.setEnd(texto, i + 1);
+        const letra = rango.getBoundingClientRect();
+        const ctx = document.createElement("canvas").getContext("2d");
+        if (ctx) {
+          const estilo = getComputedStyle(numero);
+          ctx.font = `${estilo.fontWeight} ${estilo.fontSize} ${estilo.fontFamily}`;
+          tintaDerecha = letra.left + ctx.measureText("4").actualBoundingBoxRight;
+        }
+      }
+
+      // Eje del pendulo: centro horizontal, 100dvh arriba (ver .colgada).
+      const ejeX = a.left + a.width / 2;
+      const ejeY = a.top - window.innerHeight;
+      const puntos = SILUETA.flatMap((x, k) =>
+        x === null ? [] : [[a.left + x * a.width, a.top + ((k + 0.5) / SILUETA.length) * a.height]]
+      );
+
+      // Se busca el menor angulo en el que algun punto de la silueta, a la
+      // altura del numero, llega a la tinta del 4.
+      for (let g = 0; g <= 30; g += 0.02) {
+        const c = Math.cos(g * RAD);
+        const s = Math.sin(g * RAD);
+        const toca = puntos.some(([x, y]) => {
+          const xr = ejeX + (x - ejeX) * c - (y - ejeY) * s;
+          const yr = ejeY + (x - ejeX) * s + (y - ejeY) * c;
+          return yr >= n.top && yr <= n.bottom && xr <= tintaDerecha;
+        });
+        if (toca) {
+          anguloTope = g;
+          return;
+        }
+      }
     };
-    // Cada ida se sortea entre la mitad y 1,4 veces lo necesario para llegar:
-    // mas o menos la mitad de las veces lo toca y la otra mitad se queda corta.
-    const sortear = () => Math.max(0.5, anguloTope * (0.5 + Math.random() * 0.9));
+
+    // Cada vuelta se sortea cuanto se quiere abrir, entre 0,55 y 1,35 veces
+    // lo necesario para llegar: mas o menos la mitad de las veces lo toca.
+    const sortear = () => anguloTope * (0.55 + Math.random() * 0.8);
+
     medirTope();
     window.addEventListener("resize", medirTope);
+    document.fonts?.ready.then(medirTope); // la tipografia cambia el ancho del 404
 
     let angulo = 0;
-    let velocidad = w * sortear();
+    let velocidad = 0;
+    let objetivo = sortear();
     let anterior = performance.now();
     let ultimoGolpe = 0;
-
-    const chocaConElNumero = () => {
-      const a = abuela.getBoundingClientRect();
-      const n = numero.getBoundingClientRect();
-      // La imagen tiene margen vacio a los costados del dibujo.
-      return a.left + a.width * 0.14 <= n.right;
-    };
 
     const paso = (ahora: number) => {
       // Mas de 50 ms entre cuadros es una pestaña que volvio de segundo plano:
@@ -234,16 +280,26 @@ const atajos = [
       // Solo corre si la version celular esta visible.
       if (abuela.offsetParent !== null) {
         const antes = angulo;
+
+        // Pendulo sin rozamiento...
         velocidad += -w * w * angulo * dt;
+
+        // ...mas un empuje suave hacia la amplitud objetivo. Actua sobre todo
+        // cerca del centro, donde va rapido, que es donde no se nota.
+        const amplitud = Math.hypot(angulo, velocidad / w);
+        const ajuste = (objetivo - amplitud) / Math.max(amplitud, 0.2);
+        velocidad *= 1 + ajuste * 0.9 * dt;
+        if (Math.abs(velocidad) < 0.01 && Math.abs(angulo) < 0.01) velocidad = w * 0.3;
+
         angulo += velocidad * dt;
 
-        // Al cruzar el centro se sortea la fuerza de la proxima ida.
-        if ((antes < 0) !== (angulo < 0)) {
-          velocidad = Math.sign(velocidad) * w * sortear();
-        }
+        // Una vez por vuelta, al cruzar el centro hacia el numero, cambia el
+        // objetivo.
+        if (antes < 0 && angulo >= 0) objetivo = sortear();
 
-        if (velocidad > 0 && chocaConElNumero()) {
-          velocidad = -velocidad * 0.55; // rebote que pierde fuerza
+        if (velocidad > 0 && angulo >= anguloTope) {
+          angulo = anguloTope;
+          velocidad = -velocidad * 0.6; // rebote que pierde fuerza
           if (ahora - ultimoGolpe > 400) {
             ultimoGolpe = ahora;
             numero.classList.remove("golpe");
