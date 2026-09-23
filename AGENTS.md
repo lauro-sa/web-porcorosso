@@ -189,6 +189,11 @@ Cada una salió de un problema real:
     qué estás viendo en local", arriba. Y no publicar `main` entero sin autorización
     del titular: subiría las páginas de segmento.
 
+13. **La página 404 depende de `public/.htaccess`.** Astro genera `404.html`, pero
+    Hostinger no la usa sola: sin la línea `ErrorDocument 404 /404.html` vuelve a
+    mostrar su página genérica en inglés. En `npm run dev` se ve la página propia, así
+    que esto solo se nota en producción.
+
 ## Cómo llegan los leads
 
 El formulario postea a [public/contacto.php](public/contacto.php), que guarda cada
@@ -217,6 +222,7 @@ opción al formulario, sumarlo ahí y en `ETIQUETAS_VALOR`, o llega en crudo.
 | `/gastronomicos/` | Hoteles, restaurantes, bares, catering | "proveedor de cerdo para hoteles en CABA", "cortes para buffet" |
 | `/privacidad/` | Legales | Nada, es requisito de Google Ads |
 | `/gracias/` | Post-envío | Nada: `noindex` y fuera del sitemap, existe para medir conversiones |
+| `/404.html` | Quien entra a una URL que no existe | Nada: `noindex`. La sirve el servidor por la regla de `public/.htaccess` |
 
 Las dos páginas de segmento existen porque en la home los dos públicos competían por
 las mismas palabras. Cada una emite `Service` + `OfferCatalog`, `BreadcrumbList` y su
@@ -269,6 +275,9 @@ responsive):
 - La **captura del GCLID**, que sí funciona sin los IDs, y su columna en el CSV
   ([contacto.php](public/contacto.php)), agregada al final para no correr las columnas
   de los leads viejos.
+- Una **página de error propia** ([404.astro](src/pages/404.astro)). Antes se veía la
+  genérica de Hostinger, en inglés; ahora ofrece volver al inicio, ir a una sección o
+  escribir por WhatsApp.
 - La imagen nueva de Open Graph, el `llms.txt` que responde que abastecen hoteles, y
   el color de la barra de estado de iOS (pendiente de probarse en un iPhone real).
 
