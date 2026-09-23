@@ -70,7 +70,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
       <div class="hidden md:block bg-hueso p-8 md:p-10">
         <!-- Progress bar -->
         <div class="form-progress mb-8">
-          <div class="flex justify-between mb-2">
+          <div class="flex justify-between mb-2" aria-live="polite" aria-atomic="true">
             <span id="step-label" class="font-accent text-xs tracking-widest text-carne uppercase">Paso 1 de 4</span>
             <span id="step-title" class="font-display text-xs uppercase tracking-wider text-morcilla/50">Tipo de cliente</span>
           </div>
@@ -122,7 +122,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
                 </div>
               </label>
             </div>
-            <p id="step1-error" class="text-carne text-xs mt-3 hidden">Seleccioná un tipo de negocio para continuar.</p>
+            <p id="step1-error" role="alert" class="text-carne text-xs mt-3 hidden">Seleccioná un tipo de negocio para continuar.</p>
           </div>
 
           <!-- PASO 2: Tu negocio -->
@@ -154,7 +154,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
                 />
               </div>
             </div>
-            <p id="step2-error" class="text-carne text-xs mt-3 hidden">Completá los campos obligatorios.</p>
+            <p id="step2-error" role="alert" class="text-carne text-xs mt-3 hidden">Completá los campos obligatorios.</p>
           </div>
 
           <!-- PASO 3: Qué necesitás -->
@@ -191,16 +191,16 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
                 </label>
                 <input type="hidden" name="volumen" value="" />
                 <div class="pr-dropdown relative" data-target="volumen">
-                  <button type="button" class="pr-dropdown-trigger w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla text-left transition-colors flex items-center justify-between">
+                  <button type="button" aria-haspopup="listbox" aria-expanded="false" class="pr-dropdown-trigger w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla text-left transition-colors flex items-center justify-between">
                     <span class="pr-dropdown-label text-morcilla/30">¿Cuántos kg por semana?</span>
                     <svg class="w-3 h-2 text-morcilla/40 transition-transform" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5" /></svg>
                   </button>
-                  <div class="pr-dropdown-menu hidden absolute top-full left-0 right-0 z-20 bg-frigo border border-morcilla/10 border-t-0 shadow-lg">
-                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="hasta-50">Hasta 50 kg/semana</div>
-                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="50-150">50 a 150 kg/semana</div>
-                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="150-500">150 a 500 kg/semana</div>
-                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="mas-500">Más de 500 kg/semana</div>
-                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="no-se">No sé todavía</div>
+                  <div role="listbox" class="pr-dropdown-menu hidden absolute top-full left-0 right-0 z-20 bg-frigo border border-morcilla/10 border-t-0 shadow-lg">
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="hasta-50">Hasta 50 kg/semana</div>
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="50-150">50 a 150 kg/semana</div>
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="150-500">150 a 500 kg/semana</div>
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="mas-500">Más de 500 kg/semana</div>
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="no-se">No sé todavía</div>
                   </div>
                 </div>
               </div>
@@ -210,15 +210,15 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
                 </label>
                 <input type="hidden" name="frecuencia" value="" />
                 <div class="pr-dropdown relative" data-target="frecuencia">
-                  <button type="button" class="pr-dropdown-trigger w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla text-left transition-colors flex items-center justify-between">
+                  <button type="button" aria-haspopup="listbox" aria-expanded="false" class="pr-dropdown-trigger w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla text-left transition-colors flex items-center justify-between">
                     <span class="pr-dropdown-label text-morcilla/30">¿Cada cuánto necesitás?</span>
                     <svg class="w-3 h-2 text-morcilla/40 transition-transform" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5" /></svg>
                   </button>
-                  <div class="pr-dropdown-menu hidden absolute top-full left-0 right-0 z-20 bg-frigo border border-morcilla/10 border-t-0 shadow-lg">
-                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="semanal">Semanal</div>
-                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="quincenal">Quincenal</div>
-                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="mensual">Mensual</div>
-                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="a-demanda">A demanda</div>
+                  <div role="listbox" class="pr-dropdown-menu hidden absolute top-full left-0 right-0 z-20 bg-frigo border border-morcilla/10 border-t-0 shadow-lg">
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="semanal">Semanal</div>
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="quincenal">Quincenal</div>
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="mensual">Mensual</div>
+                    <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="a-demanda">A demanda</div>
                   </div>
                 </div>
               </div>
@@ -279,7 +279,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
                 ></textarea>
               </div>
             </div>
-            <p id="step4-error" class="text-carne text-xs mt-3 hidden">Completá nombre, teléfono y email.</p>
+            <p id="step4-error" role="alert" class="text-carne text-xs mt-3 hidden">Completá nombre, teléfono y email.</p>
           </div>
 
           <!-- Navigation buttons -->
@@ -332,6 +332,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
        paso no entra. En escritorio sigue siendo la caja centrada de siempre. -->
   <div
     id="modal-panel"
+    tabindex="-1"
     class="modal-panel absolute inset-x-0 top-0 h-[var(--alto-visible,100dvh)] flex flex-col bg-hueso
            md:relative md:inset-auto md:h-auto md:block md:w-full md:max-w-lg md:mx-4 md:max-h-[90vh] md:overflow-y-auto md:p-10 md:shadow-2xl"
   >
@@ -375,7 +376,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
 
     <!-- Progress bar (modal) -->
     <div class="modal-progress mb-5 md:mb-6">
-      <div class="flex justify-between mb-2">
+      <div class="flex justify-between mb-2" aria-live="polite" aria-atomic="true">
         <span id="modal-step-label" class="font-accent text-xs tracking-widest text-carne uppercase">Paso 1 de 4</span>
         <span id="modal-step-title" class="font-display text-xs uppercase tracking-wider text-morcilla/50">Tipo de cliente</span>
       </div>
@@ -425,7 +426,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
             </div>
           </label>
         </div>
-        <p id="modal-step1-error" class="text-carne text-xs mt-3 hidden">Seleccioná un tipo de negocio.</p>
+        <p id="modal-step1-error" role="alert" class="text-carne text-xs mt-3 hidden">Seleccioná un tipo de negocio.</p>
       </div>
 
       <!-- PASO 2 -->
@@ -441,7 +442,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
             <input type="text" name="zona" autocomplete="address-level2" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="Ej: Palermo, CABA" />
           </div>
         </div>
-        <p id="modal-step2-error" class="text-carne text-xs mt-3 hidden">Completá los campos obligatorios.</p>
+        <p id="modal-step2-error" role="alert" class="text-carne text-xs mt-3 hidden">Completá los campos obligatorios.</p>
       </div>
 
       <!-- PASO 3 -->
@@ -475,16 +476,16 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
             <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Volumen estimado</label>
             <input type="hidden" name="volumen" value="" />
             <div class="pr-dropdown relative" data-target="volumen">
-              <button type="button" class="pr-dropdown-trigger w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla text-left transition-colors flex items-center justify-between">
+              <button type="button" aria-haspopup="listbox" aria-expanded="false" class="pr-dropdown-trigger w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla text-left transition-colors flex items-center justify-between">
                 <span class="pr-dropdown-label text-morcilla/30">¿Cuántos kg por semana?</span>
                 <svg class="w-3 h-2 text-morcilla/40 transition-transform" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5" /></svg>
               </button>
-              <div class="pr-dropdown-menu hidden absolute top-full left-0 right-0 z-20 bg-frigo border border-morcilla/10 border-t-0 shadow-lg">
-                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="hasta-50">Hasta 50 kg/semana</div>
-                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="50-150">50 a 150 kg/semana</div>
-                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="150-500">150 a 500 kg/semana</div>
-                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="mas-500">Más de 500 kg/semana</div>
-                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="no-se">No sé todavía</div>
+              <div role="listbox" class="pr-dropdown-menu hidden absolute top-full left-0 right-0 z-20 bg-frigo border border-morcilla/10 border-t-0 shadow-lg">
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="hasta-50">Hasta 50 kg/semana</div>
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="50-150">50 a 150 kg/semana</div>
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="150-500">150 a 500 kg/semana</div>
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="mas-500">Más de 500 kg/semana</div>
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="no-se">No sé todavía</div>
               </div>
             </div>
           </div>
@@ -492,15 +493,15 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
             <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Frecuencia de entrega</label>
             <input type="hidden" name="frecuencia" value="" />
             <div class="pr-dropdown relative" data-target="frecuencia">
-              <button type="button" class="pr-dropdown-trigger w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla text-left transition-colors flex items-center justify-between">
+              <button type="button" aria-haspopup="listbox" aria-expanded="false" class="pr-dropdown-trigger w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla text-left transition-colors flex items-center justify-between">
                 <span class="pr-dropdown-label text-morcilla/30">¿Cada cuánto necesitás?</span>
                 <svg class="w-3 h-2 text-morcilla/40 transition-transform" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5" /></svg>
               </button>
-              <div class="pr-dropdown-menu hidden absolute top-full left-0 right-0 z-20 bg-frigo border border-morcilla/10 border-t-0 shadow-lg">
-                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="semanal">Semanal</div>
-                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="quincenal">Quincenal</div>
-                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="mensual">Mensual</div>
-                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 transition-colors" data-value="a-demanda">A demanda</div>
+              <div role="listbox" class="pr-dropdown-menu hidden absolute top-full left-0 right-0 z-20 bg-frigo border border-morcilla/10 border-t-0 shadow-lg">
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="semanal">Semanal</div>
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="quincenal">Quincenal</div>
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="mensual">Mensual</div>
+                <div class="pr-dropdown-option px-4 py-3 text-sm text-morcilla cursor-pointer hover:bg-carne/5 focus:bg-carne/10 focus:outline-none transition-colors" role="option" tabindex="-1" aria-selected="false" data-value="a-demanda">A demanda</div>
               </div>
             </div>
           </div>
@@ -530,7 +531,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
             <textarea name="mensaje" rows="3" class="h-20 md:h-auto w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors resize-none" placeholder="¿Algo más que quieras contarnos?"></textarea>
           </div>
         </div>
-        <p id="modal-step4-error" class="text-carne text-xs mt-3 hidden">Completá nombre, teléfono y email.</p>
+        <p id="modal-step4-error" role="alert" class="text-carne text-xs mt-3 hidden">Completá nombre, teléfono y email.</p>
       </div>
 
     </form>
@@ -1019,6 +1020,21 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
 
   let abierto = false;
   let conHistorial = false;
+  // Desde donde se abrio, para devolverle el foco al cerrar.
+  let origen: HTMLElement | null = null;
+
+  // El modal vive adentro de la seccion #contacto. Se lo pasa al final del
+  // body para poder marcar todo lo demas como inert mientras esta abierto:
+  // asi un lector de pantalla (VoiceOver, TalkBack) no sigue recorriendo la
+  // pagina de atras, y Tab no se escapa del formulario.
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+  const fondoInerte = (si: boolean) => {
+    Array.from(document.body.children).forEach((el) => {
+      if (el === modal || el.tagName === "SCRIPT") return;
+      if (si) el.setAttribute("inert", "");
+      else el.removeAttribute("inert");
+    });
+  };
 
   function ajustarAlto() {
     const vv = window.visualViewport;
@@ -1031,6 +1047,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
   function openModal() {
     if (abierto) return;
     abierto = true;
+    origen = document.activeElement as HTMLElement | null;
     modal?.classList.remove("opacity-0", "pointer-events-none");
     modal?.classList.add("opacity-100", "pointer-events-auto", "modal-abierto");
     document.body.style.overflow = "hidden";
@@ -1041,6 +1058,10 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
     }
     history.pushState({ prFormulario: true }, "");
     conHistorial = true;
+    fondoInerte(true);
+    // El foco va al panel: el lector anuncia "Formulario de contacto" y sigue
+    // desde ahi. preventScroll para no mover nada durante la animacion.
+    modalPanel?.focus({ preventScroll: true });
   }
 
   // Cierra de verdad. La llama popstate, o sea que la entrada del historial
@@ -1056,6 +1077,10 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
     window.visualViewport?.removeEventListener("scroll", ajustarAlto);
     modalPanel?.style.removeProperty("--alto-visible");
     modalPanel?.style.removeProperty("top");
+    fondoInerte(false);
+    // Devuelve el foco al boton que lo abrio, sin mover la pagina.
+    origen?.focus({ preventScroll: true });
+    origen = null;
   }
 
   // Cerrar desde un boton: se vuelve atras en el historial para no dejar una
@@ -1101,6 +1126,11 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
   });
 
   // ====== Custom dropdowns ======
+  //
+  // Listas armadas a mano (por diseño), asi que la accesibilidad tambien:
+  // roles de listbox/option, aria-expanded, y teclado (flechas para moverse,
+  // Enter o espacio para elegir, Escape para cerrar). Antes las opciones eran
+  // bloques sueltos que no se podian elegir sin mouse ni con lector.
   document.querySelectorAll(".pr-dropdown").forEach((dropdown) => {
     const trigger = dropdown.querySelector(".pr-dropdown-trigger") as HTMLButtonElement;
     const menu = dropdown.querySelector(".pr-dropdown-menu") as HTMLElement;
@@ -1109,33 +1139,103 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
     const targetName = (dropdown as HTMLElement).dataset.target;
     const form = dropdown.closest("form");
     const hiddenInput = form?.querySelector<HTMLInputElement>(`input[name='${targetName}']`);
+    const options = Array.from(dropdown.querySelectorAll<HTMLElement>(".pr-dropdown-option"));
 
-    trigger?.addEventListener("click", () => {
+    function abrir(enfocar: boolean) {
       // Close all other dropdowns
       document.querySelectorAll(".pr-dropdown-menu").forEach((m) => {
         if (m !== menu) m.classList.add("hidden");
       });
-      document.querySelectorAll(".pr-dropdown-trigger svg").forEach((a) => {
-        if (a !== arrow) (a as SVGElement).style.transform = "";
+      document.querySelectorAll(".pr-dropdown-trigger").forEach((t) => {
+        if (t !== trigger) {
+          t.setAttribute("aria-expanded", "false");
+          const a = t.querySelector("svg") as SVGElement | null;
+          if (a) a.style.transform = "";
+        }
       });
+      menu.classList.remove("hidden");
+      trigger.setAttribute("aria-expanded", "true");
+      arrow.style.transform = "rotate(180deg)";
+      if (enfocar) (options.find((o) => o.getAttribute("aria-selected") === "true") ?? options[0])?.focus();
+    }
 
-      const isOpen = !menu.classList.contains("hidden");
-      menu.classList.toggle("hidden");
-      arrow.style.transform = isOpen ? "" : "rotate(180deg)";
+    function cerrar(devolverFoco: boolean) {
+      menu.classList.add("hidden");
+      trigger.setAttribute("aria-expanded", "false");
+      arrow.style.transform = "";
+      if (devolverFoco) trigger.focus();
+    }
+
+    function elegir(option: HTMLElement) {
+      const value = option.dataset.value || "";
+      const text = option.textContent?.trim() || "";
+      if (hiddenInput) {
+        hiddenInput.value = value;
+        // Para que el borrador registre la eleccion, como con cualquier campo.
+        hiddenInput.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+      options.forEach((o) => o.setAttribute("aria-selected", String(o === option)));
+      label.textContent = text;
+      label.classList.remove("text-morcilla/30");
+      label.classList.add("text-morcilla");
+      trigger.classList.add("border-carne/30");
+      cerrar(true);
+    }
+
+    trigger?.addEventListener("click", () => {
+      if (menu.classList.contains("hidden")) abrir(false);
+      else cerrar(false);
     });
 
-    dropdown.querySelectorAll(".pr-dropdown-option").forEach((option) => {
-      option.addEventListener("click", () => {
-        const value = (option as HTMLElement).dataset.value || "";
-        const text = option.textContent?.trim() || "";
-        if (hiddenInput) hiddenInput.value = value;
-        label.textContent = text;
-        label.classList.remove("text-morcilla/30");
-        label.classList.add("text-morcilla");
-        menu.classList.add("hidden");
-        arrow.style.transform = "";
-        trigger.classList.add("border-carne/30");
+    trigger?.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        abrir(true);
+      }
+    });
+
+    options.forEach((option, i) => {
+      option.addEventListener("click", () => elegir(option));
+      option.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowDown") { e.preventDefault(); options[Math.min(i + 1, options.length - 1)].focus(); }
+        else if (e.key === "ArrowUp") { e.preventDefault(); options[Math.max(i - 1, 0)].focus(); }
+        else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); elegir(option); }
+        else if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); cerrar(true); }
+        else if (e.key === "Tab") cerrar(false);
       });
+    });
+  });
+
+  // ====== Etiquetas de los campos ======
+  //
+  // Los titulos de los campos ("Nombre del negocio *") eran <label> sueltos,
+  // sin vinculo con su campo: un lector de pantalla solo decia "campo de
+  // texto". Se vinculan aca a lo que tienen debajo, y los grupos de opciones
+  // toman como nombre la pregunta del paso. Se hace por script porque los dos
+  // formularios comparten el mismo marcado y necesitan ids distintos.
+  document.querySelectorAll<HTMLFormElement>("#contact-form, #modal-form").forEach((f) => {
+    let n = 0;
+    const nuevoId = () => `${f.id}-a11y-${++n}`;
+    f.querySelectorAll<HTMLLabelElement>("label.block").forEach((etiqueta) => {
+      const control = etiqueta.parentElement?.querySelector<HTMLElement>(
+        "input:not([type=hidden]), textarea, .pr-dropdown-trigger"
+      );
+      if (!control) return;
+      if (control.classList.contains("pr-dropdown-trigger")) {
+        etiqueta.id ||= nuevoId();
+        control.setAttribute("aria-labelledby", etiqueta.id);
+      } else {
+        control.id ||= nuevoId();
+        etiqueta.htmlFor = control.id;
+      }
+    });
+    f.querySelectorAll<HTMLElement>("[data-step]").forEach((paso) => {
+      const pregunta = paso.querySelector("p");
+      const grupo = paso.querySelector("input[type=radio], input[type=checkbox]")?.closest("label")?.parentElement;
+      if (!pregunta || !grupo) return;
+      pregunta.id ||= nuevoId();
+      grupo.setAttribute("role", paso.querySelector("input[type=radio]") ? "radiogroup" : "group");
+      grupo.setAttribute("aria-labelledby", pregunta.id);
     });
   });
 
@@ -1144,6 +1244,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
     const target = e.target as HTMLElement;
     if (!target.closest(".pr-dropdown")) {
       document.querySelectorAll(".pr-dropdown-menu").forEach((m) => m.classList.add("hidden"));
+      document.querySelectorAll(".pr-dropdown-trigger").forEach((t) => t.setAttribute("aria-expanded", "false"));
       document.querySelectorAll(".pr-dropdown-trigger svg").forEach((a) => (a as SVGElement).style.transform = "");
     }
   });

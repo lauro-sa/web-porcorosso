@@ -166,6 +166,20 @@ input[type="checkbox"].pr-check:checked::after {
   margin: 1px auto 0;
 }
 
+/* Foco con teclado. La opacidad baja del control lo hacia invisible al
+   navegar con Tab; con el anillo en la tarjeta entera se ve cual opcion esta
+   activa. :focus-visible no aparece al tocar con el dedo ni con el mouse. */
+input[type="radio"].pr-radio:focus-visible,
+input[type="checkbox"].pr-check:focus-visible {
+  outline: none;
+  opacity: 1;
+}
+label:has(> input.pr-radio:focus-visible),
+label:has(> input.pr-check:focus-visible) {
+  outline: 2px solid var(--color-carne);
+  outline-offset: 2px;
+}
+
 /* Custom select */
 select.pr-select {
   appearance: none;

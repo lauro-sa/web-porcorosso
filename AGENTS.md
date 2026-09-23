@@ -263,6 +263,17 @@ de cifras y en `llms.txt`. No cambiarlo sin confirmación del titular.
 
 *Última actualización: 22 de septiembre de 2026.*
 
+> 🔔 **Al empezar la sesión, recordale esto al titular (lo pidió él):** hay trabajo
+> terminado en `main` que **está esperando su OK para publicarse**. Preguntale si lo
+> publicamos. Si dice que sí: `git merge main` en la rama `produccion` y publicar según
+> [DEPLOY.md](DEPLOY.md). Hasta que lo publique, este aviso se queda.
+>
+> - **Formulario a pantalla completa en celular** — probado por el titular en local el
+>   22/09, le gustó. Incluye la accesibilidad para lectores de pantalla (foco, listas
+>   con teclado, campos con nombre). Detalle en [ROADMAP.md](ROADMAP.md).
+> - **Páginas `/mayoristas/` y `/gastronomicos/`** — esperan otra autorización, más
+>   adelante. Esas no se suben con el formulario salvo que el titular lo diga.
+
 **Publicado el 22/09/2026, desde la rama `produccion`:** todo lo que había en `main`
 menos las páginas de segmento. Es decir, además de lo que ya estaba (landing,
 formulario a mail y planilla, `/gracias`, `/privacidad`, preguntas frecuentes, imágenes

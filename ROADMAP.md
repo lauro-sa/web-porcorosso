@@ -80,6 +80,12 @@ en Google, campañas pagas (Google Ads y redes) y recomendación en asistentes d
       cierra y deja al visitante donde estaba. En la sección Contacto, en celular, el
       formulario embebido se reemplaza por un botón. De paso: Enter o "Ir" en el
       teclado ya no envía la consulta desde el paso 2, y los campos se autocompletan.
+      También quedó **accesible con lector de pantalla** (VoiceOver, TalkBack): el foco
+      entra al formulario y vuelve al botón al cerrar, la página de atrás queda inerte,
+      cada campo tiene su nombre, las listas de volumen y frecuencia se manejan con
+      teclado y los errores y el cambio de paso se anuncian. Probado con Chrome
+      controlado por script; **el teclado real del iPhone no se pudo probar** (el
+      simulador de Xcode no se deja automatizar sin permisos de administrador).
       Para publicar: `git merge main` en `produccion` y seguir [DEPLOY.md](DEPLOY.md)
 - [x] **`scroll-padding-top`**: los saltos a `#productos`, `#nosotros`, etc. ya no quedan
       escondidos detrás del navbar fijo
