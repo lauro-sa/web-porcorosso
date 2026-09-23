@@ -1,0 +1,155 @@
+---
+/**
+ * Medicion de conversiones (Google Ads + GA4).
+ *
+ * Por que existe: el cliente cuenta como lead tres cosas distintas -que le
+ * escriban por WhatsApp, que lo llamen, o que completen el formulario- y hasta
+ * ahora solo la ultima dejaba rastro, porque termina en /gracias/. Los clics a
+ * WhatsApp y a los telefonos eran invisibles. Pautando asi, Google Ads optimiza
+ * hacia lo unico que ve y desperdicia el resto de la inversion.
+ *
+ * COMO ACTIVARLO: pegar los IDs aca abajo. Son lo unico que falta; el resto ya
+ * esta enganchado. Mientras las constantes esten vacias, este componente no
+ * carga ningun script de terceros ni deja cookies, asi que no afecta al sitio
+ * ni obliga a pedir consentimiento.
+ *
+ * De donde salen los IDs:
+ * - GA4_ID: Google Analytics 4, Administrar > Flujos de datos. Formato G-XXXXXXX.
+ * - ADS_ID: Google Ads, Herramientas > Conversiones. Formato AW-000000000.
+ * - CONVERSIONES: una etiqueta por accion, la da Google Ads al crear cada
+ *   conversion. Formato AW-000000000/AbCdEfGhIjK.
+ *
+ * Ver ROADMAP.md, seccion "Cuentas a crear o dar acceso".
+ */
+
+const GA4_ID = "";
+const ADS_ID = "";
+
+/**
+ * Una etiqueta de conversion de Google Ads por cada forma de contactar.
+ *
+ * OJO CON `formulario`: si en Google Ads la conversion del formulario se creo
+ * "por URL" -apuntando a b2b.porcorosso.com.ar/gracias/-, esta constante tiene
+ * que quedar VACIA. Google ya cuenta esa carga de pagina por su cuenta con la
+ * etiqueta base, y llenarla aca contaria el mismo lead dos veces: las
+ * conversiones se inflan y el algoritmo optimiza hacia datos falsos.
+ *
+ * `whatsapp` y `telefono` si necesitan su etiqueta propia: son clics, no
+ * cargas de pagina, y Google no puede detectarlos solo.
+ */
+const CONVERSIONES = {
+  formulario: "",
+  whatsapp: "",
+  telefono: "",
+};
+
+const activo = Boolean(GA4_ID || ADS_ID);
+---
+
+{activo && (
+  <>
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID || ADS_ID}`}></script>
+    <script is:inline define:vars={{ GA4_ID, ADS_ID }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag("js", new Date());
+      if (GA4_ID) gtag("config", GA4_ID);
+      if (ADS_ID) gtag("config", ADS_ID);
+    </script>
+  </>
+)}
+
+<script is:inline define:vars={{ CONVERSIONES, activo }}>
+  /**
+   * Registra un lead. `accion` es una clave de CONVERSIONES.
+   * Queda global para que /gracias/ la llame al confirmar el envio.
+   */
+  window.prConversion = function (accion) {
+    if (!activo || typeof window.gtag !== "function") return;
+
+    // GA4: evento propio, para ver el embudo completo en Analytics.
+    window.gtag("event", "lead_" + accion, { metodo: accion });
+
+    // Google Ads: solo si esa accion tiene su etiqueta cargada.
+    const etiqueta = CONVERSIONES[accion];
+    if (etiqueta) window.gtag("event", "conversion", { send_to: etiqueta });
+  };
+
+  /**
+   * GCLID: el identificador del clic de Google Ads que trajo al visitante.
+   *
+   * Para que sirve: la columna Origen del CSV dice por que landing entro el
+   * lead; el GCLID dice que clic exacto lo trajo -campana, palabra clave, dia-.
+   * Y sobre todo habilita las conversiones sin conexion: en un ciclo de venta
+   * B2B, un formulario no es una venta, es una consulta que puede terminar en
+   * un cliente de 500 kg por mes o en nada. Guardando el GCLID, cuando un lead
+   * se convierte en cliente real semanas despues se puede subir ese dato a
+   * Google Ads, y el algoritmo pasa a buscar leads que compran en vez de leads
+   * que completan formularios. No se puede reconstruir hacia atras: si no se
+   * guarda desde el primer dia, esa puerta queda cerrada.
+   *
+   * Se persiste en vez de leerlo al enviar porque el parametro viene solo en la
+   * URL de aterrizaje: si el visitante entra por /gastronomicos/?gclid=... y
+   * despues navega a la home antes de completar, ya no esta en la URL.
+   *
+   * wbraid y gbraid son los reemplazos del gclid cuando el navegador restringe
+   * el seguimiento. Se guardan igual, en el mismo lugar.
+   *
+   * Requiere que el auto-etiquetado este activo en Google Ads, o el parametro
+   * ni siquiera viaja. Viene prendido por defecto.
+   */
+  const CLIC_CLAVE = "porcorosso:clic-ads";
+  const CLIC_DIAS = 90; // la ventana de conversion por defecto de Google Ads
+
+  try {
+    const params = new URLSearchParams(location.search);
+    const id = params.get("gclid") || params.get("wbraid") || params.get("gbraid");
+    // Un clic nuevo pisa al anterior: vale el ultimo que trajo a la persona.
+    if (id) localStorage.setItem(CLIC_CLAVE, JSON.stringify({ id, ts: Date.now() }));
+  } catch {
+    // Si el navegador bloquea localStorage, el sitio funciona igual sin esto.
+  }
+
+  /**
+   * Devuelve { id, ts } del ultimo clic de Google Ads, o null si no hay o
+   * caduco.
+   *
+   * Devuelve tambien CUANDO fue el clic, y no solo el identificador, porque los
+   * 90 dias de Google se cuentan desde el clic, no desde la consulta. Un lead
+   * que entra por un anuncio y recien completa el formulario 80 dias despues
+   * llega con 10 dias de ventana para subir la conversion, no con 90. Sin la
+   * fecha del clic en la planilla no habria forma de saberlo.
+   */
+  window.prClic = function () {
+    try {
+      const crudo = localStorage.getItem(CLIC_CLAVE);
+      if (!crudo) return null;
+      const guardado = JSON.parse(crudo);
+      if (Date.now() - guardado.ts > CLIC_DIAS * 24 * 60 * 60 * 1000) {
+        localStorage.removeItem(CLIC_CLAVE);
+        return null;
+      }
+      return guardado.id ? { id: guardado.id, ts: guardado.ts } : null;
+    } catch {
+      return null;
+    }
+  };
+
+  /**
+   * WhatsApp y telefono se enganchan solos, en cualquier pagina y sobre
+   * cualquier enlace, para no tener que acordarse de instrumentar cada boton
+   * nuevo. Van por captura porque algunos enlaces abren en otra pestana.
+   */
+  document.addEventListener(
+    "click",
+    (e) => {
+      const enlace = e.target.closest?.("a[href]");
+      if (!enlace || enlace.hasAttribute("data-no-medir")) return;
+      const destino = enlace.getAttribute("href") || "";
+      if (destino.includes("wa.me")) window.prConversion("whatsapp");
+      else if (destino.startsWith("tel:")) window.prConversion("telefono");
+    },
+    true,
+  );
+</script>

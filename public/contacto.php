@@ -99,6 +99,31 @@ if (!filter_var($lead['email'], FILTER_VALIDATE_EMAIL)) {
 $momento = date('Y-m-d H:i:s');
 $origen  = limpiar($_SERVER['HTTP_REFERER'] ?? '');
 
+// Identificador del clic de Google Ads. Va al CSV pero NO al mail: al comercial
+// que lee el lead no le dice nada, y solo agrega ruido. Sirve para subir
+// conversiones sin conexion cuando una consulta termina siendo cliente real.
+// Se agrega al final, despues de Origen, para no correr las columnas de los
+// leads que ya esten guardados.
+$gclid = limpiar($datos['gclid'] ?? '');
+
+// Cuando ocurrio el clic, y hasta cuando se puede subir la conversion.
+// Google no importa conversiones sin conexion subidas mas de 90 dias despues
+// del clic, y ese plazo corre desde el clic, no desde esta consulta: si alguien
+// hizo clic en un anuncio y completa el formulario 80 dias despues, quedan 10
+// dias, no 90. La fecha limite va calculada en la planilla para no tener que
+// sacar la cuenta lead por lead.
+// El timestamp lo pone el navegador del visitante, asi que un reloj mal puesto
+// puede mandar una fecha futura o absurda. Se descarta lo que no tenga sentido
+// contra la hora del servidor: preferimos la columna vacia a una fecha inventada
+// que haga creer que todavia hay ventana para subir la conversion.
+$clicMs  = (int) preg_replace('/\D/', '', (string) ($datos['gclid_ts'] ?? ''));
+$clicSeg = intdiv($clicMs, 1000);
+$ahora   = time();
+$valido  = $clicSeg > 0 && $clicSeg <= $ahora + 86400 && $clicSeg >= $ahora - 90 * 86400;
+
+$clicFecha = $valido ? date('Y-m-d', $clicSeg) : '';
+$subirAnte = $valido ? date('Y-m-d', $clicSeg + 90 * 86400) : '';
+
 // ---- Respaldo en CSV -------------------------------------------
 
 $guardado = false;
@@ -110,9 +135,9 @@ if (is_dir($carpeta) || @mkdir($carpeta, 0700, true)) {
         if (flock($manejador, LOCK_EX)) {
             if ($nuevo) {
                 fwrite($manejador, "\xEF\xBB\xBF");   // BOM: Excel abre los acentos bien
-                fputcsv($manejador, array_merge(['Fecha'], array_values($CAMPOS), ['Origen']), ',', '"', '\\');
+                fputcsv($manejador, array_merge(['Fecha'], array_values($CAMPOS), ['Origen', 'GCLID', 'Fecha del clic', 'Subir conversion antes de']), ',', '"', '\\');
             }
-            fputcsv($manejador, array_merge([$momento], array_values($lead), [$origen]), ',', '"', '\\');
+            fputcsv($manejador, array_merge([$momento], array_values($lead), [$origen, $gclid, $clicFecha, $subirAnte]), ',', '"', '\\');
             $guardado = true;
             flock($manejador, LOCK_UN);
         }

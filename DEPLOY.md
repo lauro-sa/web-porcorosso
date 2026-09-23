@@ -20,6 +20,21 @@ archivos por SSH. El servidor no necesita Node: solo sirve HTML, CSS, imágenes 
 La clave pública está autorizada en hPanel → Avanzado → Acceso SSH, con el nombre
 `claude-code-deploy`.
 
+⚠️ **La clave privada no está en el repo y nunca debe estarlo.** Vive solo en la
+máquina desde la que se viene publicando. Si trabajás desde otra computadora, o sos
+un agente sin acceso a ese archivo, **no vas a poder desplegar**: podés hacer
+cambios y commitearlos, pero publicar requiere una clave nueva.
+
+Para habilitar otra máquina, generá un par nuevo y subí la pública al panel:
+
+```bash
+ssh-keygen -t ed25519 -f ~/.ssh/hostinger_porcorosso -C "deploy-porcorosso" -N ""
+cat ~/.ssh/hostinger_porcorosso.pub
+```
+
+Esa clave pública se pega en hPanel → Avanzado → Acceso SSH → Claves SSH. Después
+de eso, el comando de publicación de abajo funciona igual.
+
 ## Publicar cambios
 
 ```bash
@@ -30,6 +45,30 @@ rsync -avz --delete -e "ssh -i ~/.ssh/hostinger_porcorosso -p 65002" \
 
 `--delete` sincroniza exacto: lo que no está en `dist/` se borra del servidor. Como
 `dist/` se regenera entero en cada build, es el comportamiento deseado.
+
+## Publicar solo una parte
+
+Producción se publica desde la rama **`produccion`**, no desde `main`. `main` tiene
+trabajo que el titular todavía no autorizó a subir (las páginas de segmento, la
+medición). Para publicar un cambio suelto:
+
+```bash
+git worktree add ../porcorosso-publicar produccion
+cd ../porcorosso-publicar && ln -s ../web-porcorosso/node_modules node_modules
+# traer solo los archivos del cambio desde main, o hacer cherry-pick si no choca
+git checkout main -- ruta/al/archivo
+npm run build
+rsync -rn --checksum --delete --itemize-changes -e "ssh -i ~/.ssh/hostinger_porcorosso -p 65002" \
+  dist/ u512253031@212.85.6.214:/home/u512253031/domains/porcorosso.com.ar/public_html/b2b/
+```
+
+Mirar la lista del `-n` antes de publicar de verdad: tienen que aparecer solo los
+archivos del cambio. Aparecen siempre `sitemap-index.xml` y los dos logos WebP, porque
+cambian en cada build aunque el contenido sea el mismo; eso es normal. Después,
+commitear en `produccion`, borrar el symlink y `git worktree remove`.
+
+Cuando el titular autorice subir todo, se publica `main` y `produccion` se pone al día
+con `git branch -f produccion main`.
 
 ## Los leads del formulario
 

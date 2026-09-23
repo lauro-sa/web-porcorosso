@@ -1,4 +1,6 @@
 ---
+import Medicion from "../components/Medicion.astro";
+
 interface Props {
   title?: string;
   description?: string;
@@ -23,6 +25,11 @@ const ogImage = new URL("/images/og/og-image.png", Astro.site ?? Astro.url).href
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- iOS pinta la barra de estado (hora, wifi, bateria) con este color, no
+         con lo que se ve debajo. El navbar lo va actualizando al scrollear para
+         que acompañe el fondo translucido. Ver el script de NavBar.astro. -->
+    <meta name="theme-color" content="#f3e3cc" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -82,9 +89,14 @@ const ogImage = new URL("/images/og/og-image.png", Astro.site ?? Astro.url).href
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
+      // @id fijo: el marcado se repite en cada pagina, y sin un identificador
+      // estable buscadores y modelos pueden leer una entidad distinta por
+      // pagina en vez de un mismo negocio. La url tambien apunta siempre a la
+      // home, no a la pagina donde aparece el marcado.
+      "@id": "https://b2b.porcorosso.com.ar/#negocio",
       "name": "Porco Rosso",
       "description": "Empresa familiar agroindustrial. Proveedor mayorista de carne porcina en CABA y Gran Buenos Aires. Integración vertical completa: criamos, faenamos, despostamos, elaboramos y entregamos.",
-      "url": canonicalURL,
+      "url": "https://b2b.porcorosso.com.ar",
       "logo": ogImage,
       "image": ogImage,
       "telephone": "+5491172714251",
@@ -139,6 +151,7 @@ const ogImage = new URL("/images/og/og-image.png", Astro.site ?? Astro.url).href
       Ir al contenido principal
     </a>
     <slot />
+    <Medicion />
     <script is:inline src="/firma-stian/firma-stian.js" defer></script>
   </body>
 </html>
