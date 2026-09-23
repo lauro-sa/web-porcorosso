@@ -497,6 +497,8 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
 </div>
 
 <script>
+  import { WHATSAPP_B2B } from "../lib/whatsapp";
+
   // ====== CONFIG ======
   const RECAPTCHA_SITE_KEY = "RECAPTCHA_SITE_KEY_HERE"; // Reemplazar con tu site key de Google reCAPTCHA v3
   const FORM_ENDPOINT = "/contacto.php"; // Receptor PHP en el mismo hosting (public/contacto.php)
@@ -616,7 +618,6 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
   // comercial repreguntar todo. El envío al servidor se mantiene igual, porque
   // si la persona cierra WhatsApp sin mandar, el lead quedó en el CSV.
 
-  const WHATSAPP_B2B = "5491172714251";
 
   const ETIQUETAS_VALOR: Record<string, string> = {
     restaurante: "Restaurante / Bar",
@@ -674,6 +675,12 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
     }
     const mensaje = legible(data.mensaje);
     if (mensaje) partes.push(`*Comentarios*\n${mensaje}`);
+
+    // Firma discreta (entre guiones bajos = cursiva en WhatsApp) para que quien
+    // atiende sepa que la consulta vino del formulario y que los datos ya estan
+    // en la planilla. Sin la direccion de la web a proposito: con un link,
+    // WhatsApp agrega una vista previa grande y deja de ser discreta.
+    partes.push("_Enviado desde el formulario de la web B2B de Porco Rosso._");
 
     return partes.join("\n\n");
   }
