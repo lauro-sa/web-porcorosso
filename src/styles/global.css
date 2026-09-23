@@ -166,6 +166,17 @@ input[type="checkbox"].pr-check:checked::after {
   margin: 1px auto 0;
 }
 
+/* Ilustraciones sobre fondo oscuro (carne, morcilla). Los dibujos son lineas
+   oscuras con relleno blanco: bajandoles la opacidad sobre un fondo oscuro
+   quedaban como una mancha gris borrosa. Invertidos, las lineas pasan a claras
+   y el relleno a negro, y el modo screen hace desaparecer el negro: queda solo
+   el trazo claro sobre el color de la seccion. La opacidad del contenedor
+   regula cuanto se nota. */
+.ilustracion-clara {
+  filter: invert(1);
+  mix-blend-mode: screen;
+}
+
 /* Custom select */
 select.pr-select {
   appearance: none;
