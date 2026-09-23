@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Footer from "../components/Footer.astro";
 import Button from "../components/Button.astro";
 import { Image } from "astro:assets";
 import nonaPig from "../assets/images/ilustraciones/nona-pig.webp";
@@ -18,7 +17,7 @@ import "../styles/global.css";
  * ErrorDocument de public/.htaccess. Sin esa regla, Hostinger sigue mostrando
  * la suya. Va con noindex y queda fuera del sitemap.
  *
- * Sin el navbar completo, a proposito: con el menu del sitio arriba parecia una
+ * Sin navbar ni pie, a proposito: con el menu y el pie del sitio parecia una
  * seccion mas y no un error. Solo el logo, que lleva al inicio.
  *
  * Los enlaces van con barra delante (/#productos): desde /404 el ancla suelta
@@ -54,21 +53,38 @@ const atajos = [
   </header>
   <main id="contenido-principal" class="relative overflow-hidden bg-hueso min-h-dvh flex items-center">
     <!-- El 404 es el protagonista: gigante y semitransparente, detras del texto.
-         Es decorativo; el codigo lo anuncia el titulo de la pagina. -->
+         Es decorativo; el codigo lo anuncia el titulo de la pagina. En celular
+         de fondo quedaba flotando detras de los botones, asi que ahi va arriba,
+         en el flujo, con la ilustracion apoyada encima (ver mas abajo). -->
     <div
       aria-hidden="true"
-      class="pointer-events-none select-none absolute inset-0 flex items-center justify-center"
+      class="pointer-events-none select-none absolute inset-0 hidden md:flex items-center justify-center"
     >
       <span class="font-display font-bold leading-none tracking-tight text-carne/15 text-[48vw] md:text-[38vw] xl:text-[34rem]">
         404
       </span>
     </div>
 
-    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20 w-full">
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 md:pt-32 pb-16 md:pb-20 w-full">
       <div class="grid md:grid-cols-[1fr_auto] gap-10 md:gap-16 items-center">
 
         <div>
-          <span class="font-accent text-xs tracking-widest text-carne uppercase">Página no encontrada</span>
+          <!-- Version celular del 404: numero y abuela juntos, arriba del titulo. -->
+          <div aria-hidden="true" class="md:hidden relative select-none mb-3">
+            <span class="block font-display font-bold leading-[0.8] tracking-tight text-carne/15 text-[52vw]">
+              404
+            </span>
+            <Image
+              src={nonaPig}
+              alt=""
+              class="absolute right-0 -bottom-2 h-40 w-auto"
+              widths={[96, 192]}
+              sizes="96px"
+              loading="eager"
+            />
+          </div>
+
+          <span class="relative font-accent text-xs tracking-widest text-carne uppercase">Página no encontrada</span>
           <h1 class="font-display font-bold uppercase text-5xl md:text-7xl leading-[0.9] text-morcilla mt-3 mb-5">
             Este corte<br /><span class="text-carne">no lo tenemos.</span>
           </h1>
@@ -105,13 +121,13 @@ const atajos = [
           </nav>
         </div>
 
-        <div class="flex justify-center">
+        <div class="hidden md:flex justify-center">
           <Image
             src={nonaPig}
             alt="Ilustración Nona Pig - Porco Rosso"
-            class="h-56 md:h-96 w-auto opacity-90"
-            widths={[133, 228, 456]}
-            sizes="(min-width: 768px) 228px, 133px"
+            class="h-96 w-auto opacity-90"
+            widths={[228, 456]}
+            sizes="228px"
             loading="eager"
           />
         </div>
@@ -119,5 +135,4 @@ const atajos = [
       </div>
     </div>
   </main>
-  <Footer />
 </Layout>
