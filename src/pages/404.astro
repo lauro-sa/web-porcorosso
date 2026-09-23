@@ -200,7 +200,7 @@ const atajos = [
   const sinMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (abuela && numero && !sinMovimiento) {
-    const PERIODO = 3.8; // segundos por vaiven completo
+    const PERIODO = 3.2; // segundos por vaiven completo
     const w = (2 * Math.PI) / PERIODO;
     const RAD = Math.PI / 180;
 
@@ -257,17 +257,34 @@ const atajos = [
       }
     };
 
-    // Cada vuelta se sortea cuanto se quiere abrir, entre 0,55 y 1,35 veces
-    // lo necesario para llegar: mas o menos la mitad de las veces lo toca.
-    const sortear = () => anguloTope * (0.55 + Math.random() * 0.8);
+    // Ritmo pedido por el titular: el primer vaiven golpea (la sorpresa),
+    // despues una o dos idas se quedan cortas, a proposito, para que uno se
+    // quede esperando, y recien ahi otro golpe. Nunca dos golpes seguidos.
+    // Por eso no se sortea libre: se lleva la cuenta de las idas que faltan
+    // hasta el proximo golpe, y solo el tamaño exacto de cada ida es al azar.
+    let idasSinGolpe = 0;
+    const sortearEspera = () => 1 + Math.floor(Math.random() * 2); // 1 o 2
+    const idaCorta = () => anguloTope * (0.55 + Math.random() * 0.3); // no llega
+    const idaQueGolpea = () => anguloTope * (1.25 + Math.random() * 0.2);
+    const proximoObjetivo = () => {
+      if (idasSinGolpe > 0) {
+        idasSinGolpe--;
+        return idaCorta();
+      }
+      // Si una ida que tenia que golpear se quedo corta (pasa cuando viene de
+      // muy abajo), la siguiente lo vuelve a intentar: idasSinGolpe sigue en 0.
+      return idaQueGolpea();
+    };
 
     medirTope();
     window.addEventListener("resize", medirTope);
     document.fonts?.ready.then(medirTope); // la tipografia cambia el ancho del 404
 
-    let angulo = 0;
+    // Arranca soltada desde el lado de afuera con fuerza de sobra, para que
+    // el primer golpe llegue enseguida (en medio vaiven) y no a los segundos.
+    let angulo = -anguloTope * 1.3;
     let velocidad = 0;
-    let objetivo = sortear();
+    let objetivo = anguloTope * 1.3;
     let anterior = performance.now();
     let ultimoGolpe = 0;
 
@@ -288,18 +305,20 @@ const atajos = [
         // cerca del centro, donde va rapido, que es donde no se nota.
         const amplitud = Math.hypot(angulo, velocidad / w);
         const ajuste = (objetivo - amplitud) / Math.max(amplitud, 0.2);
-        velocidad *= 1 + ajuste * 0.9 * dt;
+        velocidad *= 1 + ajuste * 1.6 * dt;
         if (Math.abs(velocidad) < 0.01 && Math.abs(angulo) < 0.01) velocidad = w * 0.3;
 
         angulo += velocidad * dt;
 
         // Una vez por vuelta, al cruzar el centro hacia el numero, cambia el
         // objetivo.
-        if (antes < 0 && angulo >= 0) objetivo = sortear();
+        if (antes < 0 && angulo >= 0) objetivo = proximoObjetivo();
 
         if (velocidad > 0 && angulo >= anguloTope) {
           angulo = anguloTope;
           velocidad = -velocidad * 0.6; // rebote que pierde fuerza
+          idasSinGolpe = sortearEspera();
+          objetivo = idaCorta();
           if (ahora - ultimoGolpe > 400) {
             ultimoGolpe = ahora;
             numero.classList.remove("golpe");
