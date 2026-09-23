@@ -83,14 +83,21 @@ const atajos = [
             <span class="block font-display font-bold leading-[0.7] tracking-tight text-carne/20 text-[min(48vw,23dvh)]">
               404
             </span>
-            <Image
-              src={nonaPig}
-              alt=""
-              class="h-[calc(min(48vw,23dvh)*0.97)] w-auto"
-              widths={[86, 172]}
-              sizes="86px"
-              loading="eager"
-            />
+            <!-- Cabeza abajo, colgada de la linea donde empiezan los digitos:
+                 como mide lo mismo que el numero, girarla 180 grados en su lugar
+                 deja los pies en esa linea (el 11% compensa el margen vacio de la
+                 imagen, que es mayor arriba). El balanceo va en el contenedor, con
+                 el eje arriba, para que oscile desde los pies. -->
+            <span class="colgada block">
+              <Image
+                src={nonaPig}
+                alt=""
+                class="h-[calc(min(48vw,23dvh)*0.97)] w-auto rotate-180 translate-y-[11%]"
+                widths={[86, 172]}
+                sizes="86px"
+                loading="eager"
+              />
+            </span>
           </div>
 
           <span class="font-accent text-xs tracking-widest text-carne uppercase">Página no encontrada</span>
@@ -145,3 +152,18 @@ const atajos = [
     </div>
   </main>
 </Layout>
+
+<style>
+  /* Balanceo suave de la abuela colgada: oscila desde los pies, arriba. */
+  .colgada {
+    transform-origin: 50% 0;
+    animation: balanceo 3.2s ease-in-out infinite;
+  }
+  @keyframes balanceo {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .colgada { animation: none; }
+  }
+</style>
