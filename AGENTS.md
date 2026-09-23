@@ -60,12 +60,17 @@ Son dos versiones distintas, y confundirlas ya generó dudas:
 | Dónde | Qué versión | Tiene las páginas `/mayoristas/` y `/gastronomicos/` |
 |---|---|---|
 | **https://b2b.porcorosso.com.ar** (online) | La rama **`produccion`** | No (dan 404) |
+| **`localhost:4322`**, si alguien lo levantó desde `../porcorosso-online` | La rama **`produccion`**, igual que online | No |
 | **`npm run dev`** en la carpeta del repo (`localhost:4321`) | La rama **`main`** | Sí |
 
-`main` es donde se trabaja y va **adelantada**: tiene cosas hechas que el titular
-todavía no autorizó a publicar. `produccion` es exactamente lo que está online. El
-titular quiere por ahora **una sola landing**; las páginas de segmento se suben cuando
-lo autorice.
+`produccion` es **`main` menos las páginas de segmento**: el titular autorizó publicar
+todas las mejoras de la landing, pero por ahora quiere **una sola landing**. En
+`produccion` hay un commit que borra `/mayoristas/` y `/gastronomicos/` y saca sus
+enlaces del menú, el pie, la sección de segmentos y `llms.txt`. Se suben cuando el
+titular lo autorice.
+
+Para publicar algo nuevo de `main`: traerlo a `produccion` con `git merge main` y
+publicar desde ahí (ver [DEPLOY.md](DEPLOY.md)). **Nunca publicar desde `main`.**
 
 Para ver en local exactamente lo que está online:
 
@@ -179,8 +184,8 @@ Cada una salió de un problema real:
     decreciente más una de color aparte. Si lo simplificás a una sola capa vuelve
     la línea. Medido: el velo le saca el 96% del detalle al contenido de atrás.
 
-12. **`localhost` no es producción.** `npm run dev` muestra `main`, que va adelantada
-    a lo publicado. Lo que está online es la rama `produccion`. Ver "Qué está online y
+12. **`localhost` no es producción.** `npm run dev` en el repo muestra `main`, que
+    tiene las páginas de segmento. Lo que está online es la rama `produccion`. Ver "Qué está online y
     qué estás viendo en local", arriba. Y no publicar `main` entero sin autorización
     del titular: subiría las páginas de segmento.
 
@@ -252,41 +257,38 @@ de cifras y en `llms.txt`. No cambiarlo sin confirmación del titular.
 
 *Última actualización: 22 de septiembre de 2026.*
 
-**Producción no es `main`: es la rama `produccion`.** El titular quiere mantener por
-ahora **una sola landing** y subir las páginas de segmento más adelante, cuando lo
-autorice. Por eso el 22/09 se publicó desde `produccion`, que sale de `43a07f0` (lo que
-estaba online) y suma solo la consulta por WhatsApp. **No publicar `main` entero sin
-autorización del titular**: subiría `/mayoristas/`, `/gastronomicos/` y todo lo de abajo.
-Cómo publicar un cambio suelto: ver "Publicar solo una parte" en [DEPLOY.md](DEPLOY.md).
+**Publicado el 22/09/2026, desde la rama `produccion`:** todo lo que había en `main`
+menos las páginas de segmento. Es decir, además de lo que ya estaba (landing,
+formulario a mail y planilla, `/gracias`, `/privacidad`, preguntas frecuentes, imágenes
+responsive):
 
-⚠️ La campaña ya empezó a gastar (según el titular, 22/09) y producción **no tiene
-medición**: Google Ads no ve los leads. Los anuncios van a la home, que funciona.
+- La **consulta del formulario abierta en WhatsApp** con los datos en viñetas. Ver
+  "Cómo llegan los leads".
+- La **medición de conversiones** ([Medicion.astro](src/components/Medicion.astro)).
+  Está online pero **inactiva hasta que se carguen los IDs** de GA4 y Google Ads.
+- La **captura del GCLID**, que sí funciona sin los IDs, y su columna en el CSV
+  ([contacto.php](public/contacto.php)), agregada al final para no correr las columnas
+  de los leads viejos.
+- La imagen nueva de Open Graph, el `llms.txt` que responde que abastecen hoteles, y
+  el color de la barra de estado de iOS (pendiente de probarse en un iPhone real).
 
-Sin publicar (está en `main`, no en `produccion`):
+**Sin publicar, a la espera del titular:** `/mayoristas/` y `/gastronomicos/`. Están
+en `main`, no en `produccion`.
 
-- El color de la barra de estado de iOS (`theme-color`, en `NavBar.astro`,
-  `Layout.astro` y `global.css`). Quedó pendiente de probarse en un iPhone real.
-- Las páginas **`/mayoristas/` y `/gastronomicos/`**, con el navbar, el pie y la
-  sección de segmentos de la home enlazando a ellas.
-- El `llms.txt` actualizado, que ahora responde explícitamente que la empresa
-  abastece hoteles y enlaza las dos páginas nuevas.
-- La **medición de conversiones** ([Medicion.astro](src/components/Medicion.astro)),
-  a la espera de los IDs de GA4 y Google Ads. Incluye la captura del GCLID, que ya
-  funciona sin depender de esos IDs.
-- El cambio en [contacto.php](public/contacto.php) que suma la columna **GCLID** al CSV.
-  Se agrega al final, después de Origen, para no correr las columnas de los leads que ya
-  estén guardados.
+⚠️ La campaña ya empezó a gastar (según el titular, 22/09). Los anuncios van a la home,
+que funciona, pero **Google Ads todavía no ve ningún lead**: el único bloqueante son los
+IDs de las tres conversiones. Cuando el titular los pase, pegarlos en
+[Medicion.astro](src/components/Medicion.astro) en `main`, mergear a `produccion` y
+publicar.
+
+Lo del 22/09 quedó commiteado en local, en `main` y en `produccion`. Falta pushear las
+dos ramas (verificar con `git status -sb`).
 
 **Por qué se hicieron las páginas de segmento:** un usuario le preguntó a un asistente
 de IA a quién comprarle cerdo para un hotel en CABA y Porco Rosso apareció cuarto en
 una lista, con un teléfono inventado —o sea que el modelo ni leyó el sitio—. El sitio
 nombraba hoteles al pasar y no decía *buffet*, *desayuno*, *banquete* ni *gramaje* una
 sola vez. Ahora hay una página que responde esa intención de búsqueda exacta.
-
-**Publicado y funcionando:** la consulta del formulario abierta en WhatsApp con los
-datos en viñetas (22/09/2026, desde `produccion`), el sitio, el formulario que manda los leads a mail y
-planilla, `/gracias`, `/privacidad`, las preguntas frecuentes, `llms.txt` y las
-imágenes responsive.
 
 **En curso, esperando a Google:** la propiedad de Search Console está verificada y
 el sitemap enviado, pero Google todavía no lo rastreó. Es normal en un sitio nuevo;

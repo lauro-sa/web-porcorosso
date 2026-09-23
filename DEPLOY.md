@@ -37,6 +37,8 @@ de eso, el comando de publicación de abajo funciona igual.
 
 ## Publicar cambios
 
+⚠️ Desde la rama `produccion`, no desde `main`: ver la sección siguiente.
+
 ```bash
 npm run build
 rsync -avz --delete -e "ssh -i ~/.ssh/hostinger_porcorosso -p 65002" \
@@ -46,29 +48,31 @@ rsync -avz --delete -e "ssh -i ~/.ssh/hostinger_porcorosso -p 65002" \
 `--delete` sincroniza exacto: lo que no está en `dist/` se borra del servidor. Como
 `dist/` se regenera entero en cada build, es el comportamiento deseado.
 
-## Publicar solo una parte
+## La rama `produccion`
 
-Producción se publica desde la rama **`produccion`**, no desde `main`. `main` tiene
-trabajo que el titular todavía no autorizó a subir (las páginas de segmento, la
-medición). Para publicar un cambio suelto:
+Producción se publica **siempre desde la rama `produccion`, nunca desde `main`**.
+`produccion` es `main` más un commit que borra `/mayoristas/` y `/gastronomicos/` y sus
+enlaces, porque el titular todavía no autorizó subirlas.
+
+Para publicar lo nuevo de `main`:
 
 ```bash
-git worktree add ../porcorosso-publicar produccion
-cd ../porcorosso-publicar && ln -s ../web-porcorosso/node_modules node_modules
-# traer solo los archivos del cambio desde main, o hacer cherry-pick si no choca
-git checkout main -- ruta/al/archivo
+git worktree add ../porcorosso-online produccion   # si no existe ya
+cd ../porcorosso-online && ln -s ../web-porcorosso/node_modules node_modules
+git merge main
 npm run build
 rsync -rn --checksum --delete --itemize-changes -e "ssh -i ~/.ssh/hostinger_porcorosso -p 65002" \
   dist/ u512253031@212.85.6.214:/home/u512253031/domains/porcorosso.com.ar/public_html/b2b/
+# si la lista está bien, repetir sin -n para publicar
 ```
 
-Mirar la lista del `-n` antes de publicar de verdad: tienen que aparecer solo los
-archivos del cambio. Aparecen siempre `sitemap-index.xml` y los dos logos WebP, porque
-cambian en cada build aunque el contenido sea el mismo; eso es normal. Después,
-commitear en `produccion`, borrar el symlink y `git worktree remove`.
+Mirar la lista del `-n` antes de publicar: tienen que aparecer solo los archivos del
+cambio. `sitemap-index.xml` y los dos logos WebP aparecen siempre, porque cambian en
+cada build aunque el contenido sea el mismo; es normal.
 
-Cuando el titular autorice subir todo, se publica `main` y `produccion` se pone al día
-con `git branch -f produccion main`.
+Si un merge choca con las páginas borradas (porque en `main` se editaron), resolver
+dejándolas borradas. Cuando el titular autorice subirlas: `git branch -f produccion
+main` y publicar.
 
 ## Los leads del formulario
 
