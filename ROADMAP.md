@@ -69,7 +69,7 @@ en Google, campañas pagas (Google Ads y redes) y recomendación en asistentes d
       contacto. Si el navegador no redirige, queda un botón. Si el servidor falla,
       el aviso de error ofrece el mismo mensaje por WhatsApp. El botón de
       `/gracias/` no se mide como lead de WhatsApp, para no contar dos conversiones
-      por la misma consulta. **Publicado el 22/09/2026** desde la rama `produccion`
+      por la misma consulta. **Publicado el 22/09/2026**
 - [x] **`scroll-padding-top`**: los saltos a `#productos`, `#nosotros`, etc. ya no quedan
       escondidos detrás del navbar fijo
 
@@ -154,14 +154,16 @@ se gaste antes de que la medición esté publicada no se puede analizar ni recup
        apuntando a `/gracias/`, dejar `CONVERSIONES.formulario` vacío**: Google ya la
        cuenta sola con la etiqueta base, y cargarla ahí contaría el mismo lead dos
        veces. WhatsApp y teléfono sí necesitan su etiqueta, porque son clics.
-3. [ ] Buildear y publicar según [DEPLOY.md](DEPLOY.md). **Sin esto, la campaña corre a
-       ciegas**: el sitio en producción todavía no tiene la medición ni las páginas de
-       segmento.
+3. [ ] Buildear y publicar desde la rama `produccion` según [DEPLOY.md](DEPLOY.md).
+       El código de medición ya está online desde el 22/09/2026, pero inactivo hasta
+       tener los IDs. Las páginas de segmento **no** están publicadas: el titular
+       quiere una sola landing por ahora.
 4. [ ] Comprobar en producción que las tres conversiones registran: entrar al sitio,
        tocar el botón de WhatsApp, tocar el teléfono y mandar el formulario de prueba.
        En Google Ads las conversiones tardan unas horas en aparecer.
-5. [ ] Revisar que los anuncios apunten a la página que corresponde: gastronómicos a
-       `/gastronomicos/` y mayoristas a `/mayoristas/`, no los dos a la home. Una
+5. [ ] Cuando el titular autorice publicar las páginas de segmento: que los anuncios
+       apunten a la página que corresponde, gastronómicos a `/gastronomicos/` y
+       mayoristas a `/mayoristas/`. Hasta entonces, todo va a la home. Una
        landing específica sube el nivel de calidad y abarata el clic.
 6. [ ] Recién ahí, activar la campaña.
 
