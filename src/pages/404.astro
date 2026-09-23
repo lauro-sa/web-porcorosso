@@ -148,6 +148,18 @@ const atajos = [
   </main>
 </Layout>
 
+<style is:global>
+  /* En iPhone, la franja de arriba (hora, bateria, señal) se pinta con el fondo
+     del body, que en el sitio es frigo para empalmar con el velo del navbar
+     (ver body en global.css). La 404 no tiene navbar y es toda hueso, asi que
+     aca el body tambien: la pagina queda del mismo color de punta a punta. La
+     barra de abajo ya la pinta el meta theme-color, que es hueso. Este estilo
+     solo se carga en la 404. */
+  body {
+    background-color: var(--color-hueso);
+  }
+</style>
+
 <style>
   /* La abuela oscila desde donde esta atado el hilo, arriba de la pantalla,
      no desde sus pies: por eso el eje esta 100dvh por encima. El movimiento
