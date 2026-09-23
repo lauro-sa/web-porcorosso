@@ -71,30 +71,25 @@ const atajos = [
       <div class="grid md:grid-cols-[1fr_auto] gap-16 items-center">
 
         <div>
-          <!-- Version celular del 404: numero y abuela uno al lado del otro,
-               apoyados sobre la misma linea y sin pisarse. Se probaron
-               superpuestos y no funciona: encima del numero el relleno blanco del
-               dibujo tapa los digitos, y con el titulo encima el 404 no se lee.
-               Se dimensiona por el alto (dvh) para entrar sin scroll. La
-               ilustracion mide 0.97 del tamaño de letra: los digitos de Barlow
-               Condensed miden ~0.73 y el dibujo ocupa ~0.75 de su imagen, asi
-               que a ese tamaño el dibujo y el numero quedan del mismo alto. -->
-          <div aria-hidden="true" class="md:hidden select-none flex items-center justify-between gap-4 mb-5">
+          <!-- Version celular del 404: el numero a la izquierda y la abuela
+               colgada cabeza abajo de un hilo que baja desde arriba de todo de la
+               pantalla. Va en posicion absoluta para que colgar no empuje el
+               contenido (la pagina tiene que entrar sin scroll) y el hilo se
+               corta en el borde de arriba porque el main tiene overflow-hidden.
+               Superpuesta al numero no funcionaba: su relleno blanco tapaba los
+               digitos. Todo se dimensiona por el alto (dvh) ademas del ancho. -->
+          <div aria-hidden="true" class="md:hidden select-none relative mb-5">
             <span class="block font-display font-bold leading-[0.7] tracking-tight text-carne/20 text-[min(48vw,23dvh)]">
               404
             </span>
-            <!-- Cabeza abajo, colgada de la linea donde empiezan los digitos:
-                 como mide lo mismo que el numero, girarla 180 grados en su lugar
-                 deja los pies en esa linea (el 11% compensa el margen vacio de la
-                 imagen, que es mayor arriba). El balanceo va en el contenedor, con
-                 el eje arriba, para que oscile desde los pies. -->
-            <span class="colgada block">
+            <span class="colgada absolute right-3 -top-[22%]">
+              <span class="absolute bottom-full left-1/2 -translate-x-1/2 translate-y-1 w-px h-[100dvh] bg-morcilla/30"></span>
               <Image
                 src={nonaPig}
                 alt=""
-                class="h-[calc(min(48vw,23dvh)*0.97)] w-auto rotate-180 translate-y-[11%]"
-                widths={[86, 172]}
-                sizes="86px"
+                class="block h-[calc(min(48vw,23dvh)*0.8)] w-auto max-w-none rotate-180"
+                widths={[80, 160]}
+                sizes="80px"
                 loading="eager"
               />
             </span>
@@ -128,7 +123,7 @@ const atajos = [
             <ul class="grid grid-cols-2 gap-x-6 gap-y-1.5 md:gap-y-2">
               {atajos.map((a) => (
                 <li>
-                  <a href={a.href} class="text-morcilla hover:text-carne transition-colors text-sm">
+                  <a href={a.href} class="whitespace-nowrap text-morcilla hover:text-carne transition-colors text-sm">
                     {a.label} <span aria-hidden="true">→</span>
                   </a>
                 </li>
@@ -154,14 +149,17 @@ const atajos = [
 </Layout>
 
 <style>
-  /* Balanceo suave de la abuela colgada: oscila desde los pies, arriba. */
+  /* Balanceo de pendulo: la abuela oscila desde donde esta atado el hilo,
+     arriba de la pantalla, no desde sus pies. Por eso el eje esta 100dvh
+     por encima y el angulo es chico: a esa distancia un grado ya es un vaiven
+     visible. */
   .colgada {
-    transform-origin: 50% 0;
-    animation: balanceo 3.2s ease-in-out infinite;
+    transform-origin: 50% -100dvh;
+    animation: balanceo 3.6s ease-in-out infinite;
   }
   @keyframes balanceo {
-    0%, 100% { transform: rotate(-3deg); }
-    50% { transform: rotate(3deg); }
+    0%, 100% { transform: rotate(-1deg); }
+    50% { transform: rotate(1deg); }
   }
   @media (prefers-reduced-motion: reduce) {
     .colgada { animation: none; }
