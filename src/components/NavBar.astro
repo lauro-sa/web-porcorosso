@@ -183,12 +183,19 @@ const navLinks = [
       menuToggle?.setAttribute("aria-expanded", "false");
       menuToggle?.setAttribute("aria-label", "Abrir menú de navegación");
       navbar?.classList.remove("z-[70]");
-      document.body.style.overflow = "";
+      // Si el menu se cierra porque se abrio el formulario, el scroll sigue
+      // bloqueado: lo libera el formulario al cerrarse.
+      if (!document.querySelector(".modal-abierto")) document.body.style.overflow = "";
     }
   }
 
   menuToggle?.addEventListener("click", toggleMenu);
   mobileLinks?.forEach((link) => link.addEventListener("click", () => {
+    if (menuOpen) toggleMenu();
+  }));
+  // "Solicitar Info" del menu abre el formulario: el menu se cierra, asi al
+  // volver del formulario no queda abierto atras.
+  mobileMenu?.querySelectorAll("[data-open-form]").forEach((el) => el.addEventListener("click", () => {
     if (menuOpen) toggleMenu();
   }));
 </script>

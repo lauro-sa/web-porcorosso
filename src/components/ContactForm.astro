@@ -46,8 +46,28 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
         </div>
       </div>
 
+      <!-- En celular, el formulario embebido en la pagina obligaba a scrollear
+           adentro de la seccion con el teclado abierto. Ahi se reemplaza por
+           esta tarjeta, que abre el formulario a pantalla completa (el modal). -->
+      <div class="md:hidden bg-hueso p-6">
+        <span class="font-accent text-xs tracking-widest text-carne uppercase">Pedí tu presupuesto</span>
+        <p class="font-display font-bold uppercase text-2xl leading-tight text-morcilla mt-2">
+          Cuatro pasos, <span class="text-carne">un minuto.</span>
+        </p>
+        <p class="text-sm text-morcilla/60 mt-2">
+          Contanos qué negocio tenés y qué necesitás, y te armamos una propuesta.
+        </p>
+        <button
+          type="button"
+          data-open-form
+          class="mt-5 w-full px-6 py-3.5 bg-carne text-hueso font-display font-semibold text-sm uppercase tracking-wider active:bg-carne-dark transition-colors"
+        >
+          Completar formulario &rarr;
+        </button>
+      </div>
+
       <!-- Right: Multi-step Form -->
-      <div class="bg-hueso p-8 md:p-10">
+      <div class="hidden md:block bg-hueso p-8 md:p-10">
         <!-- Progress bar -->
         <div class="form-progress mb-8">
           <div class="flex justify-between mb-2">
@@ -115,7 +135,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
                 </label>
                 <input
                   type="text"
-                  name="empresa"
+                  name="empresa" autocomplete="organization"
                   required
                   class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
                   placeholder="Ej: Parrilla Don Julio"
@@ -127,7 +147,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
                 </label>
                 <input
                   type="text"
-                  name="zona"
+                  name="zona" autocomplete="address-level2"
                   required
                   class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
                   placeholder="Ej: Palermo, CABA"
@@ -215,7 +235,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
                 </label>
                 <input
                   type="text"
-                  name="nombre"
+                  name="nombre" autocomplete="name"
                   required
                   class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
                   placeholder="Tu nombre y apellido"
@@ -228,7 +248,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
                   </label>
                   <input
                     type="tel"
-                    name="telefono"
+                    name="telefono" autocomplete="tel"
                     required
                     class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
                     placeholder="+54 9 11..."
@@ -240,7 +260,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
                   </label>
                   <input
                     type="email"
-                    name="email"
+                    name="email" autocomplete="email"
                     required
                     class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors"
                     placeholder="tu@email.com"
@@ -296,7 +316,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
 <!-- ===================== MODAL ===================== -->
 <div
   id="form-modal"
-  class="fixed inset-0 z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300"
+  class="fixed inset-0 z-[100] md:flex md:items-center md:justify-center opacity-0 pointer-events-none transition-opacity duration-300"
   role="dialog"
   aria-modal="true"
   aria-label="Formulario de contacto"
@@ -304,12 +324,37 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
   <!-- Backdrop -->
   <div id="modal-backdrop" class="absolute inset-0 bg-morcilla/80 backdrop-blur-sm"></div>
 
-  <!-- Modal content -->
-  <div class="relative bg-hueso w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto p-8 md:p-10 shadow-2xl">
-    <!-- Close button -->
+  <!-- Modal content.
+       En celular es una pantalla completa, no una caja: encabezado fijo con
+       "Volver", las preguntas en el medio y los botones fijos abajo. El alto
+       sale de --alto-visible, que el script ajusta al viewport visible para que
+       los botones suban con el teclado. Solo el medio scrollea, y solo si el
+       paso no entra. En escritorio sigue siendo la caja centrada de siempre. -->
+  <div
+    id="modal-panel"
+    class="modal-panel absolute inset-x-0 top-0 h-[var(--alto-visible,100dvh)] flex flex-col bg-hueso
+           md:relative md:inset-auto md:h-auto md:block md:w-full md:max-w-lg md:mx-4 md:max-h-[90vh] md:overflow-y-auto md:p-10 md:shadow-2xl"
+  >
+    <!-- Encabezado de celular. Va en frigo porque es el color con el que Safari
+         pinta la barra de estado (ver body en global.css): asi empalman. -->
+    <div class="md:hidden shrink-0 flex items-center justify-between h-14 px-2 bg-frigo border-b border-morcilla/10">
+      <button
+        type="button"
+        id="modal-volver"
+        class="flex items-center gap-2 h-11 px-3 text-morcilla font-display font-semibold text-sm uppercase tracking-wider active:text-carne"
+      >
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 4l-6 6 6 6" />
+        </svg>
+        Volver
+      </button>
+      <span class="font-accent text-[10px] tracking-widest text-carne uppercase pr-3">Solicitar info</span>
+    </div>
+
+    <!-- Close button (escritorio) -->
     <button
       id="modal-close"
-      class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center text-morcilla/40 hover:text-morcilla transition-colors"
+      class="hidden md:flex absolute top-4 right-4 w-10 h-10 items-center justify-center text-morcilla/40 hover:text-morcilla transition-colors"
       aria-label="Cerrar formulario"
     >
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
@@ -317,8 +362,11 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
       </svg>
     </button>
 
-    <!-- Modal header -->
-    <div class="mb-6">
+    <!-- Zona central: en celular es la unica que scrollea, si hace falta. -->
+    <div id="modal-cuerpo" class="flex-1 min-h-0 overflow-y-auto overscroll-contain px-5 pt-5 pb-4 md:p-0 md:overflow-visible">
+
+    <!-- Modal header (en celular no entra: el paso ya dice donde estas) -->
+    <div class="hidden md:block mb-6">
       <span class="font-accent text-xs tracking-widest text-carne uppercase block mb-2">Solicitar info</span>
       <h3 class="font-display font-bold text-2xl md:text-3xl uppercase text-morcilla leading-tight">
         Armamos una propuesta <span class="text-carne">a tu medida.</span>
@@ -326,7 +374,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
     </div>
 
     <!-- Progress bar (modal) -->
-    <div class="modal-progress mb-6">
+    <div class="modal-progress mb-5 md:mb-6">
       <div class="flex justify-between mb-2">
         <span id="modal-step-label" class="font-accent text-xs tracking-widest text-carne uppercase">Paso 1 de 4</span>
         <span id="modal-step-title" class="font-display text-xs uppercase tracking-wider text-morcilla/50">Tipo de cliente</span>
@@ -341,7 +389,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
       <input type="text" name="sitio_web" tabindex="-1" autocomplete="off" aria-hidden="true" class="absolute w-px h-px -left-[9999px] opacity-0" />
       <!-- PASO 1 -->
       <div class="modal-step" data-step="1">
-        <p class="text-morcilla/60 mb-5 text-sm">¿Qué tipo de negocio tenés?</p>
+        <p class="text-morcilla/60 mb-3 md:mb-5 text-sm">¿Qué tipo de negocio tenés?</p>
         <div class="space-y-2.5">
           <label class="flex items-center gap-4 p-3.5 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
             <input type="radio" name="tipo_cliente" value="restaurante" class="pr-radio" />
@@ -382,15 +430,15 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
 
       <!-- PASO 2 -->
       <div class="modal-step hidden" data-step="2">
-        <p class="text-morcilla/60 mb-5 text-sm">Contanos sobre tu negocio.</p>
-        <div class="space-y-5">
+        <p class="text-morcilla/60 mb-3 md:mb-5 text-sm">Contanos sobre tu negocio.</p>
+        <div class="space-y-3.5 md:space-y-5">
           <div>
             <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Nombre del negocio *</label>
-            <input type="text" name="empresa" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="Ej: Parrilla Don Julio" />
+            <input type="text" name="empresa" autocomplete="organization" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="Ej: Parrilla Don Julio" />
           </div>
           <div>
             <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Zona / Localidad *</label>
-            <input type="text" name="zona" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="Ej: Palermo, CABA" />
+            <input type="text" name="zona" autocomplete="address-level2" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="Ej: Palermo, CABA" />
           </div>
         </div>
         <p id="modal-step2-error" class="text-carne text-xs mt-3 hidden">Completá los campos obligatorios.</p>
@@ -398,8 +446,8 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
 
       <!-- PASO 3 -->
       <div class="modal-step hidden" data-step="3">
-        <p class="text-morcilla/60 mb-5 text-sm">¿Qué te interesa?</p>
-        <div class="grid gap-2.5 mb-5">
+        <p class="text-morcilla/60 mb-3 md:mb-5 text-sm">¿Qué te interesa?</p>
+        <div class="grid gap-2 mb-4 md:gap-2.5 md:mb-5">
           <label class="flex items-center gap-3 p-3 border border-morcilla/10 bg-frigo cursor-pointer hover:border-carne/30 transition-colors has-[:checked]:border-carne has-[:checked]:bg-carne/5">
             <input type="checkbox" name="productos" value="piezas-enteras" class="pr-check" />
             <div>
@@ -422,7 +470,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
             </div>
           </label>
         </div>
-        <div class="space-y-5">
+        <div class="space-y-3.5 md:space-y-5">
           <div>
             <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Volumen estimado</label>
             <input type="hidden" name="volumen" value="" />
@@ -461,37 +509,43 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
 
       <!-- PASO 4 -->
       <div class="modal-step hidden" data-step="4">
-        <p class="text-morcilla/60 mb-5 text-sm">¿Cómo te contactamos?</p>
-        <div class="space-y-5">
+        <p class="text-morcilla/60 mb-3 md:mb-5 text-sm">¿Cómo te contactamos?</p>
+        <div class="space-y-3.5 md:space-y-5">
           <div>
             <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Nombre completo *</label>
-            <input type="text" name="nombre" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="Tu nombre y apellido" />
+            <input type="text" name="nombre" autocomplete="name" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="Tu nombre y apellido" />
           </div>
-          <div class="grid sm:grid-cols-2 gap-5">
+          <div class="grid sm:grid-cols-2 gap-3.5 md:gap-5">
             <div>
               <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Teléfono *</label>
-              <input type="tel" name="telefono" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="+54 9 11..." />
+              <input type="tel" name="telefono" autocomplete="tel" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="+54 9 11..." />
             </div>
             <div>
               <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Email *</label>
-              <input type="email" name="email" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="tu@email.com" />
+              <input type="email" name="email" autocomplete="email" required class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors" placeholder="tu@email.com" />
             </div>
           </div>
           <div>
             <label class="block font-display text-xs uppercase tracking-wider text-morcilla/60 mb-2">Mensaje (opcional)</label>
-            <textarea name="mensaje" rows="3" class="w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors resize-none" placeholder="¿Algo más que quieras contarnos?"></textarea>
+            <textarea name="mensaje" rows="3" class="h-20 md:h-auto w-full px-4 py-3 bg-frigo border border-morcilla/10 text-morcilla placeholder-morcilla/30 focus:border-carne focus:outline-none transition-colors resize-none" placeholder="¿Algo más que quieras contarnos?"></textarea>
           </div>
         </div>
         <p id="modal-step4-error" class="text-carne text-xs mt-3 hidden">Completá nombre, teléfono y email.</p>
       </div>
 
-      <!-- Nav buttons -->
-      <div class="flex gap-4 mt-8">
-        <button type="button" id="modal-prev" class="hidden px-6 py-3 border border-morcilla/20 text-morcilla font-display font-semibold text-sm uppercase tracking-wider hover:border-morcilla/40 transition-colors">&larr; Anterior</button>
-        <button type="button" id="modal-next" class="flex-1 px-6 py-3 bg-carne text-hueso font-display font-semibold text-sm uppercase tracking-wider hover:bg-carne-dark transition-colors">Siguiente &rarr;</button>
-        <button type="submit" id="modal-submit" class="hidden flex-1 px-6 py-3 bg-carne text-hueso font-display font-semibold text-sm uppercase tracking-wider hover:bg-carne-dark transition-colors">Enviar consulta</button>
-      </div>
     </form>
+    </div>
+
+    <!-- Botones. Fuera del form para quedar fijos abajo en celular; el de
+         enviar se asocia con form="modal-form". El padding de abajo respeta la
+         barra de gestos del iPhone. -->
+    <div class="shrink-0 px-5 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] border-t border-morcilla/10 bg-hueso md:p-0 md:pt-0 md:mt-8 md:border-0">
+      <div class="flex gap-3 md:gap-4">
+        <button type="button" id="modal-prev" class="hidden px-5 md:px-6 py-3.5 md:py-3 border border-morcilla/20 text-morcilla font-display font-semibold text-sm uppercase tracking-wider hover:border-morcilla/40 transition-colors">&larr;<span class="hidden sm:inline"> Anterior</span></button>
+        <button type="button" id="modal-next" class="flex-1 px-6 py-3.5 md:py-3 bg-carne text-hueso font-display font-semibold text-sm uppercase tracking-wider hover:bg-carne-dark transition-colors">Siguiente &rarr;</button>
+        <button type="submit" form="modal-form" id="modal-submit" class="hidden flex-1 px-6 py-3.5 md:py-3 bg-carne text-hueso font-display font-semibold text-sm uppercase tracking-wider hover:bg-carne-dark transition-colors">Enviar consulta</button>
+      </div>
+    </div>
 
   </div>
 </div>
@@ -713,11 +767,25 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
     let currentStep = Math.min(Math.max(pasoGuardado, 1), totalSteps);
     const stepTitles = ["Tipo de cliente", "Tu negocio", "Qué necesitás", "Datos de contacto"];
 
+    // Hacia donde se movio el ultimo cambio de paso, para que el paso nuevo
+    // entre desde el costado que corresponde. Null en la primera pintada.
+    let direccion: "adelante" | "atras" | null = null;
+    // En el modal de celular solo scrollea la zona central: al cambiar de paso
+    // vuelve arriba, si no el paso nuevo arrancaria a mitad de camino.
+    const zonaScroll = form.closest("#modal-cuerpo");
+
     function updateUI() {
       steps.forEach((step) => {
         const stepNum = parseInt(step.dataset.step || "1");
-        step.classList.toggle("hidden", stepNum !== currentStep);
+        const visible = stepNum === currentStep;
+        step.classList.toggle("hidden", !visible);
+        step.classList.remove("paso-adelante", "paso-atras");
+        if (visible && direccion) {
+          void step.offsetWidth; // reinicia la animacion
+          step.classList.add(direccion === "adelante" ? "paso-adelante" : "paso-atras");
+        }
       });
+      zonaScroll?.scrollTo({ top: 0 });
       progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
       stepLabel.textContent = `Paso ${currentStep} de ${totalSteps}`;
       stepTitle.textContent = stepTitles[currentStep - 1];
@@ -755,18 +823,21 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
       return true;
     }
 
-    btnNext?.addEventListener("click", () => {
+    function avanzar() {
       if (!validateStep(currentStep)) return;
       if (currentStep < totalSteps) {
         currentStep++;
+        direccion = "adelante";
         updateUI();
         guardarBorrador(form, config.formId, currentStep);
       }
-    });
+    }
+    btnNext?.addEventListener("click", avanzar);
 
     btnPrev?.addEventListener("click", () => {
       if (currentStep > 1) {
         currentStep--;
+        direccion = "atras";
         updateUI();
         guardarBorrador(form, config.formId, currentStep);
       }
@@ -791,6 +862,13 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
 
     form?.addEventListener("submit", async (e) => {
       e.preventDefault();
+      // Enter en un campo (o "Ir" en el teclado del celular) dispara submit en
+      // cualquier paso. Antes eso mandaba la consulta desde el paso 2, sin los
+      // datos de contacto. Ahora, si no es el ultimo paso, avanza.
+      if (currentStep < totalSteps) {
+        avanzar();
+        return;
+      }
       if (!validateStep(currentStep)) return;
       document.getElementById(`${config.formId}-error-envio`)?.classList.add("hidden");
 
@@ -924,23 +1002,76 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
   });
 
   // ====== Modal open/close ======
+  //
+  // En celular el modal es una pantalla completa (ver el markup). Para que se
+  // sienta como una pagina propia y no como una trampa:
+  // - Al abrir se agrega una entrada al historial, asi el gesto de "atras" del
+  //   telefono o el boton atras de Android lo cierran y te dejan donde
+  //   estabas, en vez de sacarte del sitio.
+  // - El alto sigue al viewport visible (--alto-visible), asi los botones
+  //   suben con el teclado en lugar de quedar tapados.
   const modal = document.getElementById("form-modal");
   const modalBackdrop = document.getElementById("modal-backdrop");
   const modalClose = document.getElementById("modal-close");
+  const modalVolver = document.getElementById("modal-volver");
+  const modalPanel = document.getElementById("modal-panel");
+  const esCelular = () => window.matchMedia("(max-width: 767px)").matches;
+
+  let abierto = false;
+  let conHistorial = false;
+
+  function ajustarAlto() {
+    const vv = window.visualViewport;
+    if (!modalPanel || !vv) return;
+    modalPanel.style.setProperty("--alto-visible", `${vv.height}px`);
+    // iOS desplaza el viewport visual al abrir el teclado: se acompaña.
+    modalPanel.style.top = `${vv.offsetTop}px`;
+  }
 
   function openModal() {
+    if (abierto) return;
+    abierto = true;
     modal?.classList.remove("opacity-0", "pointer-events-none");
-    modal?.classList.add("opacity-100", "pointer-events-auto");
+    modal?.classList.add("opacity-100", "pointer-events-auto", "modal-abierto");
     document.body.style.overflow = "hidden";
+    if (esCelular()) {
+      ajustarAlto();
+      window.visualViewport?.addEventListener("resize", ajustarAlto);
+      window.visualViewport?.addEventListener("scroll", ajustarAlto);
+    }
+    history.pushState({ prFormulario: true }, "");
+    conHistorial = true;
   }
 
-  function closeModal() {
+  // Cierra de verdad. La llama popstate, o sea que la entrada del historial
+  // ya se consumio.
+  function cerrarSinHistorial() {
+    if (!abierto) return;
+    abierto = false;
+    conHistorial = false;
     modal?.classList.add("opacity-0", "pointer-events-none");
-    modal?.classList.remove("opacity-100", "pointer-events-auto");
+    modal?.classList.remove("opacity-100", "pointer-events-auto", "modal-abierto");
     document.body.style.overflow = "";
+    window.visualViewport?.removeEventListener("resize", ajustarAlto);
+    window.visualViewport?.removeEventListener("scroll", ajustarAlto);
+    modalPanel?.style.removeProperty("--alto-visible");
+    modalPanel?.style.removeProperty("top");
   }
+
+  // Cerrar desde un boton: se vuelve atras en el historial para no dejar una
+  // entrada huerfana, y popstate hace el resto.
+  function closeModal() {
+    if (!abierto) return;
+    if (conHistorial) history.back();
+    else cerrarSinHistorial();
+  }
+
+  window.addEventListener("popstate", () => {
+    if (abierto) cerrarSinHistorial();
+  });
 
   modalClose?.addEventListener("click", closeModal);
+  modalVolver?.addEventListener("click", closeModal);
   modalBackdrop?.addEventListener("click", closeModal);
 
   // Close on Escape
@@ -954,6 +1085,19 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
       e.preventDefault();
       openModal();
     });
+  });
+
+  // En celular, los botones que llevan a #contacto ("Quiero ser cliente",
+  // "Consultar" en productos, etc.) abren el formulario directo, en vez de
+  // bajar hasta una seccion que solo tiene otro boton. Los enlaces del menu y
+  // del pie siguen bajando a la seccion: ahi estan telefono, mail y direccion.
+  document.addEventListener("click", (e) => {
+    if (!esCelular()) return;
+    const enlace = (e.target as HTMLElement).closest?.("a[href='#contacto'], a[href='/#contacto']");
+    if (!enlace || enlace.closest("nav, footer, #mobile-menu, [data-open-form]")) return;
+    if (!document.getElementById("form-modal")) return;
+    e.preventDefault();
+    openModal();
   });
 
   // ====== Custom dropdowns ======
@@ -1004,3 +1148,45 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
     }
   });
 </script>
+
+<style>
+  /* Entrada del formulario. En celular sube suave desde abajo, como una
+     pantalla nueva; en escritorio la caja crece apenas. */
+  .modal-panel {
+    transition:
+      transform 0.38s cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 0.3s ease-out;
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  @media (min-width: 768px) {
+    .modal-panel {
+      transform: scale(0.97);
+    }
+  }
+  :global(.modal-abierto) .modal-panel {
+    transform: none;
+    opacity: 1;
+  }
+
+  /* Cambio de paso: el nuevo entra desde el costado hacia el que se va. */
+  :global(.paso-adelante) {
+    animation: paso-adelante 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  :global(.paso-atras) {
+    animation: paso-atras 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @keyframes paso-adelante {
+    from { opacity: 0; transform: translateX(18px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes paso-atras {
+    from { opacity: 0; transform: translateX(-18px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .modal-panel { transition: opacity 0.2s; transform: none; }
+    :global(.paso-adelante), :global(.paso-atras) { animation: none; }
+  }
+</style>

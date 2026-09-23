@@ -281,8 +281,9 @@ responsive):
 - La imagen nueva de Open Graph, el `llms.txt` que responde que abastecen hoteles, y
   el color de la barra de estado de iOS (pendiente de probarse en un iPhone real).
 
-**Sin publicar, a la espera del titular:** `/mayoristas/` y `/gastronomicos/`. Están
-en `main`, no en `produccion`.
+**Sin publicar, a la espera del titular:** `/mayoristas/` y `/gastronomicos/`, y el
+formulario a pantalla completa en celular (ver [ROADMAP.md](ROADMAP.md)), que el
+titular está probando en local. Están en `main`, no en `produccion`.
 
 ⚠️ La campaña ya empezó a gastar (según el titular, 22/09). Los anuncios van a la home,
 que funciona, pero **Google Ads todavía no ve ningún lead**: el único bloqueante son los

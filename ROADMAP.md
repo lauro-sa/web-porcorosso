@@ -72,6 +72,15 @@ en Google, campañas pagas (Google Ads y redes) y recomendación en asistentes d
       por la misma consulta. **Publicado el 22/09/2026**
 - [x] **Página de error propia** (22/09/2026) — antes una URL inexistente mostraba la
       página genérica de Hostinger, en inglés y sin marca. Publicada
+- [ ] **Formulario a pantalla completa en celular** (22/09/2026) — **hecho en `main`,
+      sin publicar: el titular lo está probando en local.** En celular, "Solicitar info"
+      y los botones que llevan al formulario lo abren como una pantalla propia del alto
+      del teléfono, con "Volver" arriba y los botones fijos abajo (suben con el teclado).
+      Los cuatro pasos entran sin scroll desde 375×667. El gesto de atrás del teléfono lo
+      cierra y deja al visitante donde estaba. En la sección Contacto, en celular, el
+      formulario embebido se reemplaza por un botón. De paso: Enter o "Ir" en el
+      teclado ya no envía la consulta desde el paso 2, y los campos se autocompletan.
+      Para publicar: `git merge main` en `produccion` y seguir [DEPLOY.md](DEPLOY.md)
 - [x] **`scroll-padding-top`**: los saltos a `#productos`, `#nosotros`, etc. ya no quedan
       escondidos detrás del navbar fijo
 
