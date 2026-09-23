@@ -145,7 +145,7 @@ const activo = Boolean(GA4_ID || ADS_ID);
     "click",
     (e) => {
       const enlace = e.target.closest?.("a[href]");
-      if (!enlace) return;
+      if (!enlace || enlace.hasAttribute("data-no-medir")) return;
       const destino = enlace.getAttribute("href") || "";
       if (destino.includes("wa.me")) window.prConversion("whatsapp");
       else if (destino.startsWith("tel:")) window.prConversion("telefono");

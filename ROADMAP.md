@@ -63,6 +63,13 @@ en Google, campañas pagas (Google Ads y redes) y recomendación en asistentes d
       se hizo antes de encender la campaña. Ver [ADS.md](ADS.md)
 - [x] **La redirección post-envío va a `/gracias/`** con barra final. Antes pasaba por un
       301 justo en el momento en que se cuenta la conversión
+- [x] **La consulta del formulario se abre en WhatsApp ya redactada** (22/09/2026).
+      Al enviar, el lead se guarda igual que antes (CSV + mail) y `/gracias/` abre
+      WhatsApp al número B2B con los datos en viñetas: negocio, qué necesita y
+      contacto. Si el navegador no redirige, queda un botón. Si el servidor falla,
+      el aviso de error ofrece el mismo mensaje por WhatsApp. El botón de
+      `/gracias/` no se mide como lead de WhatsApp, para no contar dos conversiones
+      por la misma consulta. **Falta publicarlo**
 - [x] **`scroll-padding-top`**: los saltos a `#productos`, `#nosotros`, etc. ya no quedan
       escondidos detrás del navbar fijo
 

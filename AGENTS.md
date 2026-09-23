@@ -164,6 +164,13 @@ pantalla de éxito siempre y los leads se perdían en silencio. No revertir eso.
 Al enviar, redirige a `/gracias`, que existe como URL propia para poder contar
 conversiones en Google Ads. Va con `noindex` y fuera del sitemap a propósito.
 
+Desde `/gracias` se abre WhatsApp con la consulta ya escrita en viñetas, para que
+llegue al canal B2B sin repreguntar datos. Es un paso **después** del guardado, no
+un reemplazo: si la persona cierra WhatsApp sin enviar, el lead igual está en el CSV.
+El mensaje se arma en `armarMensajeWhatsApp()` de
+[ContactForm.astro](src/components/ContactForm.astro); si se agrega un campo o una
+opción al formulario, sumarlo ahí y en `ETIQUETAS_VALOR`, o llega en crudo.
+
 ## Páginas
 
 | URL | Para quién | Qué capta |
@@ -211,7 +218,12 @@ de cifras y en `llms.txt`. No cambiarlo sin confirmación del titular.
 
 ## Dónde quedó todo
 
-*Última actualización: 14 de septiembre de 2026.*
+*Última actualización: 22 de septiembre de 2026.*
+
+🔴 **El titular dice que la campaña ya empezó a gastar, pero producción sigue sin
+nada de lo de abajo** (comprobado el 22/09: `/mayoristas/` y `/gastronomicos/` dan
+404 y no hay etiqueta de Google). O sea, se está pautando a ciegas y, si algún anuncio
+apunta a una página de segmento, a una URL que no existe. Publicar es lo más urgente.
 
 ⚠️ **El repo está adelantado a producción, y ahora eso tiene fecha límite.** Nada de lo
 de abajo está publicado. La primera campaña de Google Ads está armada y pausada, y el
@@ -219,8 +231,8 @@ crédito promocional vence el **6 de noviembre de 2026**: hasta que la medición
 publicada, encender la campaña sería pautar a ciegas. Ver [ADS.md](ADS.md).
 Para subirlo, buildear y sincronizar según [DEPLOY.md](DEPLOY.md).
 
-**Todo está commiteado en `main`, pero la rama quedó adelante de `origin/main`: falta
-pushear** (verificar con `git status -sb`). Un push necesita terminal y credenciales de
+**Lo commiteado hasta el 14/09 ya está pusheado**; lo del 22/09 quedó commiteado
+local (verificar con `git status -sb`). Un push necesita terminal y credenciales de
 GitHub, así que no lo puede hacer el asistente que opera Google Ads desde el navegador,
 por más contexto del proyecto que tenga.
 
@@ -231,6 +243,8 @@ campaña puede encenderse sin pautar a ciegas.
 
 Sin publicar:
 
+- La **consulta del formulario abierta en WhatsApp** con los datos en viñetas
+  (22/09/2026). Ver "Cómo llegan los leads".
 - El color de la barra de estado de iOS (`theme-color`, en `NavBar.astro`,
   `Layout.astro` y `global.css`). Quedó pendiente de probarse en un iPhone real.
 - Las páginas **`/mayoristas/` y `/gastronomicos/`**, con el navbar, el pie y la

@@ -609,6 +609,79 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
     return datos.pasos?.[formId] ?? 1;
   }
 
+  // ====== Mensaje de WhatsApp con la consulta ======
+  //
+  // Al terminar, la consulta se abre en WhatsApp ya redactada: el canal B2B se
+  // maneja por ahí, y un mensaje con los datos ordenados le ahorra al equipo
+  // comercial repreguntar todo. El envío al servidor se mantiene igual, porque
+  // si la persona cierra WhatsApp sin mandar, el lead quedó en el CSV.
+
+  const WHATSAPP_B2B = "5491172714251";
+
+  const ETIQUETAS_VALOR: Record<string, string> = {
+    restaurante: "Restaurante / Bar",
+    hotel: "Hotel / Catering",
+    carniceria: "Carnicería / Almacén",
+    supermercado: "Supermercado / Autoservicio",
+    otro: "Otro",
+    "piezas-enteras": "Piezas enteras",
+    "fraccionadas-vacio": "Fraccionadas al vacío",
+    elaborados: "Productos elaborados",
+    "hasta-50": "Hasta 50 kg/semana",
+    "50-150": "50 a 150 kg/semana",
+    "150-500": "150 a 500 kg/semana",
+    "mas-500": "Más de 500 kg/semana",
+    "no-se": "No sé todavía",
+    semanal: "Semanal",
+    quincenal: "Quincenal",
+    mensual: "Mensual",
+    "a-demanda": "A demanda",
+  };
+
+  function legible(valor: string | string[] | undefined): string {
+    if (!valor) return "";
+    const lista = Array.isArray(valor) ? valor : [valor];
+    return lista.map((v) => ETIQUETAS_VALOR[v] || v).join(", ").trim();
+  }
+
+  // Bloques en el orden en que los lee el equipo comercial. El *texto* es
+  // negrita en WhatsApp. Los campos vacíos no se escriben, para no mandar
+  // viñetas sin nada.
+  function armarMensajeWhatsApp(data: Record<string, string | string[]>): string {
+    const bloques: [string, [string, string][]][] = [
+      ["Mi negocio", [
+        ["Tipo", legible(data.tipo_cliente)],
+        ["Nombre", legible(data.empresa)],
+        ["Zona", legible(data.zona)],
+      ]],
+      ["Qué necesito", [
+        ["Productos", legible(data.productos)],
+        ["Volumen", legible(data.volumen)],
+        ["Frecuencia", legible(data.frecuencia)],
+      ]],
+      ["Contacto", [
+        ["Nombre", legible(data.nombre)],
+        ["Teléfono", legible(data.telefono)],
+        ["Email", legible(data.email)],
+      ]],
+    ];
+
+    const partes = ["¡Hola Porco Rosso! Quiero hacer una consulta mayorista."];
+    for (const [titulo, filas] of bloques) {
+      const conDato = filas.filter(([, v]) => v);
+      if (!conDato.length) continue;
+      partes.push(`*${titulo}*\n` + conDato.map(([k, v]) => `• ${k}: ${v}`).join("\n"));
+    }
+    const mensaje = legible(data.mensaje);
+    if (mensaje) partes.push(`*Comentarios*\n${mensaje}`);
+
+    return partes.join("\n\n");
+  }
+
+  function enlaceWhatsApp(texto: string): string {
+    return `https://wa.me/${WHATSAPP_B2B}?text=${encodeURIComponent(texto)}`;
+  }
+
   // ====== Shared form logic ======
   function initMultiStepForm(config: {
     formId: string;
@@ -700,17 +773,19 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
     });
 
     // Aviso de fallo de envío, con WhatsApp como salida alternativa para no
-    // perder el contacto si el servidor no responde.
-    function mostrarErrorEnvio() {
+    // perder el contacto si el servidor no responde. El enlace lleva la
+    // consulta completa, así no hay que volver a escribir nada.
+    function mostrarErrorEnvio(textoWhatsApp: string) {
       let aviso = document.getElementById(`${config.formId}-error-envio`);
       if (!aviso) {
         aviso = document.createElement("div");
         aviso.id = `${config.formId}-error-envio`;
         aviso.setAttribute("role", "alert");
         aviso.className = "mt-4 p-4 bg-carne/10 border border-carne/30 text-sm text-morcilla";
-        aviso.innerHTML = `No pudimos enviar tu consulta en este momento. Probá de nuevo en un rato o escribinos por <a href="https://wa.me/5491172714251?text=Hola%20Porco%20Rosso!%20Quiero%20info%20mayorista" target="_blank" rel="noopener noreferrer" class="text-carne font-semibold underline">WhatsApp</a>.`;
+        aviso.innerHTML = `No pudimos enviar tu consulta en este momento. <a target="_blank" rel="noopener noreferrer" class="text-carne font-semibold underline">Mandala por WhatsApp</a>: ya va con todos tus datos.`;
         btnSubmit.parentElement?.insertAdjacentElement("afterend", aviso);
       }
+      aviso.querySelector("a")?.setAttribute("href", enlaceWhatsApp(textoWhatsApp));
       aviso.classList.remove("hidden");
     }
 
@@ -755,6 +830,8 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
         data["gclid_ts"] = String(clicAds.ts);
       }
 
+      const textoWhatsApp = armarMensajeWhatsApp(data);
+
       // Envío al backend. Si no llega, no mostramos éxito: el lead se perdería
       // sin que el visitante lo sepa.
       try {
@@ -766,41 +843,37 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
         if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
       } catch (err) {
         console.error("No se pudo enviar la consulta:", err);
-        mostrarErrorEnvio();
+        mostrarErrorEnvio(textoWhatsApp);
         btnSubmit.disabled = false;
         btnSubmit.textContent = "Enviar consulta";
         return;
       }
 
-      // Resumen legible para mostrar en /gracias
-      const labels: Record<string, string> = {
-        tipo_cliente: "Tipo de negocio",
-        empresa: "Negocio",
-        zona: "Zona",
-        productos: "Productos",
-        volumen: "Volumen",
-        frecuencia: "Frecuencia",
-        nombre: "Contacto",
-        telefono: "Teléfono",
-        email: "Email",
-        mensaje: "Mensaje",
-      };
-      const valueLabels: Record<string, string> = {
-        "piezas-enteras": "Piezas enteras",
-        "fraccionadas-vacio": "Fraccionadas al vacío",
-        "elaborados": "Productos elaborados",
-      };
+      // Resumen legible para mostrar en /gracias. Solo lo que cargó la persona:
+      // el token, el tiempo y el GCLID son internos.
+      const etiquetas: [string, string][] = [
+        ["tipo_cliente", "Tipo de negocio"],
+        ["empresa", "Negocio"],
+        ["zona", "Zona"],
+        ["productos", "Productos"],
+        ["volumen", "Volumen"],
+        ["frecuencia", "Frecuencia"],
+        ["nombre", "Contacto"],
+        ["telefono", "Teléfono"],
+        ["email", "Email"],
+        ["mensaje", "Mensaje"],
+      ];
       const resumen: Record<string, string> = {};
-      for (const [key, value] of Object.entries(data)) {
-        if (key === "recaptcha_token" || key === "sitio_web" || key === "tiempo_ms") continue;
-        const val = Array.isArray(value)
-          ? value.map((v) => valueLabels[v] || v).join(", ")
-          : valueLabels[String(value)] || String(value);
-        if (val.trim() !== "") resumen[labels[key] || key] = val;
+      for (const [clave, etiqueta] of etiquetas) {
+        const valor = legible(data[clave]);
+        if (valor) resumen[etiqueta] = valor;
       }
 
+      // /gracias abre WhatsApp con este texto. Viaja aparte del resumen porque
+      // son dos formatos distintos del mismo contenido.
       try {
         sessionStorage.setItem("porcorosso:ultima-consulta", JSON.stringify(resumen));
+        sessionStorage.setItem("porcorosso:ultima-consulta-wa", textoWhatsApp);
       } catch {
         // Si el navegador bloquea sessionStorage, /gracias funciona igual sin resumen.
       }

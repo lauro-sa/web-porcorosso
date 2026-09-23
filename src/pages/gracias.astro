@@ -56,7 +56,7 @@ import "../styles/global.css";
         <h1 class="font-display font-bold uppercase text-4xl md:text-6xl leading-[0.95] text-morcilla mt-3 mb-4">
           Gracias por<br /><span class="text-carne">escribirnos.</span>
         </h1>
-        <p class="text-morcilla/60 max-w-md mx-auto">
+        <p id="texto-gracias" class="text-morcilla/60 max-w-md mx-auto">
           Ya tenemos tu consulta. Nuestro equipo comercial se pone en contacto a la
           brevedad, en menos de 24 horas hábiles.
         </p>
@@ -75,6 +75,7 @@ import "../styles/global.css";
         style="animation: success-fade-up 0.5s ease-out 1s both;"
       >
         <a
+          id="boton-whatsapp"
           href="https://wa.me/5491172714251?text=Hola%20Porco%20Rosso!%20Acabo%20de%20completar%20el%20formulario%20mayorista"
           target="_blank"
           rel="noopener noreferrer"
@@ -115,6 +116,34 @@ import "../styles/global.css";
   // En Google Ads conviene configurar esta conversión como "una por clic", así
   // recargar la página no la cuenta dos veces.
   window.prConversion?.("formulario");
+
+  // El formulario deja acá el mensaje de WhatsApp ya redactado con la
+  // consulta. Se abre solo, con una pausa para que la conversión de arriba
+  // alcance a salir antes de dejar la página, y el botón queda como respaldo
+  // por si el navegador no sigue la redirección.
+  //
+  // El botón lleva data-no-medir: la persona ya contó como lead de formulario,
+  // y si Medicion.astro contara además el clic como lead de WhatsApp, Google
+  // Ads vería dos conversiones por la misma consulta.
+  const CLAVE_WHATSAPP = "porcorosso:ultima-consulta-wa";
+  const textoWhatsApp = sessionStorage.getItem(CLAVE_WHATSAPP);
+
+  if (textoWhatsApp) {
+    const enlace = `https://wa.me/5491172714251?text=${encodeURIComponent(textoWhatsApp)}`;
+    const boton = document.getElementById("boton-whatsapp");
+    if (boton) {
+      boton.setAttribute("href", enlace);
+      boton.setAttribute("data-no-medir", "");
+      boton.textContent = "Enviar consulta por WhatsApp";
+    }
+    const texto = document.getElementById("texto-gracias");
+    if (texto) {
+      texto.textContent =
+        "Te abrimos WhatsApp con tu consulta ya escrita: solo tenés que tocar enviar. Si no se abre, usá el botón de abajo.";
+    }
+    sessionStorage.removeItem(CLAVE_WHATSAPP);
+    setTimeout(() => window.location.assign(enlace), 1500);
+  }
 
   // El formulario deja el resumen acá antes de redirigir. Se consume una sola
   // vez: si se recarga la página, ya no aparece.
