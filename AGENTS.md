@@ -135,7 +135,8 @@ Cada una salió de un problema real:
    por nombre igual.
 
 5. **El teléfono del canal B2B (+54 9 11 7271-4251) no es el de la tienda.** Si se
-   cambia, hay que actualizarlo en los enlaces de WhatsApp, los `tel:`, el JSON-LD,
+   cambia, hay que actualizarlo en [src/lib/whatsapp.ts](src/lib/whatsapp.ts) (de ahí
+   salen todos los enlaces de WhatsApp), los `tel:`, el JSON-LD,
    las preguntas frecuentes y `llms.txt`, y escribirlo siempre igual: para el SEO
    local el teléfono tiene que ser idéntico en todos lados.
 
@@ -209,7 +210,11 @@ conversiones en Google Ads. Va con `noindex` y fuera del sitemap a propósito.
 Desde `/gracias` se abre WhatsApp con la consulta ya escrita en viñetas, para que
 llegue al canal B2B sin repreguntar datos. Es un paso **después** del guardado, no
 un reemplazo: si la persona cierra WhatsApp sin enviar, el lead igual está en el CSV.
-El mensaje se arma en `armarMensajeWhatsApp()` de
+El mensaje termina con una firma en cursiva ("Enviado desde el formulario de la web
+B2B de Porco Rosso") para que quien atiende sepa de dónde vino. Los demás botones de
+WhatsApp mandan un saludo propio con "Enviado desde la web B2B de Porco Rosso"; se
+arman en [src/lib/whatsapp.ts](src/lib/whatsapp.ts). El mensaje del formulario se arma
+en `armarMensajeWhatsApp()` de
 [ContactForm.astro](src/components/ContactForm.astro); si se agrega un campo o una
 opción al formulario, sumarlo ahí y en `ETIQUETAS_VALOR`, o llega en crudo.
 
@@ -277,7 +282,10 @@ responsive):
   de los leads viejos.
 - Una **página de error propia** ([404.astro](src/pages/404.astro)). Antes se veía la
   genérica de Hostinger, en inglés; ahora ofrece volver al inicio, ir a una sección o
-  escribir por WhatsApp.
+  escribir por WhatsApp. En celular, la abuela cuelga de un hilo y a veces golpea el
+  404; las franjas del iPhone van en beige solo en esa página.
+- La **firma en los mensajes de WhatsApp** que salen de la web (formulario y botones),
+  para que quien atiende sepa que el contacto vino del sitio.
 - La imagen nueva de Open Graph, el `llms.txt` que responde que abastecen hoteles, y
   el color de la barra de estado de iOS (pendiente de probarse en un iPhone real).
 
