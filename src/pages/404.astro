@@ -38,12 +38,12 @@ const atajos = [
   noindex
 >
   <header class="absolute top-0 left-0 w-full z-10">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 md:h-20 flex items-center">
       <a href="/" aria-label="Porco Rosso, ir al inicio">
         <Image
           src={logoMorcilla}
           alt="Porco Rosso - Proveedor mayorista de carne porcina"
-          class="h-12 w-auto"
+          class="h-10 md:h-12 w-auto"
           widths={[110, 220]}
           sizes="110px"
           loading="eager"
@@ -55,45 +55,49 @@ const atajos = [
     <!-- El 404 es el protagonista: gigante y semitransparente, detras del texto.
          Es decorativo; el codigo lo anuncia el titulo de la pagina. En celular
          de fondo quedaba flotando detras de los botones, asi que ahi va arriba,
-         en el flujo, con la ilustracion apoyada encima (ver mas abajo). -->
+         en el flujo, con la ilustracion apoyada encima (ver mas abajo).
+         Todo se dimensiona tambien por el alto de la pantalla (dvh) para que la
+         pagina entre justa, sin scroll, en celulares bajos y en notebooks. -->
     <div
       aria-hidden="true"
       class="pointer-events-none select-none absolute inset-0 hidden md:flex items-center justify-center"
     >
-      <span class="font-display font-bold leading-none tracking-tight text-carne/15 text-[48vw] md:text-[38vw] xl:text-[34rem]">
+      <span class="font-display font-bold leading-none tracking-tight text-carne/15 text-[min(38vw,72dvh)]">
         404
       </span>
     </div>
 
-    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 md:pt-32 pb-16 md:pb-20 w-full">
-      <div class="grid md:grid-cols-[1fr_auto] gap-10 md:gap-16 items-center">
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-20 pb-6 md:pb-10 w-full">
+      <div class="grid md:grid-cols-[1fr_auto] gap-16 items-center">
 
         <div>
           <!-- Version celular del 404: numero y abuela juntos, arriba del titulo. -->
-          <div aria-hidden="true" class="md:hidden relative select-none mb-3">
-            <span class="block font-display font-bold leading-[0.8] tracking-tight text-carne/15 text-[52vw]">
+          <div aria-hidden="true" class="md:hidden select-none mb-2">
+            <div class="relative inline-block">
+            <span class="block font-display font-bold leading-[0.8] tracking-tight text-carne/15 text-[min(48vw,22dvh)]">
               404
             </span>
             <Image
               src={nonaPig}
               alt=""
-              class="absolute right-0 -bottom-2 h-40 w-auto"
+              class="absolute left-full -ml-8 -bottom-1 h-[min(9rem,18dvh)] w-auto max-w-none"
               widths={[96, 192]}
               sizes="96px"
               loading="eager"
             />
+            </div>
           </div>
 
           <span class="relative font-accent text-xs tracking-widest text-carne uppercase">Página no encontrada</span>
-          <h1 class="font-display font-bold uppercase text-5xl md:text-7xl leading-[0.9] text-morcilla mt-3 mb-5">
+          <h1 class="font-display font-bold uppercase text-[min(3rem,6.5dvh)] md:text-7xl leading-[0.9] text-morcilla mt-2 md:mt-3 mb-3 md:mb-5">
             Este corte<br /><span class="text-carne">no lo tenemos.</span>
           </h1>
-          <p class="text-morcilla/60 max-w-md">
+          <p class="text-sm md:text-base text-morcilla/60 max-w-md">
             La página que buscás no existe o cambió de dirección. Lo que sí tenemos
             es carne de cerdo de producción propia para tu negocio: seguí por acá.
           </p>
 
-          <div class="mt-8 flex flex-col sm:flex-row gap-3">
+          <div class="mt-5 md:mt-8 flex flex-col sm:flex-row gap-2 sm:gap-3">
             <Button href="/" size="md">Volver al inicio</Button>
             <a
               href="https://wa.me/5491172714251?text=Hola%20Porco%20Rosso!%20Quiero%20info%20mayorista"
@@ -105,11 +109,11 @@ const atajos = [
             </a>
           </div>
 
-          <nav aria-label="Secciones del sitio" class="mt-12 pt-6 border-t border-morcilla/10 max-w-md">
-            <h2 class="font-display text-xs uppercase tracking-wider text-morcilla/40 mb-3">
+          <nav aria-label="Secciones del sitio" class="mt-6 pt-4 md:mt-12 md:pt-6 border-t border-morcilla/10 max-w-md">
+            <h2 class="font-display text-xs uppercase tracking-wider text-morcilla/40 mb-2 md:mb-3">
               O andá directo a
             </h2>
-            <ul class="grid grid-cols-2 gap-x-6 gap-y-2">
+            <ul class="grid grid-cols-2 gap-x-6 gap-y-1.5 md:gap-y-2">
               {atajos.map((a) => (
                 <li>
                   <a href={a.href} class="text-morcilla hover:text-carne transition-colors text-sm">
@@ -125,7 +129,7 @@ const atajos = [
           <Image
             src={nonaPig}
             alt="Ilustración Nona Pig - Porco Rosso"
-            class="h-96 w-auto opacity-90"
+            class="h-[min(24rem,50dvh)] w-auto opacity-90"
             widths={[228, 456]}
             sizes="228px"
             loading="eager"
