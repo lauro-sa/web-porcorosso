@@ -772,3 +772,44 @@ sigue sin cargar porque no existe la propiedad.
 - **Verificación del anunciante**: la tiene que completar el titular con los datos de
   la empresa tal como figuran en Dun & Bradstreet. Vence el **28/10/2026**.
 
+
+### Cambios aplicados (01/10/2026, segunda tanda)
+
+*Resumen que entregó el asistente de Chrome después de aplicar la recomendación de
+arriba. Está pegado tal cual.*
+
+**IA Max**
+- Se apagó IA Max en la campaña "Pauta B2B - 1er Ejercicio". Con eso quedaron apagadas también la "Personalización de texto" y la "Expansión de la URL final". Google ya no genera títulos ni descripciones a partir del texto de la web.
+
+**Conversiones**
+- Se quitaron las acciones viejas "Compra (Carga de página https://b2b.porcorosso.com.ar/#contacto)" y "Contacto". Esta última se disparaba con cualquier página que empezara con b2b.porcorosso.com.ar/gracias/, o sea que duplicaba a "Formulario B2B".
+- "Formulario B2B" quedó como la única acción principal. "Clic WhatsApp B2B" y "Clic teléfono B2B" siguen como secundarias.
+- Conversiones avanzadas: siguen apagadas.
+
+**Borradores**
+- Se descartaron los 4 borradores de campaña: "Primer ejercicio pauta B2B" (Máximo rendimiento) y tres "Campaign #1" (Búsqueda: ARS 0,01, ARS 12.000 y ARS 0,01 por día). La campaña activa no se tocó.
+- Las filas ya no aparecen en la lista, aunque el contador "Borradores en curso" todavía mostraba 4 al cierre.
+
+**Prueba de la etiqueta**
+- "Probar instalación" sobre https://b2b.porcorosso.com.ar: etiqueta detectada. La calidad de la etiqueta figura "Excelente" ("Etiqueta está enviando datos. No se ha detectado ningún problema").
+- IDs de la etiqueta de Google: AW-18436888856 y GT-WVXSKDW5. El GT- es el ID propio de la etiqueta, no una propiedad de GA4; sigue sin haber GA4 vinculado.
+- Las tres conversiones pasaron de "Inactiva" a "No hay conversiones recientes": la etiqueta llega, pero todavía no hubo ninguna conversión.
+- Revisión del código: la home carga AW-18436888856 y las etiquetas `q-gRCJSpk40dEJiystdE` (WhatsApp) y `5BkjCOjwmY0dEJiystdE` (teléfono). La página /gracias/ existe y carga la etiqueta.
+- Pendiente: confirmar en los próximos días que cada conversión registre su primer evento. Las tres van a mostrar "Grabando conversiones" cuando eso pase.
+
+**Sigue pendiente**
+- Verificación del anunciante (Dun & Bradstreet): fecha límite 28/10/2026.
+
+### Qué mirar en los próximos días
+
+- **"No hay conversiones recientes" no es un error.** Quiere decir que la etiqueta
+  llega y que todavía nadie que vino de un anuncio consultó. Solo cuentan las visitas
+  que llegaron tocando un anuncio. Abrir `/gracias/` a mano o tocar WhatsApp en la web
+  sin pasar por un anuncio no suma.
+- **Si en una semana hubo clics en la campaña y las tres siguen sin datos, hay que
+  revisar.** Antes de tocar nada, comparar con el CSV de leads: si entraron consultas
+  marcadas con GCLID y Google no las contó, el problema está en la medición. Si no
+  entró ninguna, el problema es la campaña.
+- **El contador "Borradores en curso: 4"** tendría que bajar a 0 solo. Si sigue en 4,
+  revisar que no haya quedado alguno a medio descartar, sobre todo el de ARS 12.000
+  por día.
