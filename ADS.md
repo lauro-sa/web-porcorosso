@@ -657,6 +657,13 @@ Google sugiere.
   `diarco` (quien los busca quiere ir a esa cadena), `"cuanto pesa"`, `"bola de lomo"`,
   `"los reyes del cerdo"`, `domicilio`, `panceta` (solo si el titular confirma que no la
   vende por mayor; si la vende, no).
+- **Sacar `supermercado` y `supermercados` de la lista de amplias** (detectado al armar
+  las instrucciones para el asistente de Chrome, 01/10). "Supermercado / Autoservicio"
+  es un tipo de cliente del formulario: la negativa bloquearía a un supermercado que
+  busca "proveedor de cerdo para supermercados". Es la misma trampa que `carnicería`.
+  Las cadenas puntuales (`coto`, `carrefour`, `jumbo`) sí quedan.
+- **Sacar `jamon` y `jamón` sueltos** y dejar solo `"jamon iberico"` y `"jamon
+  serrano"`, como ya decía la revisión del 14/09.
 - **Datos que no se pueden poner en anuncios** (regla 7 de AGENTS.md, no están
   confirmados): "1.600 madres" (sigue la contradicción 1.600/3.000), "precio de
   fábrica", "Pedí muestras", "entregas programadas", "Cotización en 24 h". El sitio sí
