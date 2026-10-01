@@ -182,9 +182,13 @@ asistente de Google Ads (01/10/2026)".
 - [x] Conversiones creadas y etiqueta de Google Ads instalada en el sitio (01/10/2026)
 - [ ] **Verificación del anunciante — vence el 28/10/2026.** Necesita los datos de la
       empresa como figuran en Dun & Bradstreet. Solo la puede hacer el titular
-- [ ] Decidir: apagar IA Max, quitar las conversiones viejas "Compra" y "Contacto",
-      descartar los 4 borradores (recomendación en [ADS.md](ADS.md))
-- [ ] Comprobar en unos días que las conversiones pasen de "Inactiva" a activas
+- [x] IA Max apagado, conversiones viejas "Compra" y "Contacto" quitadas, 4 borradores
+      descartados y "Probar instalación" con resultado "Excelente" — asistente de
+      Chrome, 01/10/2026 (segunda tanda en [ADS.md](ADS.md))
+- [ ] Comprobar en unos días que las tres conversiones pasen de "No hay conversiones
+      recientes" a "Grabando conversiones". Qué mirar si no pasa: [ADS.md](ADS.md),
+      "Qué mirar en los próximos días"
+- [ ] Confirmar que el contador "Borradores en curso" bajó de 4 a 0
 - [ ] Crear la propiedad de **GA4** y pasar el ID (`G-...`)
 - [ ] **Preseleccionar el tipo de cliente por URL** (por ejemplo `/?tipo=hotel#contacto`),
       para que cada grupo de anuncios de la campaña nueva abra el formulario con el

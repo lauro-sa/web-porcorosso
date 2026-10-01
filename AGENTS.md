@@ -277,8 +277,11 @@ de cifras y en `llms.txt`. No cambiarlo sin confirmación del titular.
 **Google Ads, corregido el 01/10/2026.** La campaña corría desde el 21/09 sin la
 configuración decidida (Display prendido, amplia, sin negativas, sin medición: ARS
 71.689 en 11 días y cero conversiones). El asistente de Chrome la corrigió siguiendo
-ADS.md, y la **etiqueta de Google Ads quedó instalada y publicada** en la web. Detalle y
-pendientes en [ADS.md](ADS.md), últimas secciones.
+ADS.md, y la **etiqueta de Google Ads quedó instalada y publicada** en la web. En una
+segunda tanda apagó IA Max, quitó las conversiones viejas, descartó los 4 borradores y
+"Probar instalación" dio "Excelente". Las tres conversiones están en "No hay conversiones
+recientes", que es lo esperado hasta que alguien que llegó por un anuncio consulte.
+Detalle y pendientes en [ADS.md](ADS.md), últimas secciones.
 
 🔴 **Verificación del anunciante: vence el 28/10/2026.** Si no se completa, Google frena
 la cuenta. La tiene que hacer el titular con los datos de Dun & Bradstreet.
@@ -333,11 +336,10 @@ tarda días. **No reenviar el sitemap**, reenviarlo reinicia la cola.
 1. Crear el **Perfil de Empresa de Google** — depende del titular, es gratis y tarda
    días en verificarse. Es lo que más mueve la aguja: define si aparecen en
    búsquedas locales y es la fuente que más citan los asistentes de IA.
-2. Instalar **GA4 y la etiqueta de Google Ads** — falta que el titular pase los IDs.
-   Es el último bloqueante para poder pautar. El código ya está hecho: solo hay que
-   pegarlos en [Medicion.astro](src/components/Medicion.astro) y publicar. La primera
-   campaña se está armando pausada; la secuencia de encendido, paso por paso, está en
-   [ROADMAP.md](ROADMAP.md) bajo "Encender la campaña de Google Ads".
+2. Instalar **GA4** — la etiqueta de Google Ads ya está (01/10/2026). Falta que el
+   titular cree la propiedad de GA4 y pase el ID (`G-...`): se pega en
+   [Medicion.astro](src/components/Medicion.astro) y se publica. Sirve para ver todas
+   las visitas a la web, no solo las que vienen de anuncios.
 3. Crear las **páginas por producto** — las de segmento ya están hechas. Esto se puede
    hacer sin depender de nadie y es lo que más mueve el SEO a mediano plazo. El plan
    completo está en [ROADMAP.md](ROADMAP.md).
