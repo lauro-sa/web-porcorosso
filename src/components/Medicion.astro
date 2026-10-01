@@ -23,7 +23,9 @@
  */
 
 const GA4_ID = "";
-const ADS_ID = "";
+// Cargado el 01/10/2026 con los datos que paso el asistente de Google Ads.
+// GA4 todavia no existe: no hay ninguna propiedad vinculada a la cuenta.
+const ADS_ID = "AW-18436888856";
 
 /**
  * Una etiqueta de conversion de Google Ads por cada forma de contactar.
@@ -38,9 +40,10 @@ const ADS_ID = "";
  * cargas de pagina, y Google no puede detectarlos solo.
  */
 const CONVERSIONES = {
+  // Vacio a proposito: "Formulario B2B" se creo por URL (/gracias/). Ver arriba.
   formulario: "",
-  whatsapp: "",
-  telefono: "",
+  whatsapp: "AW-18436888856/q-gRCJSpk40dEJiystdE", // "Clic WhatsApp B2B", secundaria
+  telefono: "AW-18436888856/5BkjCOjwmY0dEJiystdE", // "Clic teléfono B2B", secundaria
 };
 
 const activo = Boolean(GA4_ID || ADS_ID);

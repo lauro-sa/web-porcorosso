@@ -176,11 +176,16 @@ inglés y sin medición. El detalle, el orden de las correcciones y las recomend
 del informe que **no** hay que aplicar están en [ADS.md](ADS.md), sección "Informe del
 asistente de Google Ads (01/10/2026)".
 
-- [ ] Verificación del anunciante, borradores, Display y socios apagados, Maximizar
-      clics con CPC máx. 1.200, pausar "proveedor gastronómico", frase, negativas,
-      sin inglés — todo en la cuenta, lo hace el titular o el asistente de Chrome
-- [ ] IDs de las conversiones → [Medicion.astro](src/components/Medicion.astro) →
-      publicar (lado del sitio, 10 minutos cuando estén los IDs)
+- [x] Display y socios apagados, Maximizar clics con CPC máx. 1.200, "proveedor
+      gastronómico" pausada, frase, lista de negativas, sin inglés, CABA + GBA por
+      presencia — hecho por el asistente de Chrome el 01/10/2026
+- [x] Conversiones creadas y etiqueta de Google Ads instalada en el sitio (01/10/2026)
+- [ ] **Verificación del anunciante — vence el 28/10/2026.** Necesita los datos de la
+      empresa como figuran en Dun & Bradstreet. Solo la puede hacer el titular
+- [ ] Decidir: apagar IA Max, quitar las conversiones viejas "Compra" y "Contacto",
+      descartar los 4 borradores (recomendación en [ADS.md](ADS.md))
+- [ ] Comprobar en unos días que las conversiones pasen de "Inactiva" a activas
+- [ ] Crear la propiedad de **GA4** y pasar el ID (`G-...`)
 - [ ] **Preseleccionar el tipo de cliente por URL** (por ejemplo `/?tipo=hotel#contacto`),
       para que cada grupo de anuncios de la campaña nueva abra el formulario con el
       tipo ya elegido, como propone el informe. Se puede hacer sin depender de nadie.
