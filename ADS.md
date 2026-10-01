@@ -4,9 +4,16 @@ Insumos y decisiones de la primera campaña. **Está acá porque el borrador de 
 Ads ya se rompió dos veces**, y estas listas son trabajo que no se puede perder cada
 vez que una pestaña se cae. Si hay que rehacer la campaña, se rehace copiando de acá.
 
-Estado al 14 de septiembre de 2026: **armada y frenada en la pantalla de facturación**.
-No gastó nada y no puede: sin facturación cargada la cuenta no publica.
-La secuencia de encendido está en [ROADMAP.md](ROADMAP.md).
+Estado al 1 de octubre de 2026: **la campaña está publicando desde el 21/09, pero no con
+la configuración de este archivo.** Gastó ARS 71.689 en 11 días, sin medición y con
+Display prendido. Ver "Informe del asistente de Google Ads (01/10/2026)" al final: ahí
+está qué corregir, en qué orden, y qué recomendaciones del informe **no** aplicar.
+
+<details><summary>Estado anterior (14/09/2026)</summary>
+
+Armada y frenada en la pantalla de facturación. No gastó nada y no podía: sin
+facturación cargada la cuenta no publica.
+</details>
 
 ⚠️ **La cuenta nunca estuvo en modo inteligente.** Es una cuenta estándar recorriendo el
 asistente de alta de usuario nuevo, y eso se ve en que ofrece cosas que el modo
@@ -575,3 +582,119 @@ falta poner los 300.000 de una.
 
 **El camino crítico es la medición del sitio**, que hoy no está publicada. Ver
 [ROADMAP.md](ROADMAP.md).
+
+## Informe del asistente de Google Ads (01/10/2026)
+
+Lo armó el asistente que opera la cuenta desde Chrome, con los datos de la cuenta del
+21/09 al 01/10. El titular lo pasó al repo; acá queda el resumen cruzado con lo que este
+archivo ya tenía decidido.
+
+### Lo que pasó
+
+| Red | Impr. | Clics | CTR | CPC prom. | Costo (ARS) | % gasto |
+|---|---|---|---|---|---|---|
+| Búsqueda de Google | 1.152 | 42 | 3,65% | 900 | 37.780 | 53% |
+| Red de Display | 10.852 | 147 | 1,35% | 231 | 33.910 | 47% |
+| Socios de búsqueda | 32 | 0 | — | — | 0 | 0% |
+| **Total** | **12.036** | **189** | **1,57%** | **379** | **71.689** | |
+
+Palabras clave con gasto (todas en concordancia **amplia**): proveedor gastronómico
+9.223 · proveedor de cerdo 8.133 · proveedores de cerdo 8.068 · venta de carne de cerdo
+al por mayor 4.753 · proveedor de carne de cerdo 2.713 · carne de cerdo por mayor 2.448 ·
+distribuidora de carne de cerdo 1.713 · res de cerdo 726. Las otras 35 tuvieron cero
+clics; "media res de cerdo" y "res de cerdo" con calidad baja.
+
+Términos de búsqueda pagos que no son clientes: "kilo de bola de lomo" (vacuno),
+"comprar panceta de cerdo", "los reyes del cerdo precios", "cuánto pesa una media res
+de cerdo", "lomo de cerdo precio", "cerdo a domicilio", "makro mayorista".
+
+**Conversiones registradas: cero**, porque no hay etiqueta en el sitio. No se sabe
+cuántos formularios trajo.
+
+### ⚠️ Lo central: la campaña no tiene la configuración que se decidió
+
+Casi todo lo que el informe marca como problema ya estaba resuelto en este archivo el
+14/09, pero **la campaña que se publicó no lo respeta**. Lo más probable es que se haya
+publicado desde un borrador viejo o con lo que Google trae preseleccionado: es la
+tercera vez que la configuración de la cuenta no coincide con lo trabajado.
+
+| | Decidido acá (14/09) | Lo que está corriendo |
+|---|---|---|
+| Redes | Display y socios apagados | **Display prendido: 47% del gasto** |
+| Concordancia | Frase | **Amplia** |
+| Puja | Maximizar clics, CPC máx. 1.200 | **Maximizar conversiones**, sin conversiones |
+| Palabras clave | 33 | 43 |
+| Negativas | Lista compartida larga (ver arriba) | **Casi ninguna** |
+| Idioma | Español | **Español e inglés** |
+| Presupuesto | 12.000/día | 5.000/día |
+
+**Antes de tocar nada en la cuenta, el que la opere tiene que tener este archivo
+abierto** y cargar la configuración desde acá, no desde la memoria ni desde lo que
+Google sugiere.
+
+### Qué del informe sí aplicar (coincide con lo decidido)
+
+1. Completar la **verificación del anunciante** (banner arriba en la cuenta): si no, Google
+   puede frenar los anuncios.
+2. Revisar o descartar los **4 borradores** pendientes antes de cambiar nada.
+3. **Apagar Display y socios de búsqueda.** Es lo que más plata ahorra hoy.
+4. **Maximizar clics con CPC máx. ARS 1.200** hasta tener 15-30 conversiones.
+5. **Pausar "proveedor gastronómico"** (ya estaba marcado el 14/09: no dice ni carne ni
+   cerdo) y pasar el resto a **frase**.
+6. Cargar la **lista de negativas compartida** de este archivo, más las nuevas de abajo.
+7. Sacar el **idioma inglés**; ubicación CABA + GBA por **presencia**.
+8. **Instalar la medición**: el código está listo en
+   [Medicion.astro](src/components/Medicion.astro), faltan los IDs (ver "Conversiones").
+
+### Qué del informe NO aplicar, y por qué
+
+- **Negativas que bloquean clientes.** El informe propone `carnicería`, `pollo` y
+  `delivery`, y las tres estaban descartadas a propósito (ver "Las que se decidió NO
+  poner"). La peor es **`carnicería`**: las carnicerías son clientes, y además anula la
+  palabra clave propia `"carne de cerdo para carniceria"`. `kilo` suelto tampoco: ya está
+  `"precio por kilo"` como frase. `vacuno` sigue siendo decisión del titular.
+- **Negativas nuevas que sí suman**, del informe: `makro`, `vital`, `maxiconsumo`,
+  `diarco` (quien los busca quiere ir a esa cadena), `"cuanto pesa"`, `"bola de lomo"`,
+  `"los reyes del cerdo"`, `domicilio`, `panceta` (solo si el titular confirma que no la
+  vende por mayor; si la vende, no).
+- **Datos que no se pueden poner en anuncios** (regla 7 de AGENTS.md, no están
+  confirmados): "1.600 madres" (sigue la contradicción 1.600/3.000), "precio de
+  fábrica", "Pedí muestras", "entregas programadas", "Cotización en 24 h". El sitio sí
+  dice que responden la consulta en menos de 24 horas hábiles: eso se puede usar, una
+  cotización no.
+- **Grupo "Media res"**: el sitio no dice "media res" en ningún lado, y por eso esa
+  palabra tiene calidad baja. Primero el titular confirma que la vende y se escribe en
+  el sitio; recién después tiene sentido el grupo. El mensaje de bienvenida del
+  WhatsApp de la empresa ofrece medias reses, así que probablemente sí.
+- **Acortar el formulario a un paso**: es decisión del titular, y el 22/09 eligió
+  mantener los cuatro pasos. Lo que sí se hizo es lo que el informe marca como
+  problema de fondo, la fricción en celular: desde el 01/10 el formulario se abre a
+  pantalla completa, entra sin scroll y se autocompleta. La pantalla de "gracias" ya
+  existe (`/gracias/`). Si con medición la tasa de envío sale baja, se revisa.
+- **Extensión de formulario de Google** (formulario dentro del anuncio): esos contactos
+  quedan en Google Ads y **no llegan a la planilla ni al mail**. Si se prueba, alguien
+  tiene que bajarlos a mano.
+
+### Para decidir con el titular
+
+- **Conversiones principales o secundarias.** El informe propone el formulario como
+  principal y WhatsApp y teléfono como secundarias (se miden pero la puja no optimiza
+  hacia ellas). Este archivo había dejado las tres iguales, porque el canal B2B se
+  maneja por WhatsApp. Con el informe en la mano, conviene arrancar con el formulario
+  como única principal y revisar en un mes: un clic a WhatsApp no es un lead, un
+  formulario sí.
+- **Campaña nueva con cuatro grupos** (cerdo por mayor, gastronomía y hoteles, cortes
+  al vacío, media res): tiene sentido, y es lo que este archivo planteaba como segundo
+  paso. Los grupos pueden apuntar a la home con el formulario; si se quiere el tipo de
+  cliente ya elegido según el grupo, hay que agregarlo al sitio (ver
+  [ROADMAP.md](ROADMAP.md)).
+
+### Los números, con datos reales
+
+- **El CPC real de Búsqueda es ~ARS 900, no 240** como estimaba Google: casi cuatro
+  veces más. Las proyecciones de "Los números" de arriba quedan sin efecto. A 5.000/día
+  son 5-6 clics de Búsqueda por día.
+- **La promoción de 300.000** vence el 6 de noviembre. Al 01/10 se gastaron 71.689 y
+  quedan 36 días: para usar el resto hacen falta unos **ARS 6.300 por día** solo en
+  Búsqueda. A 5.000/día quedan ~48.000 sin usar.
+
