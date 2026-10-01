@@ -705,3 +705,70 @@ Google sugiere.
   quedan 36 días: para usar el resto hacen falta unos **ARS 6.300 por día** solo en
   Búsqueda. A 5.000/día quedan ~48.000 sin usar.
 
+### Cambios aplicados (01/10/2026)
+
+*Resumen que entregó el asistente de Chrome al terminar, pegado tal cual. Las
+instrucciones que siguió están en el historial del chat del titular; este archivo
+tiene las mismas decisiones.*
+
+**Cuenta**
+- Se trabajó en la interfaz habitual de Google Ads, sin cambiar de modo. No se aceptó ninguna recomendación automática.
+- Verificación del anunciante: **no completada**. La tarea "Proporciona la información de Dun & Bradstreet" figura con dos errores: no se pudo verificar el nombre de la organización ni la dirección. Hace falta la razón social y la dirección exactamente como figuran en D&B (o el número D-U-N-S). Fecha límite: **28/10/2026**; si no se completa, Google detiene la cuenta.
+- Borradores pendientes: **sin aplicar ni descartar**, a la espera de decisión. Son 4 campañas que se empezaron a crear y quedaron sin terminar: "Primer ejercicio pauta B2B" (Máximo rendimiento, sin presupuesto), "Campaign #1" (Búsqueda, ARS 0,01/día), "Campaign #1" (Búsqueda, ARS 12.000/día) y "Campaign #1" (Búsqueda, ARS 0,01/día).
+
+**Campaña "Pauta B2B - 1er Ejercicio"**
+- Redes: se apagaron la Red de Display y los socios de búsqueda. Queda solo la Búsqueda de Google.
+- Puja: de "Maximizar conversiones" a "Maximizar clics", con CPC máximo de ARS 1.200.
+- Idioma: solo español (se quitó inglés).
+- Ubicación: de "CABA" a 25 ubicaciones (CABA + los 24 partidos del GBA), con la opción "Presencia".
+  - Como "departamento" (partido): Almirante Brown, Esteban Echeverría, Ezeiza, La Matanza, Lomas de Zamora, Malvinas Argentinas, Morón, Quilmes, San Isidro, Tres de Febrero, Vicente López.
+  - Como "Ciudad", porque Google no ofrece la opción por partido (se eligió la de mayor alcance): Avellaneda, Berazategui, Florencio Varela, General San Martín, Hurlingham, Ituzaingó, José C. Paz, Lanús, Merlo, Moreno, San Fernando, San Miguel, Tigre.
+- Palabras clave: se pausó "proveedor gastronómico". Las otras 42 pasaron de amplia a frase. Google borra la palabra clave original y crea una nueva, así que el historial de cada una no se traslada. Las nuevas quedaron "Pendiente / En proceso de revisión".
+- Presupuesto: sin cambios (ARS 5.000/día).
+
+**Lista de palabras clave negativas**
+- Se creó la lista compartida "Negativas B2B" con 139 términos: 106 palabras sueltas y 33 frases cargadas con comillas (quedaron como concordancia de frase). Está aplicada a la campaña.
+- No se cargó ninguno de los términos excluidos: carnicería, supermercado(s), pollo, delivery, kilo, oferta, precio, vacío, vaca, vacuna, vacuno, parrilla, chancho, lechón.
+
+**Conversiones (tipo Sitio web)**
+- "Formulario B2B": **principal**, se cuenta cuando se carga una página cuya URL contiene `/gracias/`. Recuento: una. Ventana: 90 días.
+- "Clic WhatsApp B2B": **secundaria**, con código manual. Etiqueta `q-gRCJSpk40dEJiystdE`.
+- "Clic teléfono B2B": **secundaria**, con código manual. Etiqueta `5BkjCOjwmY0dEJiystdE`.
+- Etiqueta de Google de la cuenta: `AW-18436888856`. No se instaló código en la web y no se corrió "Probar instalación".
+- GA4: no hay ninguna propiedad vinculada a la cuenta.
+- Las tres conversiones figuran "Inactiva" hasta que la web envíe los datos.
+
+**Anuncios**
+- Sin cambios. No se agregó "1.600 madres", "precio de fábrica", "muestras", "entregas programadas" ni "cotización en 24 h", y no se creó el grupo de "media res".
+
+**No hecho / pendiente de decisión**
+- Verificación del anunciante: faltan los datos de Dun & Bradstreet (ver arriba).
+- Borradores: falta decidir si se aplican o descartan.
+- IA Max sigue activo, con personalización de texto y expansión de URL final. Puede generar textos sacados de la web, incluso datos no confirmados. Recomendación: apagarlo.
+- Las conversiones "Compra (Carga de página …/#contacto)" y "Contacto" siguen como principales (inactivas). Recomendación: pasarlas a secundarias o quitarlas.
+- Conversiones avanzadas: no se activaron, porque implicaban aceptar condiciones de Google.
+- La campaña va a seguir figurando "Apto (configuración incorrecta)" hasta que la etiqueta esté instalada en la web.
+
+### Lado del sitio (01/10/2026)
+
+Los códigos se cargaron en [Medicion.astro](src/components/Medicion.astro) y se
+publicaron el mismo día: `ADS_ID = AW-18436888856`, etiquetas de WhatsApp y teléfono.
+`CONVERSIONES.formulario` queda **vacío a propósito**, porque "Formulario B2B" es por URL
+y Google la cuenta sola con la etiqueta base; llenarlo duplicaría cada consulta. GA4
+sigue sin cargar porque no existe la propiedad.
+
+### Recomendación sobre lo pendiente
+
+- **IA Max: apagarlo.** Arma textos con lo que lee de la web, y la web dice "1.600
+  madres", que sigue sin confirmar. Es justo lo que los anuncios no pueden decir.
+- **Conversiones viejas "Compra" y "Contacto": quitarlas** (o pasarlas a secundarias).
+  "Compra" mide `#contacto`, que no es una consulta, y dos principales de más mezclan
+  la señal de la puja.
+- **Borradores: descartar los cuatro.** El de ARS 12.000/día es el que más riesgo tiene:
+  si alguien lo termina sin querer, publica una segunda campaña.
+- **Conversiones avanzadas: dejarlas apagadas** por ahora. Mandan a Google el mail y el
+  teléfono del formulario (cifrados); conviene que el titular lo decida y, si las
+  activa, sumarlo a la política de privacidad.
+- **Verificación del anunciante**: la tiene que completar el titular con los datos de
+  la empresa tal como figuran en Dun & Bradstreet. Vence el **28/10/2026**.
+

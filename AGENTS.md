@@ -255,10 +255,9 @@ recomendación en asistentes de IA. Al escribir contenido, tener en cuenta:
 hacer solo y lo que necesita cuentas o datos del titular. Mantenerlo actualizado al
 cerrar tareas.
 
-Lo más importante hoy: **no hay medición instalada** (falta GA4 y la etiqueta de
-Google Ads), así que no se puede pautar todavía. El código ya está listo en
+La medición de Google Ads está instalada desde el 01/10/2026 en
 [Medicion.astro](src/components/Medicion.astro) y cubre los tres canales de lead
-—WhatsApp, llamada y formulario—; solo faltan los IDs, que los tiene el titular.
+—WhatsApp, llamada y formulario—. Falta GA4: no existe la propiedad.
 
 ⚠️ **Dato contradictorio sin resolver:** el sitio dice **1.600 madres porcinas** y la
 información pública de la empresa dice **3.000**. Aparece en el hero, en la franja
@@ -275,12 +274,14 @@ de cifras y en `llms.txt`. No cambiarlo sin confirmación del titular.
 >
 > - **Páginas `/mayoristas/` y `/gastronomicos/`** — esperan su autorización.
 
-🔴 **Google Ads: la campaña está gastando sin la configuración decidida.** Corre desde
-el 21/09 con Display prendido (47% del gasto), concordancia amplia, casi sin negativas,
-idioma inglés y sin medición: ARS 71.689 en 11 días y cero conversiones registradas. Lo
-encontró el informe del asistente de Google Ads del 01/10. Qué corregir, en qué orden,
-y qué recomendaciones del informe **no** aplicar (hay negativas que bloquean clientes):
-[ADS.md](ADS.md), última sección. El que opere la cuenta tiene que tener ADS.md abierto.
+**Google Ads, corregido el 01/10/2026.** La campaña corría desde el 21/09 sin la
+configuración decidida (Display prendido, amplia, sin negativas, sin medición: ARS
+71.689 en 11 días y cero conversiones). El asistente de Chrome la corrigió siguiendo
+ADS.md, y la **etiqueta de Google Ads quedó instalada y publicada** en la web. Detalle y
+pendientes en [ADS.md](ADS.md), últimas secciones.
+
+🔴 **Verificación del anunciante: vence el 28/10/2026.** Si no se completa, Google frena
+la cuenta. La tiene que hacer el titular con los datos de Dun & Bradstreet.
 
 **Publicado el 01/10/2026:** el **formulario a pantalla completa en celular**, con
 accesibilidad para lectores de pantalla. Probado en el sitio real en 390×844 y 375×667:
@@ -310,8 +311,8 @@ responsive):
 **Sin publicar, a la espera del titular:** `/mayoristas/` y `/gastronomicos/`. Están en
 `main`, no en `produccion`.
 
-⚠️ **Google Ads todavía no ve ningún lead**: el único bloqueante del lado del sitio son
-los IDs de las conversiones. Cuando el titular los pase, pegarlos en
+**Medición:** Google Ads instalada el 01/10 (formulario por URL, WhatsApp y teléfono por
+clic). GA4 no está, porque no existe la propiedad. Cuando el titular los pase, pegarlos en
 [Medicion.astro](src/components/Medicion.astro) en `main`, mergear a `produccion` y
 publicar.
 
