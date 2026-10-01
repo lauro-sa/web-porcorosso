@@ -268,6 +268,17 @@ de cifras y en `llms.txt`. No cambiarlo sin confirmación del titular.
 
 *Última actualización: 22 de septiembre de 2026.*
 
+> 🔔 **Al empezar la sesión, recordale esto al titular (lo pidió él):** hay trabajo
+> terminado en `main` que **está esperando su OK para publicarse**. Preguntale si lo
+> publicamos. Si dice que sí: `git merge main` en la rama `produccion` y publicar según
+> [DEPLOY.md](DEPLOY.md). Hasta que lo publique, este aviso se queda.
+>
+> - **Formulario a pantalla completa en celular** — probado por el titular en local el
+>   22/09, le gustó. Incluye la accesibilidad para lectores de pantalla (foco, listas
+>   con teclado, campos con nombre). Detalle en [ROADMAP.md](ROADMAP.md).
+> - **Páginas `/mayoristas/` y `/gastronomicos/`** — esperan otra autorización, más
+>   adelante. Esas no se suben con el formulario salvo que el titular lo diga.
+
 **Publicado el 22/09/2026, desde la rama `produccion`:** todo lo que había en `main`
 menos las páginas de segmento. Es decir, además de lo que ya estaba (landing,
 formulario a mail y planilla, `/gracias`, `/privacidad`, preguntas frecuentes, imágenes
@@ -289,8 +300,9 @@ responsive):
 - La imagen nueva de Open Graph, el `llms.txt` que responde que abastecen hoteles, y
   el color de la barra de estado de iOS (pendiente de probarse en un iPhone real).
 
-**Sin publicar, a la espera del titular:** `/mayoristas/` y `/gastronomicos/`. Están
-en `main`, no en `produccion`.
+**Sin publicar, a la espera del titular:** `/mayoristas/` y `/gastronomicos/`, y el
+formulario a pantalla completa en celular (ver [ROADMAP.md](ROADMAP.md)), que el
+titular está probando en local. Están en `main`, no en `produccion`.
 
 ⚠️ La campaña ya empezó a gastar (según el titular, 22/09). Los anuncios van a la home,
 que funciona, pero **Google Ads todavía no ve ningún lead**: el único bloqueante son los
