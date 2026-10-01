@@ -266,18 +266,25 @@ de cifras y en `llms.txt`. No cambiarlo sin confirmación del titular.
 
 ## Dónde quedó todo
 
-*Última actualización: 22 de septiembre de 2026.*
+*Última actualización: 1 de octubre de 2026.*
 
 > 🔔 **Al empezar la sesión, recordale esto al titular (lo pidió él):** hay trabajo
 > terminado en `main` que **está esperando su OK para publicarse**. Preguntale si lo
 > publicamos. Si dice que sí: `git merge main` en la rama `produccion` y publicar según
-> [DEPLOY.md](DEPLOY.md). Hasta que lo publique, este aviso se queda.
+> [DEPLOY.md](DEPLOY.md). Cuando se publique algo, sacalo de esta lista.
 >
-> - **Formulario a pantalla completa en celular** — probado por el titular en local el
->   22/09, le gustó. Incluye la accesibilidad para lectores de pantalla (foco, listas
->   con teclado, campos con nombre). Detalle en [ROADMAP.md](ROADMAP.md).
-> - **Páginas `/mayoristas/` y `/gastronomicos/`** — esperan otra autorización, más
->   adelante. Esas no se suben con el formulario salvo que el titular lo diga.
+> - **Páginas `/mayoristas/` y `/gastronomicos/`** — esperan su autorización.
+
+🔴 **Google Ads: la campaña está gastando sin la configuración decidida.** Corre desde
+el 21/09 con Display prendido (47% del gasto), concordancia amplia, casi sin negativas,
+idioma inglés y sin medición: ARS 71.689 en 11 días y cero conversiones registradas. Lo
+encontró el informe del asistente de Google Ads del 01/10. Qué corregir, en qué orden,
+y qué recomendaciones del informe **no** aplicar (hay negativas que bloquean clientes):
+[ADS.md](ADS.md), última sección. El que opere la cuenta tiene que tener ADS.md abierto.
+
+**Publicado el 01/10/2026:** el **formulario a pantalla completa en celular**, con
+accesibilidad para lectores de pantalla. Probado en el sitio real en 390×844 y 375×667:
+los cuatro pasos entran sin scroll y el gesto de atrás lo cierra.
 
 **Publicado el 22/09/2026, desde la rama `produccion`:** todo lo que había en `main`
 menos las páginas de segmento. Es decir, además de lo que ya estaba (landing,
@@ -300,18 +307,15 @@ responsive):
 - La imagen nueva de Open Graph, el `llms.txt` que responde que abastecen hoteles, y
   el color de la barra de estado de iOS (pendiente de probarse en un iPhone real).
 
-**Sin publicar, a la espera del titular:** `/mayoristas/` y `/gastronomicos/`, y el
-formulario a pantalla completa en celular (ver [ROADMAP.md](ROADMAP.md)), que el
-titular está probando en local. Están en `main`, no en `produccion`.
+**Sin publicar, a la espera del titular:** `/mayoristas/` y `/gastronomicos/`. Están en
+`main`, no en `produccion`.
 
-⚠️ La campaña ya empezó a gastar (según el titular, 22/09). Los anuncios van a la home,
-que funciona, pero **Google Ads todavía no ve ningún lead**: el único bloqueante son los
-IDs de las tres conversiones. Cuando el titular los pase, pegarlos en
+⚠️ **Google Ads todavía no ve ningún lead**: el único bloqueante del lado del sitio son
+los IDs de las conversiones. Cuando el titular los pase, pegarlos en
 [Medicion.astro](src/components/Medicion.astro) en `main`, mergear a `produccion` y
 publicar.
 
-Lo del 22/09 quedó commiteado en local, en `main` y en `produccion`. Falta pushear las
-dos ramas (verificar con `git status -sb`).
+`main` y `produccion` están pusheadas a GitHub (verificar con `git status -sb`).
 
 **Por qué se hicieron las páginas de segmento:** un usuario le preguntó a un asistente
 de IA a quién comprarle cerdo para un hotel en CABA y Porco Rosso apareció cuarto en

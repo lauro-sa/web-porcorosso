@@ -72,8 +72,8 @@ en Google, campañas pagas (Google Ads y redes) y recomendación en asistentes d
       por la misma consulta. **Publicado el 22/09/2026**
 - [x] **Página de error propia** (22/09/2026) — antes una URL inexistente mostraba la
       página genérica de Hostinger, en inglés y sin marca. Publicada
-- [ ] **Formulario a pantalla completa en celular** (22/09/2026) — **hecho en `main`,
-      sin publicar: el titular lo está probando en local.** En celular, "Solicitar info"
+- [x] **Formulario a pantalla completa en celular** (22/09/2026, **publicado el
+      01/10/2026**). En celular, "Solicitar info"
       y los botones que llevan al formulario lo abren como una pantalla propia del alto
       del teléfono, con "Volver" arriba y los botones fijos abajo (suben con el teclado).
       Los cuatro pasos entran sin scroll desde 375×667. El gesto de atrás del teléfono lo
@@ -168,7 +168,29 @@ cuatro preguntas de un jefe de compras y hoy quedan sin responder.
 
 ---
 
+## Corregir la campaña de Google Ads que ya está corriendo
+
+**Urgente (01/10/2026).** La campaña publica desde el 21/09 con una configuración
+distinta de la decidida: Display prendido, concordancia amplia, casi sin negativas,
+inglés y sin medición. El detalle, el orden de las correcciones y las recomendaciones
+del informe que **no** hay que aplicar están en [ADS.md](ADS.md), sección "Informe del
+asistente de Google Ads (01/10/2026)".
+
+- [ ] Verificación del anunciante, borradores, Display y socios apagados, Maximizar
+      clics con CPC máx. 1.200, pausar "proveedor gastronómico", frase, negativas,
+      sin inglés — todo en la cuenta, lo hace el titular o el asistente de Chrome
+- [ ] IDs de las conversiones → [Medicion.astro](src/components/Medicion.astro) →
+      publicar (lado del sitio, 10 minutos cuando estén los IDs)
+- [ ] **Preseleccionar el tipo de cliente por URL** (por ejemplo `/?tipo=hotel#contacto`),
+      para que cada grupo de anuncios de la campaña nueva abra el formulario con el
+      tipo ya elegido, como propone el informe. Se puede hacer sin depender de nadie.
+- [ ] Confirmar con el titular si vende **media res** antes de armar ese grupo de
+      anuncios (ver "Datos del negocio a confirmar")
+
 ## Encender la campaña de Google Ads
+
+*Sección escrita antes de que la campaña se publicara. Sigue valiendo como checklist de
+lo que la campaña tiene que tener.*
 
 La primera campaña se arma **pausada** y se activa después. El orden importa: lo que
 se gaste antes de que la medición esté publicada no se puede analizar ni recuperar.
