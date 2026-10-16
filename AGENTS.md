@@ -265,7 +265,7 @@ de cifras y en `llms.txt`. No cambiarlo sin confirmación del titular.
 
 ## Dónde quedó todo
 
-*Última actualización: 1 de octubre de 2026.*
+*Última actualización: 16 de octubre de 2026.*
 
 > 🔔 **Al empezar la sesión, recordale esto al titular (lo pidió él):** hay trabajo
 > terminado en `main` que **está esperando su OK para publicarse**. Preguntale si lo
@@ -285,6 +285,16 @@ Detalle y pendientes en [ADS.md](ADS.md), últimas secciones.
 
 🔴 **Verificación del anunciante: vence el 28/10/2026.** Si no se completa, Google frena
 la cuenta. La tiene que hacer el titular con los datos de Dun & Bradstreet.
+
+**Próximo paso en Google Ads: una campaña nueva**, que el titular quiere armar después
+de medir unos días la corregida. Al cerrar la sesión (16/10/2026) no había registro de
+si ya se armó ni de cuántas conversiones entraron: lo primero es preguntarle eso y mirar
+Google Ads → Objetivos → Conversiones. Checklist en [ROADMAP.md](ROADMAP.md), sección
+"Corregir la campaña de Google Ads que ya está corriendo".
+
+La carpeta `../porcorosso-online` (el worktree de `produccion`) se borró al cerrar la
+sesión. Para publicar o ver lo que está online, volver a crearla con los comandos de
+"Qué está online y qué estás viendo en local".
 
 **Publicado el 01/10/2026:** el **formulario a pantalla completa en celular**, con
 accesibilidad para lectores de pantalla. Probado en el sitio real en 390×844 y 375×667:
