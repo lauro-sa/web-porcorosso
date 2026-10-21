@@ -856,7 +856,7 @@ cambio les agrega un atributo en `main`. El `git merge main` va a frenar con un
 conflicto *modify/delete* en esas dos páginas: resolverlo manteniendo el borrado
 (`git rm src/pages/mayoristas.astro src/pages/gastronomicos.astro`).
 
-### Copia de cada lead a Flux (publicada el 21/10/2026, inactiva hasta cargar la clave)
+### Copia de cada lead a Flux (publicada y activa desde el 21/10/2026)
 
 Además del script, `contacto.php` le manda a Flux una copia de cada consulta al
 endpoint `POST /api/publico/f/frm_724af40a219aab961175db75/recibir`. Lleva la sesión
