@@ -864,3 +864,24 @@ de Flux del visitante (`visitante_id`, que el formulario lee con
 `flux('sesion', cb)`). Con eso Flux une el lead con la visita que trajo el gclid y los
 `utm_*`, y con la conversión "Formulario B2B", en vez de contarlos por separado. No
 cambia nada de Google Ads. Detalle técnico en [DEPLOY.md](DEPLOY.md), "Copia a Flux".
+
+**Cómo une Flux el lead con la visita** (respuesta de la sesión que construyó el
+endpoint, 21/10/2026):
+
+- El script de Flux no usa cookie. El visitante es un hash diario que arma el servidor.
+  `flux('sesion')` da el id de esa carga de página, y no hay otro id para mandar.
+- Si la carga desde la que se envió el formulario no trae la llegada (fuente, campaña o
+  gclid), Flux busca la última llegada del mismo visitante **en los 30 minutos
+  anteriores**. Si el anuncio fue hace más de 30 minutos, si se cruzó la medianoche o si
+  cambió la IP o el navegador, no la encuentra.
+- Por eso la landing manda igual el `gclid` y el `gclid_ts` que guarda por 90 días: lo
+  que manda el servidor tiene prioridad sobre la visita. **No sacarlos del envío.**
+- La conversión "Formulario B2B" del script y el lead que manda `contacto.php` **no se
+  unen ni se cuentan dos veces**. Son métricas distintas: la conversión alimenta el
+  tablero por fuente en Seguimiento, y el lead entra en Leads marcado «vía servidor».
+  Las dos se quedan.
+- El aviso de Flux por cada envío se apaga en Marketing → Formularios → el formulario →
+  «Qué hace» → «Avisar de cada envío». Viene prendido. El titular decide si lo quiere
+  además del mail que ya llega a hola@porcorosso.com.ar.
+- Cada rechazo (clave, datos, límite) queda a la vista en Compartir → «Desde tu
+  servidor», con fecha y motivo.
