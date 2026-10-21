@@ -279,9 +279,6 @@ de cifras y en `llms.txt`. No cambiarlo sin confirmación del titular.
 > [DEPLOY.md](DEPLOY.md). Cuando se publique algo, sacalo de esta lista.
 >
 > - **Páginas `/mayoristas/` y `/gastronomicos/`** — esperan su autorización.
-> - **Flux by Salix** (21/10/2026) — el CRM que mide visitas y contactos. Commiteado en
->   `main`, sin publicar. Al mergear a `produccion` hay un conflicto esperable: ver
->   [ADS.md](ADS.md), sección "Flux by Salix".
 
 **Google Ads, corregido el 01/10/2026.** La campaña corría desde el 21/09 sin la
 configuración decidida (Display prendido, amplia, sin negativas, sin medición: ARS
@@ -304,6 +301,12 @@ Google Ads → Objetivos → Conversiones. Checklist en [ROADMAP.md](ROADMAP.md)
 La carpeta `../porcorosso-online` (el worktree de `produccion`) se borró al cerrar la
 sesión. Para publicar o ver lo que está online, volver a crearla con los comandos de
 "Qué está online y qué estás viendo en local".
+
+**Publicado el 21/10/2026 a las 13:54 (hora argentina):** la conexión con **Flux by
+Salix**, sola. El merge de `main` a `produccion` chocó con las páginas de segmento,
+como estaba previsto, y se resolvió dejándolas borradas. Verificado con `curl` contra
+el sitio real: Flux carga una vez por página, la etiqueta de Google Ads sigue igual y
+`/mayoristas/` y `/gastronomicos/` siguen en 404.
 
 **Publicado el 01/10/2026:** el **formulario a pantalla completa en celular**, con
 accesibilidad para lectores de pantalla. Probado en el sitio real en 390×844 y 375×667:
@@ -338,7 +341,8 @@ clic). GA4 no está, porque no existe la propiedad. Cuando el titular los pase, 
 [Medicion.astro](src/components/Medicion.astro) en `main`, mergear a `produccion` y
 publicar.
 
-`main` y `produccion` están pusheadas a GitHub (verificar con `git status -sb`).
+Al 21/10/2026, `main` y `produccion` tienen commits **sin pushear a GitHub** (el
+titular no lo pidió). Verificar con `git status -sb` y pushear cuando lo autorice.
 
 **Por qué se hicieron las páginas de segmento:** un usuario le preguntó a un asistente
 de IA a quién comprarle cerdo para un hotel en CABA y Porco Rosso apareció cuarto en
