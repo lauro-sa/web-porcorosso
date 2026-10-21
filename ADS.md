@@ -885,3 +885,32 @@ endpoint, 21/10/2026):
   además del mail que ya llega a hola@porcorosso.com.ar.
 - Cada rechazo (clave, datos, límite) queda a la vista en Compartir → «Desde tu
   servidor», con fecha y motivo.
+
+### Prueba de conexión landing → Flux (21/10/2026)
+
+*Resumen que entregó el asistente de Flux en Chrome, más lo que se revisó del lado de la
+landing.*
+
+- **Clave:** la generó el titular y se cargó en el servidor desde el portapapeles. Flux la
+  aceptó a las 17:19.
+- **Envío de prueba:** 17:22, desde b2b.porcorosso.com.ar, con Negocio "PRUEBA", nombre
+  "Prueba Flux", prueba@example.com y +54 9 11 0000-0000. El WhatsApp de `/gracias/` se
+  cerró sin enviar. Del lado de la landing: la fila quedó en el CSV y no hubo nada en
+  `leads/errores.log`.
+- **Compartir → Desde tu servidor:** "Último envío recibido: 21/10/2026 17:22". ✅ Sigue
+  visible "Último rechazado: 17:19 (faltaban datos)": es la comprobación de la clave, no
+  un error. Que no desaparezca es cosa de Flux; ya se lo avisamos.
+- **Leads:** entró "Prueba Flux" · "Formulario B2B (landing) · vía servidor", con todos los
+  datos adicionales etiquetados. Sin campaña, como corresponde a una entrada directa. ✅
+- **Seguimiento:** «Formulario B2B» = 1. ✅ También figura «WhatsApp» = 1 (Directo). **No
+  es el WhatsApp que abre `/gracias/`**: el script de Flux solo cuenta clics en elementos
+  con `data-flux-conversion`, y esa apertura no es un clic. Además, el botón de
+  `/gracias/` pierde el atributo después de un envío. Es un clic real en otro botón de
+  WhatsApp; le pedimos a Flux la hora y la página para confirmarlo.
+- **Atribución:** Flux ya registra 3 personas llegadas desde anuncios de Google.
+- **Para corregir en Flux:** la lista de formularios dice "Borrador · No recibe envíos
+  hasta que lo publiques", pero por servidor sí recibe.
+- **Avisar de cada envío:** sigue prendido. Lo tiene que decidir el titular.
+- **La fila de prueba** sigue en el CSV, y en Leads de Flux. Borrarla o dejarla, a
+  criterio del titular.
+- **Google Ads:** sin cambios.

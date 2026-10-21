@@ -323,10 +323,10 @@ endpoint de Flux ya está en producción (responde 401 sin clave) y su script ya
 sesión. **Activa desde el 21/10/2026 a la tarde:** el titular generó la clave y se cargó en
 `privado/flux.php` directo desde el portapapeles, sin pasar por ningún chat. Flux la
 aceptó: un pedido vacío de prueba dio 422 ("faltan datos") y no 401. Ese pedido deja un
-«rechazo: datos» en Compartir que desaparece con el primer envío bueno. Falta la
-consulta de prueba ("PRUEBA" en Negocio), que la hace el asistente de Flux en Chrome, y
-mirar después `leads/errores.log`. La fila de prueba queda en el CSV y el mail llega a
-hola@. El formulario de Flux sigue en borrador, que igual recibe.
+«rechazo: datos» en Compartir que desaparece con el primer envío bueno. **Probada
+a las 17:22**: la consulta "PRUEBA" entró en Leads de Flux «vía servidor», con los datos
+etiquetados, y sin errores en el servidor. La fila de prueba sigue en el CSV. Detalle y
+pendientes en [ADS.md](ADS.md), "Prueba de conexión landing → Flux".
 
 **Publicado el 21/10/2026 a las 13:54 (hora argentina):** la conexión con **Flux by
 Salix**, sola. El merge de `main` a `produccion` chocó con las páginas de segmento,
