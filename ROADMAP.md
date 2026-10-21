@@ -153,6 +153,45 @@ Nada de esto se puede hacer sin información que solo tiene el dueño del negoci
       vectorial** en la web (solo WebP en `src/assets/images/logos/` y los `.ai` y
       PNG del brand book, fuera de git) ni **isotipo**: `favicon.svg` son las letras
       "PR" en tipografía genérica, no la marca.
+
+      **Búsqueda en fuentes públicas (21/10/2026).** Lo único que aparece es la
+      tienda de consumidor final, `porcorosso.com.ar` (Shopify). Sus datos son **de
+      la tienda, no del canal B2B**, así que no van a esta web sin que el titular
+      diga que valen también para mayoristas:
+
+      - **Razón social y CUIT: no están en ningún lado.** No figuran en la tienda
+        (términos, privacidad, envíos, sucursal), y las búsquedas por nombre y por
+        dirección solo devuelven la película de Ghibli y un restaurante mexicano
+        homónimo. Los términos de la tienda nombran a la empresa como **"Porco Rosso
+        Almacén"** (sección 6, Propiedad intelectual): es un nombre de fantasía, no
+        una razón social. La constancia de ARCA se consulta por CUIT, no por nombre,
+        así que hace falta que el titular pase el número.
+      - **Condición frente al IVA:** no figura. La tienda dice que los precios
+        "incluyen IVA" y que la factura se pide por WhatsApp; no dice si es A o B.
+      - **Qué es la dirección de Ituzaingó:** la tienda la llama "sucursal" y
+        "almacén" (`/pages/sucursal`), con compra presencial y retiro de pedidos. Es
+        un **local de venta**, no la planta. La ubicación del criadero y de la
+        planta no figura en ningún lado.
+      - **Código postal:** solo `B1715`, igual que acá.
+      - **Entregas de la tienda** (`/policies/shipping-policy`): miércoles y
+        viernes. Pedidos hasta el martes a las 12 → viernes, solo CABA. Pedidos
+        hasta el viernes a las 12 → miércoles, en CABA, Zona Oeste (Ituzaingó,
+        Castelar, Morón, Haedo, Ramos Mejía) y Zona Norte (Vicente López, Florida
+        Este, Olivos, La Lucila, Martínez, Acassuso, San Isidro, Beccar, San
+        Fernando). **No menciona Zona Sur**, que esta web sí promete.
+      - **Pedido mínimo de la tienda:** $60.000, con envío de $10.000 y gratis desde
+        $100.000. Su página `/pages/mayoristas` muestra el mismo mínimo y manda a
+        pedir por WhatsApp, pero no aclara si es el mínimo mayorista.
+      - **Formas de pago de la tienda:** Mercado Pago (crédito, débito,
+        transferencia, dinero en cuenta, cuotas). De cuenta corriente o plazos para
+        mayoristas no dice nada.
+      - **Áreas y cargos:** no figuran. `/pages/quienes-somos` describe el proceso
+        productivo, no el equipo.
+      - **Para preguntarle al titular:** esa misma página dice **1.600 madres** (como
+        esta web, y no 3.000) y "hace más de una década" que están en la producción
+        porcina, mientras que esta web dice "fundada en 2018". Además, la página
+        mayorista de la tienda manda al WhatsApp de la tienda (+54 9 11 4045-3345) y
+        no al B2B (+54 9 11 7271-4251).
 - [ ] **Pedido mínimo mayorista** — no está publicado en ningún lado. Es de las primeras
       preguntas de un comprador B2B y hoy queda sin responder.
 - [ ] **¿Venden media res?** El sitio **no dice "media res" ni una vez**, pero
