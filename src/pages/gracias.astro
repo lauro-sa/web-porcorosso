@@ -77,6 +77,7 @@ import "../styles/global.css";
       >
         <a
           id="boton-whatsapp"
+          data-flux-conversion="WhatsApp"
           href={enlaceWhatsApp("¡Hola Porco Rosso! Acabo de completar el formulario mayorista de la web.")}
           target="_blank"
           rel="noopener noreferrer"
@@ -120,6 +121,18 @@ import "../styles/global.css";
   // recargar la página no la cuenta dos veces.
   window.prConversion?.("formulario");
 
+  // Flux cuenta el formulario aparte. Solo si esta carga viene de un envio que
+  // el servidor confirmo: el aviso lo deja ContactForm despues de la respuesta
+  // OK y se consume una vez, asi recargar no suma otra conversion.
+  try {
+    if (sessionStorage.getItem("porcorosso:envio-ok")) {
+      sessionStorage.removeItem("porcorosso:envio-ok");
+      (window as any).flux?.("conversion", "Formulario B2B");
+    }
+  } catch {
+    // Sin sessionStorage, ContactForm ya la mando antes de redirigir.
+  }
+
   // El formulario deja acá el mensaje de WhatsApp ya redactado con la
   // consulta. Se abre solo, con una pausa para que la conversión de arriba
   // alcance a salir antes de dejar la página, y el botón queda como respaldo
@@ -127,7 +140,8 @@ import "../styles/global.css";
   //
   // El botón lleva data-no-medir: la persona ya contó como lead de formulario,
   // y si Medicion.astro contara además el clic como lead de WhatsApp, Google
-  // Ads vería dos conversiones por la misma consulta.
+  // Ads vería dos conversiones por la misma consulta. Por lo mismo pierde
+  // data-flux-conversion: Flux también la contaría dos veces.
   const CLAVE_WHATSAPP = "porcorosso:ultima-consulta-wa";
   const textoWhatsApp = sessionStorage.getItem(CLAVE_WHATSAPP);
 
@@ -137,6 +151,7 @@ import "../styles/global.css";
     if (boton) {
       boton.setAttribute("href", enlace);
       boton.setAttribute("data-no-medir", "");
+      boton.removeAttribute("data-flux-conversion");
       boton.textContent = "Enviar consulta por WhatsApp";
     }
     const texto = document.getElementById("texto-gracias");

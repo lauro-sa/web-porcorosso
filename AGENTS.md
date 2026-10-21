@@ -259,13 +259,19 @@ La medición de Google Ads está instalada desde el 01/10/2026 en
 [Medicion.astro](src/components/Medicion.astro) y cubre los tres canales de lead
 —WhatsApp, llamada y formulario—. Falta GA4: no existe la propiedad.
 
+**Flux by Salix** (el CRM) mide aparte, desde el 21/10/2026 en `main`: script en
+[Layout.astro](src/layouts/Layout.astro) y atributos `data-flux-conversion` en los
+enlaces. Si agregás un botón de WhatsApp o un `tel:`, ponele
+`data-flux-conversion="WhatsApp"` o `"Llamada"`: a diferencia de Google Ads, Flux no
+los detecta solo. Detalle en [ADS.md](ADS.md).
+
 ⚠️ **Dato contradictorio sin resolver:** el sitio dice **1.600 madres porcinas** y la
 información pública de la empresa dice **3.000**. Aparece en el hero, en la franja
 de cifras y en `llms.txt`. No cambiarlo sin confirmación del titular.
 
 ## Dónde quedó todo
 
-*Última actualización: 16 de octubre de 2026.*
+*Última actualización: 21 de octubre de 2026.*
 
 > 🔔 **Al empezar la sesión, recordale esto al titular (lo pidió él):** hay trabajo
 > terminado en `main` que **está esperando su OK para publicarse**. Preguntale si lo
@@ -273,6 +279,9 @@ de cifras y en `llms.txt`. No cambiarlo sin confirmación del titular.
 > [DEPLOY.md](DEPLOY.md). Cuando se publique algo, sacalo de esta lista.
 >
 > - **Páginas `/mayoristas/` y `/gastronomicos/`** — esperan su autorización.
+> - **Flux by Salix** (21/10/2026) — el CRM que mide visitas y contactos. Commiteado en
+>   `main`, sin publicar. Al mergear a `produccion` hay un conflicto esperable: ver
+>   [ADS.md](ADS.md), sección "Flux by Salix".
 
 **Google Ads, corregido el 01/10/2026.** La campaña corría desde el 21/09 sin la
 configuración decidida (Display prendido, amplia, sin negativas, sin medición: ARS
