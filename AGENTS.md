@@ -277,7 +277,8 @@ La medición de Google Ads está instalada desde el 01/10/2026 en
 [Layout.astro](src/layouts/Layout.astro) y atributos `data-flux-conversion` en los
 enlaces. Si agregás un botón de WhatsApp o un `tel:`, ponele
 `data-flux-conversion="WhatsApp"` o `"Llamada"`: a diferencia de Google Ads, Flux no
-los detecta solo. Detalle en [ADS.md](ADS.md).
+los detecta solo. Escribí el nombre exactamente así, con las mismas mayúsculas: Flux
+agrupa por ese texto, y «Whatsapp» sería otra fila en el tablero. Detalle en [ADS.md](ADS.md).
 
 ⚠️ **Dato contradictorio sin resolver:** el sitio dice **1.600 madres porcinas** y la
 información pública de la empresa dice **3.000**. Aparece en el hero, en la franja
