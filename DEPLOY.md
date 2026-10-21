@@ -90,6 +90,39 @@ hosting), el lead ya quedó guardado igual. La consulta solo se da por perdida s
 las dos vías, y en ese caso el visitante ve un aviso con el WhatsApp como alternativa,
 en lugar de la pantalla de éxito.
 
+### Copia a Flux (el CRM)
+
+Después de guardar en el CSV y mandar el mail, `contacto.php` le contesta al navegador
+y **recién ahí** manda una copia del lead a Flux by Salix. Si Flux no responde o
+rechaza la copia, el lead no se pierde (ya está en el CSV y en el mail) y queda una
+línea en `leads/errores.log`.
+
+La URL y la clave **no están en el repo**. Viven en
+`/home/u512253031/domains/porcorosso.com.ar/privado/flux.php`, fuera de `public_html`.
+Mientras ese archivo no exista, no se manda nada a Flux. Para crearlo, con la URL y la
+clave que da Flux (Marketing → Formularios → «Formulario B2B (landing)» → Compartir →
+«Recibir desde tu servidor» → Generar clave):
+
+```bash
+ssh -i ~/.ssh/hostinger_porcorosso -p 65002 u512253031@212.85.6.214
+mkdir -p ~/domains/porcorosso.com.ar/privado && chmod 700 ~/domains/porcorosso.com.ar/privado
+cat > ~/domains/porcorosso.com.ar/privado/flux.php <<'PHP'
+<?php return ['url' => 'https://…/api/publico/f/frm_724af40a219aab961175db75/recibir', 'clave' => '…'];
+PHP
+chmod 600 ~/domains/porcorosso.com.ar/privado/flux.php
+```
+
+Si alguien regenera la clave en Flux, la anterior deja de andar: hay que reemplazarla
+en ese archivo. Lo que mande la landing a partir de ahí va a figurar como rechazado
+(401) en Flux y en `errores.log`.
+
+### Errores del script
+
+`contacto.php` escribe sus errores en
+`/home/u512253031/domains/porcorosso.com.ar/leads/errores.log`, junto al CSV. Hostinger
+los escribiría por defecto en un archivo `error_log` dentro de la carpeta pública: ver
+la regla 14 de [AGENTS.md](AGENTS.md).
+
 ### Bajar los leads
 
 ```bash

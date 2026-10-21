@@ -855,3 +855,12 @@ página, la etiqueta de Ads quedó igual y una URL con `gclid` y `utm_*` llega i
 cambio les agrega un atributo en `main`. El `git merge main` va a frenar con un
 conflicto *modify/delete* en esas dos páginas: resolverlo manteniendo el borrado
 (`git rm src/pages/mayoristas.astro src/pages/gastronomicos.astro`).
+
+### Copia de cada lead a Flux (21/10/2026, sin publicar)
+
+Además del script, `contacto.php` le manda a Flux una copia de cada consulta al
+endpoint `POST /api/publico/f/frm_724af40a219aab961175db75/recibir`. Lleva la sesión
+de Flux del visitante (`visitante_id`, que el formulario lee con
+`flux('sesion', cb)`). Con eso Flux une el lead con la visita que trajo el gclid y los
+`utm_*`, y con la conversión "Formulario B2B", en vez de contarlos por separado. No
+cambia nada de Google Ads. Detalle técnico en [DEPLOY.md](DEPLOY.md), "Copia a Flux".
