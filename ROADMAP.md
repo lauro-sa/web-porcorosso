@@ -60,11 +60,10 @@ en Google, campañas pagas (Google Ads y redes) y recomendación en asistentes d
       [Layout.astro](src/layouts/Layout.astro); conversiones "Formulario B2B" (en
       `/gracias/`, solo tras un envío confirmado), "WhatsApp" y "Llamada" por atributo
       en cada enlace. Google Ads no se tocó. Detalle en [ADS.md](ADS.md). La copia
-      de cada lead a Flux desde `contacto.php` está hecha y probada en una copia
-      aislada en el servidor, **sin publicar**. Falta: que Flux publique su endpoint,
-      generar la clave, crear `privado/flux.php` en el servidor (ver
-      [DEPLOY.md](DEPLOY.md)), publicar y hacer un envío de prueba que aparezca en
-      Leads unido a su visita
+      de cada lead a Flux desde `contacto.php` está **publicada el 21/10/2026** a las
+      16:42, pero inactiva. Falta: generar la clave en Flux, crear `privado/flux.php` en
+      el servidor (ver [DEPLOY.md](DEPLOY.md)) y hacer un envío de prueba que aparezca
+      en Leads unido a su visita
 - [x] **GCLID guardado con cada lead** — el identificador del clic de Google Ads se
       captura al aterrizar, se persiste 90 días y viaja al CSV. Habilita subir
       conversiones sin conexión: cuando una consulta termina siendo cliente semanas

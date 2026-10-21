@@ -316,12 +316,14 @@ La carpeta `../porcorosso-online` (el worktree de `produccion`) se borró al cer
 sesión. Para publicar o ver lo que está online, volver a crearla con los comandos de
 "Qué está online y qué estás viendo en local".
 
-**Sin publicar (21/10/2026): la copia de cada lead a Flux** desde `contacto.php`, y el
-log de errores de PHP movido fuera de `public_html`. Commiteado en `main`. Para que
-mande algo, además de publicarlo, falta crear `privado/flux.php` en el servidor con la
-URL y la clave del endpoint de Flux, que al cierre todavía no estaba en producción
-(ver [DEPLOY.md](DEPLOY.md), "Copia a Flux"). Sin ese archivo el código no hace nada
-nuevo.
+**Publicado el 21/10/2026 a las 16:42 (hora argentina): la copia de cada lead a Flux**
+desde `contacto.php`, y el log de errores de PHP movido fuera de `public_html`. El
+endpoint de Flux ya está en producción (responde 401 sin clave) y su script ya da la
+sesión. **Todavía no manda nada**: falta que el titular genere la clave en Flux y cree
+`privado/flux.php` en el servidor con el comando de [DEPLOY.md](DEPLOY.md), "Copia a
+Flux". Después, un envío de prueba que aparezca en Leads de Flux unido a su visita, y
+mirar que `leads/errores.log` no tenga rechazos. El formulario de Flux sigue en
+borrador, que igual recibe.
 
 **Publicado el 21/10/2026 a las 13:54 (hora argentina):** la conexión con **Flux by
 Salix**, sola. El merge de `main` a `produccion` chocó con las páginas de segmento,

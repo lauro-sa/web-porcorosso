@@ -99,17 +99,22 @@ línea en `leads/errores.log`.
 
 La URL y la clave **no están en el repo**. Viven en
 `/home/u512253031/domains/porcorosso.com.ar/privado/flux.php`, fuera de `public_html`.
-Mientras ese archivo no exista, no se manda nada a Flux. Para crearlo, con la URL y la
-clave que da Flux (Marketing → Formularios → «Formulario B2B (landing)» → Compartir →
-«Recibir desde tu servidor» → Generar clave):
+Mientras ese archivo no exista, no se manda nada a Flux. Flux sugiere una variable de
+entorno `FLUX_CLAVE_FORMULARIO`, pero en el hosting compartido de Hostinger no hay una
+forma simple de dársela a PHP: por eso va en un archivo.
+
+La clave se genera en Flux: Marketing → Formularios → «Formulario B2B (landing)» →
+Compartir → «Recibir desde tu servidor» → Generar clave. Se muestra una sola vez.
+**No pegarla en ningún chat.** Este comando la pide sin mostrarla y escribe el archivo
+en el servidor. Correrlo en una terminal propia (zsh), no dentro de un asistente:
 
 ```bash
-ssh -i ~/.ssh/hostinger_porcorosso -p 65002 u512253031@212.85.6.214
-mkdir -p ~/domains/porcorosso.com.ar/privado && chmod 700 ~/domains/porcorosso.com.ar/privado
-cat > ~/domains/porcorosso.com.ar/privado/flux.php <<'PHP'
-<?php return ['url' => 'https://…/api/publico/f/frm_724af40a219aab961175db75/recibir', 'clave' => '…'];
-PHP
-chmod 600 ~/domains/porcorosso.com.ar/privado/flux.php
+read -rs "CLAVE?Clave de Flux: " && echo && \
+ssh -i ~/.ssh/hostinger_porcorosso -p 65002 u512253031@212.85.6.214 \
+  'mkdir -p ~/domains/porcorosso.com.ar/privado && chmod 700 ~/domains/porcorosso.com.ar/privado && umask 077 && cat > ~/domains/porcorosso.com.ar/privado/flux.php' <<FIN
+<?php return ['url' => 'https://flux.salixweb.com/api/publico/f/frm_724af40a219aab961175db75/recibir', 'clave' => '$CLAVE'];
+FIN
+unset CLAVE
 ```
 
 Si alguien regenera la clave en Flux, la anterior deja de andar: hay que reemplazarla
