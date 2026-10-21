@@ -41,6 +41,16 @@ const ogImage = new URL("/images/og/og-image.png", Astro.site ?? Astro.url).href
          quita, Google puede perder la verificacion del sitio. -->
     <meta name="google-site-verification" content="lgPJT8WueGHlc8s4eeppfkUBO4E8HXGTNq5jsqsj0kA" />
 
+    <!-- Flux by Salix: el CRM que cuenta visitas y contactos, aparte de Google
+         Ads (que sigue en Medicion.astro, sin tocar). Las visitas las registra
+         solo. Las conversiones salen de los atributos data-flux-conversion de
+         los enlaces y de flux("conversion", ...) en /gracias/.
+         La primera linea deja una cola para que las llamadas hechas antes de
+         que cargue el script no se pierdan. Lee gclid y utm_* de la URL: no
+         limpiarlos. -->
+    <script is:inline>window.flux=window.flux||function(){(window.flux.q=window.flux.q||[]).push(arguments)}</script>
+    <script is:inline defer src="https://flux.salixweb.com/seguimiento.js" data-sitio="flx_8ac79cb5e40a64bd33c63499"></script>
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />

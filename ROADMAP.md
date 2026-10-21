@@ -55,6 +55,12 @@ en Google, campañas pagas (Google Ads y redes) y recomendación en asistentes d
       WhatsApp y a los teléfonos eran invisibles, y son el canal principal en B2B.
       Pautando así, Google Ads optimizaría hacia lo único que ve. Los clics se enganchan
       solos en cualquier página, sin instrumentar botón por botón
+- [x] **Flux by Salix conectado** (21/10/2026, **sin publicar**). El CRM que mide
+      visitas y contactos, aparte de Google Ads. Script en el `<head>` de
+      [Layout.astro](src/layouts/Layout.astro); conversiones "Formulario B2B" (en
+      `/gracias/`, solo tras un envío confirmado), "WhatsApp" y "Llamada" por atributo
+      en cada enlace. Google Ads no se tocó. Detalle en [ADS.md](ADS.md). Falta:
+      publicarlo y conectar los campos del formulario con Flux (los pidió el titular)
 - [x] **GCLID guardado con cada lead** — el identificador del clic de Google Ads se
       captura al aterrizar, se persiste 90 días y viaja al CSV. Habilita subir
       conversiones sin conexión: cuando una consulta termina siendo cliente semanas
@@ -129,6 +135,14 @@ Nada de esto se puede hacer sin información que solo tiene el dueño del negoci
       [NOTAS-PROYECTO.md](NOTAS-PROYECTO.md) y la información pública de la empresa
       dicen **3.000**. Es un dato que se cita en el hero, en las cifras y en `llms.txt`:
       conviene que sea el correcto y el mismo en todos lados.
+- [ ] **Datos para el alta en un sistema de gestión (pedidos el 16/10/2026).** Se
+      relevó todo lo que hay en el repo y faltan: razón social, CUIT, condición
+      frente al IVA, código postal completo (solo figura `B1715`), si la dirección
+      de Ituzaingó es local, planta u oficina, horarios de despacho por día, pedido
+      mínimo, formas de pago, áreas y cargos de la empresa. Tampoco hay **logo
+      vectorial** en la web (solo WebP en `src/assets/images/logos/` y los `.ai` y
+      PNG del brand book, fuera de git) ni **isotipo**: `favicon.svg` son las letras
+      "PR" en tipografía genérica, no la marca.
 - [ ] **Pedido mínimo mayorista** — no está publicado en ningún lado. Es de las primeras
       preguntas de un comprador B2B y hoy queda sin responder.
 - [ ] **¿Venden media res?** El sitio **no dice "media res" ni una vez**, pero
@@ -189,6 +203,15 @@ asistente de Google Ads (01/10/2026)".
       recientes" a "Grabando conversiones". Qué mirar si no pasa: [ADS.md](ADS.md),
       "Qué mirar en los próximos días"
 - [ ] Confirmar que el contador "Borradores en curso" bajó de 4 a 0
+- [ ] **Armar una campaña nueva**, ya con datos reales. El 01/10/2026 el titular dijo
+      que la quería armar "el fin de semana o la semana que viene", **después** de
+      medir unos días la campaña corregida. Antes de armarla: mirar cuántas
+      conversiones registró cada palabra clave, cruzarlo con el CSV de leads, y
+      decidir el presupuesto con la promo de ARS 300.000 que vence el 6/11 (ver
+      [ADS.md](ADS.md), "Los números, con datos reales"). Al 16/10 no hay registro de
+      que se haya hecho: preguntarle al titular en qué quedó.
+- [x] Mensaje al cliente por WhatsApp explicando los cambios en Google Ads y en la web
+      — redactado el 01/10/2026; lo manda el titular
 - [ ] Crear la propiedad de **GA4** y pasar el ID (`G-...`)
 - [ ] **Preseleccionar el tipo de cliente por URL** (por ejemplo `/?tipo=hotel#contacto`),
       para que cada grupo de anuncios de la campaña nueva abra el formulario con el

@@ -20,7 +20,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
         <div class="space-y-6 mt-8">
           <div>
             <h4 class="font-display font-bold uppercase text-sm text-hueso mb-1">Teléfono</h4>
-            <a href="tel:+5491172714251" class="text-piel hover:text-hueso transition-colors">
+            <a href="tel:+5491172714251" data-flux-conversion="Llamada" class="text-piel hover:text-hueso transition-colors">
               +54 9 11 7271-4251
             </a>
           </div>
@@ -861,7 +861,7 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
         aviso.id = `${config.formId}-error-envio`;
         aviso.setAttribute("role", "alert");
         aviso.className = "mt-4 p-4 bg-carne/10 border border-carne/30 text-sm text-morcilla";
-        aviso.innerHTML = `No pudimos enviar tu consulta en este momento. <a target="_blank" rel="noopener noreferrer" class="text-carne font-semibold underline">Mandala por WhatsApp</a>: ya va con todos tus datos.`;
+        aviso.innerHTML = `No pudimos enviar tu consulta en este momento. <a target="_blank" rel="noopener noreferrer" data-flux-conversion="WhatsApp" class="text-carne font-semibold underline">Mandala por WhatsApp</a>: ya va con todos tus datos.`;
         btnSubmit.parentElement?.insertAdjacentElement("afterend", aviso);
       }
       aviso.querySelector("a")?.setAttribute("href", enlaceWhatsApp(textoWhatsApp));
@@ -960,8 +960,16 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
       try {
         sessionStorage.setItem("porcorosso:ultima-consulta", JSON.stringify(resumen));
         sessionStorage.setItem("porcorosso:ultima-consulta-wa", textoWhatsApp);
+        // Aviso para que /gracias cuente la conversion en Flux. Se cuenta alla
+        // y no aca porque la redireccion de abajo es inmediata y podria cortar
+        // el envio. Y se cuenta solo con este aviso, no con cada carga de
+        // /gracias, para que recargar o entrar directo no sume un lead falso.
+        sessionStorage.setItem("porcorosso:envio-ok", "1");
       } catch {
-        // Si el navegador bloquea sessionStorage, /gracias funciona igual sin resumen.
+        // Si el navegador bloquea sessionStorage, /gracias funciona igual sin
+        // resumen, y la conversion de Flux sale desde aca, a riesgo de que la
+        // redireccion la corte.
+        (window as any).flux?.("conversion", "Formulario B2B");
       }
 
       // El borrador ya no hace falta: la consulta salió.

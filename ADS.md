@@ -813,3 +813,42 @@ arriba. Está pegado tal cual.*
 - **El contador "Borradores en curso: 4"** tendría que bajar a 0 solo. Si sigue en 4,
   revisar que no haya quedado alguno a medio descartar, sobre todo el de ARS 12.000
   por día.
+
+## Flux by Salix: medición aparte de Google Ads (21/10/2026)
+
+Se conectó la landing con **Flux by Salix**, el CRM que mide visitas y contactos. Mide
+**por su cuenta**: no reemplaza ni toca la etiqueta de Google Ads. `Medicion.astro`
+quedó sin cambios, y Google Ads sigue contando una conversión de formulario por envío
+(la de URL, al cargar `/gracias/`), igual que antes.
+
+**Instalación.** En el `<head>` de [Layout.astro](src/layouts/Layout.astro), que usan
+todas las páginas: la línea de cola `window.flux=...` y después
+`seguimiento.js` con `data-sitio="flx_8ac79cb5e40a64bd33c63499"`. Las visitas las
+registra solo. Flux lee `gclid` y `utm_*` de la URL para atribuir cada visita a su
+campaña: **no limpiar esos parámetros** (hoy nada en el sitio los toca).
+
+**Conversiones que quedaron en Flux:**
+
+| Conversión | Cómo se dispara | Dónde |
+|---|---|---|
+| `Formulario B2B` | `flux('conversion', 'Formulario B2B')` | En `/gracias/`, **solo** si el servidor confirmó el envío (ver abajo) |
+| `WhatsApp` | `data-flux-conversion="WhatsApp"` | Botón "WhatsApp mayorista" del hero; botón flotante (todas las páginas); "Escribinos por WhatsApp" del 404; botón de `/gracias/` si se entra sin venir del formulario; "Mandala por WhatsApp" del aviso de error del formulario; botón WhatsApp de `/mayoristas/` y `/gastronomicos/` (sin publicar) |
+| `Llamada` | `data-flux-conversion="Llamada"` | Teléfono de la sección Contacto y teléfono del pie |
+
+No hay descarga de catálogo ni otra acción secundaria, así que no se usó `data-flux-evento`.
+
+**Por qué el formulario se cuenta en `/gracias/` y no en el formulario.** Al recibir el
+OK del servidor, el formulario deja un aviso en `sessionStorage`
+(`porcorosso:envio-ok`) y redirige al instante. Si `flux()` se llamara ahí, la
+redirección podría cortar el envío. `/gracias/` lee el aviso, cuenta la conversión y lo
+borra: recargar la página o entrar directo no suma un lead falso. Si el navegador
+bloquea `sessionStorage`, la conversión se manda desde el formulario antes de redirigir.
+
+**Por qué el botón de WhatsApp de `/gracias/` pierde el atributo después de un envío.**
+Es la misma consulta que ya contó como formulario; mismo criterio que `data-no-medir`
+en Google Ads. Tampoco cuenta la apertura automática de WhatsApp, que no es un clic.
+
+**Ojo al publicar.** `produccion` borra `/mayoristas/` y `/gastronomicos/`, y este
+cambio les agrega un atributo en `main`. El `git merge main` va a frenar con un
+conflicto *modify/delete* en esas dos páginas: resolverlo manteniendo el borrado
+(`git rm src/pages/mayoristas.astro src/pages/gastronomicos.astro`).
