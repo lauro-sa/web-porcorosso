@@ -848,6 +848,9 @@ bloquea `sessionStorage`, la conversión se manda desde el formulario antes de r
 Es la misma consulta que ya contó como formulario; mismo criterio que `data-no-medir`
 en Google Ads. Tampoco cuenta la apertura automática de WhatsApp, que no es un clic.
 
+**Publicado el 21/10/2026 a las 13:54.** Verificado online: el script carga una vez por
+página, la etiqueta de Ads quedó igual y una URL con `gclid` y `utm_*` llega intacta.
+
 **Ojo al publicar.** `produccion` borra `/mayoristas/` y `/gastronomicos/`, y este
 cambio les agrega un atributo en `main`. El `git merge main` va a frenar con un
 conflicto *modify/delete* en esas dos páginas: resolverlo manteniendo el borrado
