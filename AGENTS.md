@@ -288,6 +288,13 @@ de cifras y en `llms.txt`. No cambiarlo sin confirmación del titular.
 
 *Última actualización: 21 de octubre de 2026.*
 
+**Porcorosso quedó en pausa el 21/10/2026, por pedido del titular.** Todo lo que
+espera a una persona está en una sola lista: [ROADMAP.md](ROADMAP.md), sección
+"Pendiente manual (2026-10-21)". Ahí están «Crear contacto» en Flux, con el texto para
+el asistente de Chrome; los datos del alta; las inconsistencias de datos; las páginas
+de segmento, que no se publican; y la verificación del anunciante, que vence el 28/10.
+`main` y `produccion` están subidas a GitHub.
+
 > 🔔 **Al empezar la sesión, recordale esto al titular (lo pidió él):** hay trabajo
 > terminado en `main` que **está esperando su OK para publicarse**. Preguntale si lo
 > publicamos. Si dice que sí: `git merge main` en la rama `produccion` y publicar según
@@ -368,8 +375,8 @@ clic). GA4 no está, porque no existe la propiedad. Cuando el titular los pase, 
 [Medicion.astro](src/components/Medicion.astro) en `main`, mergear a `produccion` y
 publicar.
 
-Al 21/10/2026, `main` y `produccion` tienen commits **sin pushear a GitHub** (el
-titular no lo pidió). Verificar con `git status -sb` y pushear cuando lo autorice.
+El 21/10/2026, por orden del titular, `main` y `produccion` se subieron a GitHub.
+Verificar con `git status -sb` que sigan al día.
 
 **Por qué se hicieron las páginas de segmento:** un usuario le preguntó a un asistente
 de IA a quién comprarle cerdo para un hotel en CABA y Porco Rosso apareció cuarto en
