@@ -195,6 +195,14 @@ Cada una salió de un problema real:
     mostrar su página genérica en inglés. En `npm run dev` se ve la página propia, así
     que esto solo se nota en producción.
 
+14. **Los errores de PHP en Hostinger van a un archivo público.** El servidor trae
+    `error_log = error_log`: un archivo con ese nombre en la carpeta del script, o
+    sea en `public_html/b2b/`. Ninguna regla del `.htaccess` lo bloquea, así que
+    quedaría para bajar desde la web, y el `rsync --delete` lo borra en cada deploy.
+    Comprobado el 21/10/2026 con `php -r 'echo ini_get("error_log");'` en el servidor. `contacto.php` escribe datos de leads en el log,
+    así que lo redirige con `ini_set` a `leads/errores.log`, fuera de `public_html`.
+    Si agregás otro script PHP, hacé lo mismo.
+
 ## Cómo llegan los leads
 
 El formulario postea a [public/contacto.php](public/contacto.php), que guarda cada
@@ -203,6 +211,12 @@ verdad: si el mail falla, el lead igual quedó guardado.
 
 **El front solo muestra éxito si el envío salió de verdad.** Antes mostraba la
 pantalla de éxito siempre y los leads se perdían en silencio. No revertir eso.
+
+Después de contestarle al navegador, `contacto.php` le manda una **copia a Flux**, el
+CRM, con los valores ya legibles, un `id_externo` para que un reintento no duplique y la
+sesión de Flux del visitante para que el lead quede unido a su visita y a su campaña.
+Es un extra: si Flux falla, el lead ya está en el CSV y en el mail. La URL y la clave
+viven en el servidor, no en el repo (ver [DEPLOY.md](DEPLOY.md), "Copia a Flux").
 
 Al enviar, redirige a `/gracias`, que existe como URL propia para poder contar
 conversiones en Google Ads. Va con `noindex` y fuera del sitemap a propósito.
@@ -301,6 +315,13 @@ Google Ads → Objetivos → Conversiones. Checklist en [ROADMAP.md](ROADMAP.md)
 La carpeta `../porcorosso-online` (el worktree de `produccion`) se borró al cerrar la
 sesión. Para publicar o ver lo que está online, volver a crearla con los comandos de
 "Qué está online y qué estás viendo en local".
+
+**Sin publicar (21/10/2026): la copia de cada lead a Flux** desde `contacto.php`, y el
+log de errores de PHP movido fuera de `public_html`. Commiteado en `main`. Para que
+mande algo, además de publicarlo, falta crear `privado/flux.php` en el servidor con la
+URL y la clave del endpoint de Flux, que al cierre todavía no estaba en producción
+(ver [DEPLOY.md](DEPLOY.md), "Copia a Flux"). Sin ese archivo el código no hace nada
+nuevo.
 
 **Publicado el 21/10/2026 a las 13:54 (hora argentina):** la conexión con **Flux by
 Salix**, sola. El merge de `main` a `produccion` chocó con las páginas de segmento,

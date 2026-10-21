@@ -19,6 +19,18 @@ $ARCHIVO_CSV   = __DIR__ . '/../../leads/leads-b2b.csv';  // fuera de public_htm
 $MAX_BYTES     = 20000;
 $MIN_SEGUNDOS  = 3;   // un humano no completa 4 pasos en menos que esto
 
+// Copia de cada lead a Flux, el CRM. La URL y la clave viven en este archivo,
+// fuera de public_html y fuera del repo, porque la clave da permiso para cargar
+// leads en la cuenta. Tiene que devolver ['url' => '...', 'clave' => '...'].
+// Si no existe, no se manda nada a Flux y lo demas funciona igual.
+$ARCHIVO_FLUX  = __DIR__ . '/../../privado/flux.php';
+
+// Hostinger trae error_log = "error_log": un archivo con ese nombre en la
+// carpeta del script, o sea en public_html, descargable desde la web. Y este
+// script escribe ahi datos de leads. Va junto al CSV, fuera de public_html; de
+// paso, el rsync --delete de cada deploy ya no lo borra.
+ini_set('error_log', dirname($ARCHIVO_CSV) . '/errores.log');
+
 // ============================================================
 
 header('Content-Type: application/json; charset=utf-8');
@@ -182,4 +194,93 @@ if (!$guardado && !$enviado) {
     responder(500, ['ok' => false, 'error' => 'No se pudo procesar la consulta']);
 }
 
-responder(200, ['ok' => true, 'guardado' => $guardado, 'notificado' => $enviado]);
+// ---- Respuesta, y despues la copia a Flux ------------------------
+//
+// Se le contesta al navegador antes de hablar con Flux: el visitante no tiene
+// por que esperar a otro servidor para llegar a /gracias/. Hostinger corre PHP
+// con LiteSpeed, que corta la conexion con litespeed_finish_request(); con
+// PHP-FPM es fastcgi_finish_request(). Si no esta ninguna, la copia sale antes
+// de que llegue la respuesta, con un tope de 3 segundos.
+
+http_response_code(200);
+echo json_encode(['ok' => true, 'guardado' => $guardado, 'notificado' => $enviado], JSON_UNESCAPED_UNICODE);
+if (function_exists('litespeed_finish_request')) {
+    litespeed_finish_request();
+} elseif (function_exists('fastcgi_finish_request')) {
+    fastcgi_finish_request();
+}
+
+$flux = is_file($ARCHIVO_FLUX) ? (include $ARCHIVO_FLUX) : null;
+if (!is_array($flux) || empty($flux['url']) || empty($flux['clave']) || !function_exists('curl_init')) {
+    exit;
+}
+
+// El navegador manda los valores de las listas ya traducidos ("Hasta 50
+// kg/semana" en vez de "hasta-50"), porque la traduccion vive en
+// ContactForm.astro. Si no llegan, va el valor crudo.
+$legibles = is_array($datos['legibles'] ?? null) ? $datos['legibles'] : [];
+$adicionales = [];
+foreach (['tipo_cliente', 'empresa', 'zona', 'productos', 'volumen', 'frecuencia'] as $clave) {
+    $valor = $legibles[$clave] ?? '';
+    if (is_array($valor)) {
+        // productos es una lista y Flux la muestra como lista.
+        $valor = array_values(array_filter(array_map('limpiar', $valor), 'strlen'));
+        if (!$valor && $lead[$clave] !== '') $valor = array_map('trim', explode(',', $lead[$clave]));
+    } else {
+        $valor = limpiar($valor) ?: $lead[$clave];
+    }
+    if ($valor !== '' && $valor !== []) $adicionales[$clave] = $valor;
+}
+
+// Las etiquetas del CSV van sin acentos; las de Flux se leen en pantalla.
+$etiquetas = array_intersect_key(
+    array_merge($CAMPOS, ['productos' => 'Productos de interés']),
+    $adicionales
+);
+
+$copia = [
+    'nombre'   => $lead['nombre'],
+    'email'    => $lead['email'],
+    'telefono' => $lead['telefono'],
+    'mensaje'  => $lead['mensaje'],
+    'datos'    => $adicionales,
+    'etiquetas'=> $etiquetas,
+    'origen'   => $origen,
+];
+
+// Solo caracteres seguros: los dos vienen del navegador.
+$idExterno = preg_replace('/[^A-Za-z0-9_-]/', '', (string) ($datos['id_externo'] ?? ''));
+if ($idExterno !== '') $copia['id_externo'] = substr($idExterno, 0, 64);
+$sesion = preg_replace('/[^A-Za-z0-9_-]/', '', (string) ($datos['flux_sesion'] ?? ''));
+if ($sesion !== '') $copia['visitante_id'] = substr($sesion, 0, 128);
+
+// Mismo criterio que el CSV: sin una fecha de clic creible, no se manda.
+if ($gclid !== '') {
+    $copia['gclid'] = $gclid;
+    if ($valido) $copia['gclid_ts'] = $clicMs;
+}
+
+$ch = curl_init($flux['url']);
+curl_setopt_array($ch, [
+    CURLOPT_POST           => true,
+    CURLOPT_HTTPHEADER     => ['Content-Type: application/json', 'Authorization: Bearer ' . $flux['clave']],
+    CURLOPT_POSTFIELDS     => json_encode($copia, JSON_UNESCAPED_UNICODE),
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_CONNECTTIMEOUT => 2,
+    CURLOPT_TIMEOUT        => 3,
+]);
+$respuestaFlux = curl_exec($ch);
+$codigoFlux = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+
+// 201 es nuevo y 200 es un id_externo repetido: los dos estan bien. Lo demas
+// queda en el log de errores del hosting, sin datos del lead ni la clave. El
+// lead no se pierde: ya esta en el CSV y en el mail.
+if ($codigoFlux !== 201 && $codigoFlux !== 200) {
+    error_log(sprintf(
+        '[porcorosso] Flux no recibio el lead %s: HTTP %d %s',
+        $copia['id_externo'] ?? '(sin id)',
+        $codigoFlux,
+        $respuestaFlux === false ? 'sin respuesta' : mb_substr((string) $respuestaFlux, 0, 200)
+    ));
+}

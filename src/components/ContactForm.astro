@@ -561,6 +561,29 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
   // Marca de tiempo de carga: el backend descarta envios instantaneos (bots).
   const FORM_LOADED_AT = Date.now();
 
+  // Sesion de Flux, el CRM. contacto.php se la pasa a Flux con la copia del
+  // lead, y Flux la usa para unir la consulta con la visita que ya registro su
+  // script: de ahi saca de que campana vino, y no cuenta la misma consulta dos
+  // veces. Si el script no carga (un bloqueador, por ejemplo), queda vacia y
+  // el lead llega igual, solo que sin unir.
+  // No va en un input oculto a proposito: el borrador guarda todos los campos
+  // y al volver a la pagina repondria la sesion vieja.
+  let fluxSesion = "";
+  (window as any).flux?.("sesion", (id: unknown) => {
+    fluxSesion = String(id ?? "");
+  });
+
+  // Identificador unico de cada consulta. Flux descarta un id_externo que ya
+  // recibio, asi que si el envio falla y la persona reintenta, no se duplica.
+  function nuevoIdEnvio(): string {
+    try {
+      return crypto.randomUUID();
+    } catch {
+      // Navegadores viejos sin randomUUID.
+      return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+    }
+  }
+
   // ====== Borrador: no perder lo cargado si se abandona a mitad ======
   //
   // El formulario tiene cuatro pasos y pide bastantes datos, asi que un cierre
@@ -768,6 +791,10 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
 
     if (!form || !steps.length) return;
 
+    // Se genera en el primer intento y se reusa en los reintentos: es la misma
+    // consulta. La pagina cambia al salir bien, asi que no hace falta resetearlo.
+    let idEnvio: string | null = null;
+
     const totalSteps = steps.length;
     // Si hay un borrador guardado, se repueblan los campos y se vuelve al paso
     // donde había quedado.
@@ -918,13 +945,28 @@ import pigPig02 from "../assets/images/ilustraciones/pig-pig-02.webp";
 
       const textoWhatsApp = armarMensajeWhatsApp(data);
 
+      // Para la copia que contacto.php le manda a Flux. El CSV y el mail siguen
+      // con los valores crudos; Flux recibe los legibles porque los muestra tal
+      // cual llegan, y la traduccion vive aca, en ETIQUETAS_VALOR.
+      idEnvio ??= nuevoIdEnvio();
+      const paraFlux = {
+        id_externo: idEnvio,
+        flux_sesion: fluxSesion,
+        legibles: {
+          tipo_cliente: legible(data.tipo_cliente),
+          productos: ((data.productos as string[] | undefined) ?? []).map((v) => ETIQUETAS_VALOR[v] || v),
+          volumen: legible(data.volumen),
+          frecuencia: legible(data.frecuencia),
+        },
+      };
+
       // Envío al backend. Si no llega, no mostramos éxito: el lead se perdería
       // sin que el visitante lo sepa.
       try {
         const respuesta = await fetch(FORM_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
+          body: JSON.stringify({ ...data, ...paraFlux }),
         });
         if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
       } catch (err) {
