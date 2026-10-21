@@ -325,8 +325,9 @@ sesión. **Activa desde el 21/10/2026 a la tarde:** el titular generó la clave 
 aceptó: un pedido vacío de prueba dio 422 ("faltan datos") y no 401. Ese pedido deja un
 «rechazo: datos» en Compartir que desaparece con el primer envío bueno. **Probada
 a las 17:22**: la consulta "PRUEBA" entró en Leads de Flux «vía servidor», con los datos
-etiquetados, y sin errores en el servidor. La fila de prueba sigue en el CSV. Detalle y
-pendientes en [ADS.md](ADS.md), "Prueba de conexión landing → Flux".
+etiquetados, y sin errores en el servidor. La consulta "PRUEBA" se deja a propósito (el
+titular la usa para ver cómo se muestran los datos) y el aviso de Flux por cada envío
+queda prendido. Detalle en [ADS.md](ADS.md), "Prueba de conexión landing → Flux".
 
 **Publicado el 21/10/2026 a las 13:54 (hora argentina):** la conexión con **Flux by
 Salix**, sola. El merge de `main` a `produccion` chocó con las páginas de segmento,

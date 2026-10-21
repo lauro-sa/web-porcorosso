@@ -910,7 +910,9 @@ landing.*
 - **Atribución:** Flux ya registra 3 personas llegadas desde anuncios de Google.
 - **Para corregir en Flux:** la lista de formularios dice "Borrador · No recibe envíos
   hasta que lo publiques", pero por servidor sí recibe.
-- **Avisar de cada envío:** sigue prendido. Lo tiene que decidir el titular.
-- **La fila de prueba** sigue en el CSV, y en Leads de Flux. Borrarla o dejarla, a
-  criterio del titular.
+- **Avisar de cada envío: queda prendido**, por decisión del titular (21/10/2026). Más
+  adelante puede que se deje de mandar el mail de `contacto.php`, pero el aviso de
+  Flux se queda. No apagarlo.
+- **La consulta "PRUEBA" se queda** en el CSV y en Leads de Flux, también por decisión
+  del titular: le sirve para ver cómo se muestran los datos en Flux. No borrarla.
 - **Google Ads:** sin cambios.

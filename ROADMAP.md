@@ -62,8 +62,15 @@ en Google, campañas pagas (Google Ads y redes) y recomendación en asistentes d
       en cada enlace. Google Ads no se tocó. Detalle en [ADS.md](ADS.md). La copia
       de cada lead a Flux desde `contacto.php` está **publicada el 21/10/2026** a las
       16:42, y activa
-      desde que se cargó la clave esa misma tarde (Flux la aceptó). Falta: la consulta de
-      prueba y confirmar que aparezca en Leads unida a su visita
+      desde que se cargó la clave esa misma tarde (Flux la aceptó). Probada
+      a las 17:22: la consulta entró en Leads «vía servidor». El aviso de Flux por cada
+      envío queda prendido, por decisión del titular
+- [ ] **Evaluar sacar el mail de `contacto.php`** — el titular lo planteó como
+      posibilidad, ahora que Flux avisa de cada consulta. Si se hace, el aviso de Flux
+      se queda. Antes de sacarlo, tener en cuenta que hoy el script da la consulta por
+      recibida si quedó en el CSV **o** si salió el mail. Sin mail, el CSV queda como
+      única vía propia: si no se pudiera escribir, el lead dependería solo de Flux.
+      Habría que decidir qué responde el script en ese caso
 - [x] **GCLID guardado con cada lead** — el identificador del clic de Google Ads se
       captura al aterrizar, se persiste 90 días y viaja al CSV. Habilita subir
       conversiones sin conexión: cuando una consulta termina siendo cliente semanas
