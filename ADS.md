@@ -899,17 +899,23 @@ landing.*
   `leads/errores.log`.
 - **Compartir → Desde tu servidor:** "Último envío recibido: 21/10/2026 17:22". ✅ Sigue
   visible "Último rechazado: 17:19 (faltaban datos)": es la comprobación de la clave, no
-  un error. Que no desaparezca es cosa de Flux; ya se lo avisamos.
+  un error.
 - **Leads:** entró "Prueba Flux" · "Formulario B2B (landing) · vía servidor", con todos los
   datos adicionales etiquetados. Sin campaña, como corresponde a una entrada directa. ✅
 - **Seguimiento:** «Formulario B2B» = 1. ✅ También figura «WhatsApp» = 1 (Directo). **No
   es el WhatsApp que abre `/gracias/`**: el script de Flux solo cuenta clics en elementos
   con `data-flux-conversion`, y esa apertura no es un clic. Además, el botón de
-  `/gracias/` pierde el atributo después de un envío. Es un clic real en otro botón de
-  WhatsApp; le pedimos a Flux la hora y la página para confirmarlo.
+  `/gracias/` pierde el atributo después de un envío. Confirmado por Flux: fue a las 16:09:22,
+  en la home, en otra carga de página. Un clic real en el botón del hero o en el
+  flotante. La única conversión de `/gracias/` es la del formulario, a las 17:22:37. **La
+  landing no cuenta dos veces.**
+- **Contacto en Flux:** la prueba quedó unida a su visita, pero **no se creó un contacto**
+  porque el formulario tiene «Crear contacto» apagado (pestaña «Qué hace»). Si el titular
+  quiere que cada consulta quede como contacto en Flux, se prende ahí.
 - **Atribución:** Flux ya registra 3 personas llegadas desde anuncios de Google.
-- **Para corregir en Flux:** la lista de formularios dice "Borrador · No recibe envíos
-  hasta que lo publiques", pero por servidor sí recibe.
+- **Corregido en Flux, sale en su próxima subida:** la lista de formularios va a decir
+  "Borrador: solo recibe desde tu servidor", y Compartir va a mostrar una sola línea con
+  lo último que pasó, en vez de dejar el rechazo viejo a la vista.
 - **Avisar de cada envío: queda prendido**, por decisión del titular (21/10/2026). Más
   adelante puede que se deje de mandar el mail de `contacto.php`, pero el aviso de
   Flux se queda. No apagarlo.
