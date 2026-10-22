@@ -159,3 +159,9 @@ macOS guarda los acentos en forma NFD y Linux espera NFC, así que un archivo ll
 `chorizo-bombón.jpg` se sube con un nombre que el servidor no encuentra cuando el
 navegador lo pide, y devuelve 404 aunque el archivo esté ahí. **Nombrar los archivos de
 `public/` sin acentos ni eñes.**
+
+## Registro de actualizaciones
+
+| Fecha | Qué |
+|---|---|
+| 2026-10-22 | Parche de seguridad: Astro 6.1.3 → **7.4.2** (avisos de npm: RCE crítico en la optimización de imágenes AVIF, XSS, SSRF; más Vite y transitivas). `npm audit` queda en 0. Portada comparada contra lo online antes de subir; publicado desde `produccion`. |
