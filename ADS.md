@@ -856,7 +856,7 @@ cambio les agrega un atributo en `main`. El `git merge main` va a frenar con un
 conflicto *modify/delete* en esas dos páginas: resolverlo manteniendo el borrado
 (`git rm src/pages/mayoristas.astro src/pages/gastronomicos.astro`).
 
-### Copia de cada lead a Flux (publicada el 21/10/2026, inactiva hasta cargar la clave)
+### Copia de cada lead a Flux (publicada y activa desde el 21/10/2026)
 
 Además del script, `contacto.php` le manda a Flux una copia de cada consulta al
 endpoint `POST /api/publico/f/frm_724af40a219aab961175db75/recibir`. Lleva la sesión
@@ -864,3 +864,61 @@ de Flux del visitante (`visitante_id`, que el formulario lee con
 `flux('sesion', cb)`). Con eso Flux une el lead con la visita que trajo el gclid y los
 `utm_*`, y con la conversión "Formulario B2B", en vez de contarlos por separado. No
 cambia nada de Google Ads. Detalle técnico en [DEPLOY.md](DEPLOY.md), "Copia a Flux".
+
+**Cómo une Flux el lead con la visita** (respuesta de la sesión que construyó el
+endpoint, 21/10/2026):
+
+- El script de Flux no usa cookie. El visitante es un hash diario que arma el servidor.
+  `flux('sesion')` da el id de esa carga de página, y no hay otro id para mandar.
+- Si la carga desde la que se envió el formulario no trae la llegada (fuente, campaña o
+  gclid), Flux busca la última llegada del mismo visitante **en los 30 minutos
+  anteriores**. Si el anuncio fue hace más de 30 minutos, si se cruzó la medianoche o si
+  cambió la IP o el navegador, no la encuentra.
+- Por eso la landing manda igual el `gclid` y el `gclid_ts` que guarda por 90 días: lo
+  que manda el servidor tiene prioridad sobre la visita. **No sacarlos del envío.**
+- La conversión "Formulario B2B" del script y el lead que manda `contacto.php` **no se
+  unen ni se cuentan dos veces**. Son métricas distintas: la conversión alimenta el
+  tablero por fuente en Seguimiento, y el lead entra en Leads marcado «vía servidor».
+  Las dos se quedan.
+- El aviso de Flux por cada envío se apaga en Marketing → Formularios → el formulario →
+  «Qué hace» → «Avisar de cada envío». Viene prendido. El titular decide si lo quiere
+  además del mail que ya llega a hola@porcorosso.com.ar.
+- Cada rechazo (clave, datos, límite) queda a la vista en Compartir → «Desde tu
+  servidor», con fecha y motivo.
+
+### Prueba de conexión landing → Flux (21/10/2026)
+
+*Resumen que entregó el asistente de Flux en Chrome, más lo que se revisó del lado de la
+landing.*
+
+- **Clave:** la generó el titular y se cargó en el servidor desde el portapapeles. Flux la
+  aceptó a las 17:19.
+- **Envío de prueba:** 17:22, desde b2b.porcorosso.com.ar, con Negocio "PRUEBA", nombre
+  "Prueba Flux", prueba@example.com y +54 9 11 0000-0000. El WhatsApp de `/gracias/` se
+  cerró sin enviar. Del lado de la landing: la fila quedó en el CSV y no hubo nada en
+  `leads/errores.log`.
+- **Compartir → Desde tu servidor:** "Último envío recibido: 21/10/2026 17:22". ✅ Sigue
+  visible "Último rechazado: 17:19 (faltaban datos)": es la comprobación de la clave, no
+  un error.
+- **Leads:** entró "Prueba Flux" · "Formulario B2B (landing) · vía servidor", con todos los
+  datos adicionales etiquetados. Sin campaña, como corresponde a una entrada directa. ✅
+- **Seguimiento:** «Formulario B2B» = 1. ✅ También figura «WhatsApp» = 1 (Directo). **No
+  es el WhatsApp que abre `/gracias/`**: el script de Flux solo cuenta clics en elementos
+  con `data-flux-conversion`, y esa apertura no es un clic. Además, el botón de
+  `/gracias/` pierde el atributo después de un envío. Confirmado por Flux: fue a las 16:09:22,
+  en la home, en otra carga de página. Un clic real en el botón del hero o en el
+  flotante. La única conversión de `/gracias/` es la del formulario, a las 17:22:37. **La
+  landing no cuenta dos veces.**
+- **Contacto en Flux:** la prueba quedó unida a su visita, pero **no se creó un contacto**
+  porque el formulario tiene «Crear contacto» apagado (pestaña «Qué hace»). Si el titular
+  quiere que cada consulta quede como contacto en Flux, se prende ahí.
+- **Atribución:** Flux ya registra 3 personas llegadas desde anuncios de Google.
+- **Corregido en Flux, sale en su próxima subida:** la lista de formularios va a decir
+  "Borrador: solo recibe desde tu servidor", y Compartir va a mostrar una sola línea con
+  lo último que pasó, en vez de dejar el rechazo viejo a la vista.
+- **Avisar de cada envío: queda prendido**, por decisión del titular (21/10/2026). Más
+  adelante puede que se deje de mandar el mail de `contacto.php`, pero el aviso de
+  Flux se queda. No apagarlo.
+- **La consulta "PRUEBA" se queda** en el CSV y en Leads de Flux, también por decisión
+  del titular: le sirve para ver cómo se muestran los datos en Flux. No borrarla.
+- **Google Ads:** sin cambios.

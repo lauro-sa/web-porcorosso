@@ -12,6 +12,74 @@ en Google, campañas pagas (Google Ads y redes) y recomendación en asistentes d
 
 ---
 
+## Pendiente manual (2026-10-21)
+
+Lo que no se puede hacer desde el código y quedó esperando a una persona. El 21/10/2026
+el titular pidió dejar porcorosso en pausa con todo esto anotado. Esta es la lista única:
+si aparece algo manual nuevo, va acá.
+
+- [ ] **Prender «Crear contacto» en el formulario de Flux.** Lo hace el titular o el
+      asistente de Flux en Chrome. Ninguna sesión con acceso al código lo puede hacer:
+      hace falta una sesión iniciada en Flux, y escribir directo en la base está
+      prohibido. Hoy las consultas entran en Leads de Flux pero no quedan como contacto.
+      Texto para pegarle al asistente de Chrome:
+
+      ```
+      1. Flux → Marketing → Formularios → «Formulario B2B (landing)» → pestaña «Qué hace» → prender «Crear contacto» → «Guardar», arriba a la derecha. Sin guardar no queda.
+      2. En https://b2b.porcorosso.com.ar completá el formulario entero: Negocio "PRUEBA CONTACTO", nombre "Prueba Contacto", contacto@example.com, +54 9 11 0000-0001. Enviá y cerrá el WhatsApp que se abre sin mandarlo.
+      3. En Flux, revisá que la consulta entre en Leads «vía servidor» y que se haya creado el contacto "Prueba Contacto" con ese correo y ese teléfono. Si ya existía un contacto con alguno de los dos, tiene que vincularse a ese, no duplicarse.
+      4. Avisá la hora del envío y lo que viste. No toques nada más.
+      ```
+
+      Para verificarlo desde el código: la sesión de Flux puede confirmar en producción,
+      solo leyendo, que el envío quedó con su contacto. Del lado de la landing, la fila
+      tiene que estar en el CSV y `leads/errores.log` tiene que seguir vacío (ver
+      [DEPLOY.md](DEPLOY.md)).
+      **Para volver atrás:** la misma pestaña «Qué hace» → apagar «Crear contacto» →
+      «Guardar». Las consultas siguen entrando en Leads; solo dejan de crear contacto.
+      El contacto de prueba se borra a mano en Flux, si molesta. La consulta "PRUEBA" del
+      21/10 se deja a propósito (ver [ADS.md](ADS.md)).
+
+- [ ] **Datos para el alta de la empresa.** Los tiene que pasar el titular, porque no
+      son públicos:
+      - razón social y CUIT (no figuran en ningún lado);
+      - condición frente al IVA, y si emiten factura A;
+      - código postal completo (solo se conoce `B1715`);
+      - horarios y días de despacho;
+      - si valen también para el canal B2B tres datos que hoy son **de la tienda de
+        consumidor final**: el pedido mínimo de $60.000, el pago por Mercado Pago y las
+        entregas de miércoles y viernes (que además no cubren Zona Sur, y esta web sí
+        la promete). Si no valen, falta el dato mayorista: pedido mínimo, plazos de
+        entrega por zona y medios de pago (cuenta corriente, plazos, contado).
+
+      Lo que ya se relevó, con las fuentes, está en "Datos del negocio a confirmar",
+      más abajo. **No cargar ninguno de estos datos en el sitio, el schema ni
+      `llms.txt` hasta que el titular los confirme** (regla 7 de [AGENTS.md](AGENTS.md)).
+
+- [ ] **Inconsistencias para que las resuelva el titular.** No cambiar nada hasta que
+      diga cuál es el dato bueno:
+      - **Madres porcinas:** esta web y la tienda dicen **1.600**;
+        [NOTAS-PROYECTO.md](NOTAS-PROYECTO.md) y otra información pública de la empresa
+        dicen **3.000**. Aparece en el hero, en la franja de cifras y en `llms.txt`.
+      - **Antigüedad:** esta web dice "fundada en 2018" (también en el JSON-LD) y la
+        tienda dice "hace más de una década" en la producción porcina.
+      - **WhatsApp de la página mayorista de la tienda:** `porcorosso.com.ar/pages/mayoristas`
+        manda al WhatsApp de la tienda (+54 9 11 4045-3345) y no al del canal B2B
+        (+54 9 11 7271-4251). Se corrige en Shopify, no en este repo.
+
+- [ ] **`/mayoristas/` y `/gastronomicos/`: NO se publican hasta que el titular lo
+      diga.** Lo repitió el 21/10/2026: "son páginas que vamos a publicarlas en otro
+      momento". Están en `main` y no en `produccion`. Cuando lo autorice, un `git merge
+      main` no alcanza, porque las deja borradas: hay que seguir
+      [DEPLOY.md](DEPLOY.md), "La rama `produccion`" (`git branch -f produccion main`
+      y publicar).
+
+- [ ] **Verificación del anunciante en Google Ads: vence el 28/10/2026.** La hace el
+      titular con los datos de Dun & Bradstreet. Detalle en "Corregir la campaña de
+      Google Ads que ya está corriendo", más abajo.
+
+---
+
 ## Hecho
 
 - [x] Sitio publicado en `b2b.porcorosso.com.ar` con certificado SSL
@@ -61,9 +129,16 @@ en Google, campañas pagas (Google Ads y redes) y recomendación en asistentes d
       `/gracias/`, solo tras un envío confirmado), "WhatsApp" y "Llamada" por atributo
       en cada enlace. Google Ads no se tocó. Detalle en [ADS.md](ADS.md). La copia
       de cada lead a Flux desde `contacto.php` está **publicada el 21/10/2026** a las
-      16:42, pero inactiva. Falta: generar la clave en Flux, crear `privado/flux.php` en
-      el servidor (ver [DEPLOY.md](DEPLOY.md)) y hacer un envío de prueba que aparezca
-      en Leads unido a su visita
+      16:42, y activa
+      desde que se cargó la clave esa misma tarde (Flux la aceptó). Probada
+      a las 17:22: la consulta entró en Leads «vía servidor». El aviso de Flux por cada
+      envío queda prendido, por decisión del titular
+- [ ] **Evaluar sacar el mail de `contacto.php`** — el titular lo planteó como
+      posibilidad, ahora que Flux avisa de cada consulta. Si se hace, el aviso de Flux
+      se queda. Antes de sacarlo, tener en cuenta que hoy el script da la consulta por
+      recibida si quedó en el CSV **o** si salió el mail. Sin mail, el CSV queda como
+      única vía propia: si no se pudiera escribir, el lead dependería solo de Flux.
+      Habría que decidir qué responde el script en ese caso
 - [x] **GCLID guardado con cada lead** — el identificador del clic de Google Ads se
       captura al aterrizar, se persiste 90 días y viaja al CSV. Habilita subir
       conversiones sin conexión: cuando una consulta termina siendo cliente semanas
@@ -134,11 +209,12 @@ Nada de esto se puede hacer sin información que solo tiene el dueño del negoci
 
 ### Datos del negocio a confirmar
 
-- [ ] **Cuántas madres porcinas son.** El sitio dice **1.600**, pero
-      [NOTAS-PROYECTO.md](NOTAS-PROYECTO.md) y la información pública de la empresa
-      dicen **3.000**. Es un dato que se cita en el hero, en las cifras y en `llms.txt`:
-      conviene que sea el correcto y el mismo en todos lados.
-- [ ] **Datos para el alta en un sistema de gestión (pedidos el 16/10/2026).** Se
+Los datos del alta, las inconsistencias (madres porcinas, antigüedad, WhatsApp de la
+tienda) y los datos comerciales mayoristas (pedido mínimo, plazos, pagos, factura) se
+siguen como tareas en **"Pendiente manual (2026-10-21)"**, arriba. Acá queda el
+detalle de lo relevado.
+
+- **Relevamiento para el alta en un sistema de gestión (pedido el 16/10/2026).** Se
       relevó todo lo que hay en el repo y faltan: razón social, CUIT, condición
       frente al IVA, código postal completo (solo figura `B1715`), si la dirección
       de Ituzaingó es local, planta u oficina, horarios de despacho por día, pedido
@@ -146,8 +222,42 @@ Nada de esto se puede hacer sin información que solo tiene el dueño del negoci
       vectorial** en la web (solo WebP en `src/assets/images/logos/` y los `.ai` y
       PNG del brand book, fuera de git) ni **isotipo**: `favicon.svg` son las letras
       "PR" en tipografía genérica, no la marca.
-- [ ] **Pedido mínimo mayorista** — no está publicado en ningún lado. Es de las primeras
-      preguntas de un comprador B2B y hoy queda sin responder.
+
+      **Búsqueda en fuentes públicas (21/10/2026).** Lo único que aparece es la
+      tienda de consumidor final, `porcorosso.com.ar` (Shopify). Sus datos son **de
+      la tienda, no del canal B2B**, así que no van a esta web sin que el titular
+      diga que valen también para mayoristas:
+
+      - **Razón social y CUIT: no están en ningún lado.** No figuran en la tienda
+        (términos, privacidad, envíos, sucursal), y las búsquedas por nombre y por
+        dirección solo devuelven la película de Ghibli y un restaurante mexicano
+        homónimo. Los términos de la tienda nombran a la empresa como **"Porco Rosso
+        Almacén"** (sección 6, Propiedad intelectual): es un nombre de fantasía, no
+        una razón social. La constancia de ARCA se consulta por CUIT, no por nombre,
+        así que hace falta que el titular pase el número.
+      - **Condición frente al IVA:** no figura. La tienda dice que los precios
+        "incluyen IVA" y que la factura se pide por WhatsApp; no dice si es A o B.
+      - **Qué es la dirección de Ituzaingó:** la tienda la llama "sucursal" y
+        "almacén" (`/pages/sucursal`), con compra presencial y retiro de pedidos. Es
+        un **local de venta**, no la planta. La ubicación del criadero y de la
+        planta no figura en ningún lado.
+      - **Código postal:** solo `B1715`, igual que acá.
+      - **Entregas de la tienda** (`/policies/shipping-policy`): miércoles y
+        viernes. Pedidos hasta el martes a las 12 → viernes, solo CABA. Pedidos
+        hasta el viernes a las 12 → miércoles, en CABA, Zona Oeste (Ituzaingó,
+        Castelar, Morón, Haedo, Ramos Mejía) y Zona Norte (Vicente López, Florida
+        Este, Olivos, La Lucila, Martínez, Acassuso, San Isidro, Beccar, San
+        Fernando). **No menciona Zona Sur**, que esta web sí promete.
+      - **Pedido mínimo de la tienda:** $60.000, con envío de $10.000 y gratis desde
+        $100.000. Su página `/pages/mayoristas` muestra el mismo mínimo y manda a
+        pedir por WhatsApp, pero no aclara si es el mínimo mayorista.
+      - **Formas de pago de la tienda:** Mercado Pago (crédito, débito,
+        transferencia, dinero en cuenta, cuotas). De cuenta corriente o plazos para
+        mayoristas no dice nada.
+      - **Áreas y cargos:** no figuran. `/pages/quienes-somos` describe el proceso
+        productivo, no el equipo.
+      - **Inconsistencias encontradas** (madres porcinas, antigüedad, WhatsApp de la
+        página mayorista de la tienda): pasaron a "Pendiente manual", arriba.
 - [ ] **¿Venden media res?** El sitio **no dice "media res" ni una vez**, pero
       `"media res de cerdo"` es palabra clave cargada en Ads y el titular mandó
       **siete variantes** de ese término (14/09/2026), o sea que da por hecho que se
@@ -172,9 +282,6 @@ Nada de esto se puede hacer sin información que solo tiene el dueño del negoci
 - [ ] **¿Se dice "pechito" y "matambre", o solo "matambrito"?** El sitio nombra
       *matambrito* y no nombra *pechito*. Son búsquedas distintas en concordancia
       de frase: no se capturan entre sí.
-- [ ] **Plazos de entrega** y días de reparto por zona.
-- [ ] **Medios de pago y condiciones** (cuenta corriente, plazos, contado).
-- [ ] **Condición fiscal / facturación** (si emiten factura A).
 - [ ] **Mail donde quiere recibir los leads** — hoy van a `hola@porcorosso.com.ar`.
       Se puede agregar más de un destinatario en `contacto.php`.
 

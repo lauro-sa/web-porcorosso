@@ -277,7 +277,8 @@ La medición de Google Ads está instalada desde el 01/10/2026 en
 [Layout.astro](src/layouts/Layout.astro) y atributos `data-flux-conversion` en los
 enlaces. Si agregás un botón de WhatsApp o un `tel:`, ponele
 `data-flux-conversion="WhatsApp"` o `"Llamada"`: a diferencia de Google Ads, Flux no
-los detecta solo. Detalle en [ADS.md](ADS.md).
+los detecta solo. Escribí el nombre exactamente así, con las mismas mayúsculas: Flux
+agrupa por ese texto, y «Whatsapp» sería otra fila en el tablero. Detalle en [ADS.md](ADS.md).
 
 ⚠️ **Dato contradictorio sin resolver:** el sitio dice **1.600 madres porcinas** y la
 información pública de la empresa dice **3.000**. Aparece en el hero, en la franja
@@ -286,6 +287,13 @@ de cifras y en `llms.txt`. No cambiarlo sin confirmación del titular.
 ## Dónde quedó todo
 
 *Última actualización: 21 de octubre de 2026.*
+
+**Porcorosso quedó en pausa el 21/10/2026, por pedido del titular.** Todo lo que
+espera a una persona está en una sola lista: [ROADMAP.md](ROADMAP.md), sección
+"Pendiente manual (2026-10-21)". Ahí están «Crear contacto» en Flux, con el texto para
+el asistente de Chrome; los datos del alta; las inconsistencias de datos; las páginas
+de segmento, que no se publican; y la verificación del anunciante, que vence el 28/10.
+`main` y `produccion` están subidas a GitHub.
 
 > 🔔 **Al empezar la sesión, recordale esto al titular (lo pidió él):** hay trabajo
 > terminado en `main` que **está esperando su OK para publicarse**. Preguntale si lo
@@ -319,11 +327,14 @@ sesión. Para publicar o ver lo que está online, volver a crearla con los coman
 **Publicado el 21/10/2026 a las 16:42 (hora argentina): la copia de cada lead a Flux**
 desde `contacto.php`, y el log de errores de PHP movido fuera de `public_html`. El
 endpoint de Flux ya está en producción (responde 401 sin clave) y su script ya da la
-sesión. **Todavía no manda nada**: falta que el titular genere la clave en Flux y cree
-`privado/flux.php` en el servidor con el comando de [DEPLOY.md](DEPLOY.md), "Copia a
-Flux". Después, un envío de prueba que aparezca en Leads de Flux unido a su visita, y
-mirar que `leads/errores.log` no tenga rechazos. El formulario de Flux sigue en
-borrador, que igual recibe.
+sesión. **Activa desde el 21/10/2026 a la tarde:** el titular generó la clave y se cargó en
+`privado/flux.php` directo desde el portapapeles, sin pasar por ningún chat. Flux la
+aceptó: un pedido vacío de prueba dio 422 ("faltan datos") y no 401. Ese pedido deja un
+«rechazo: datos» en Compartir que desaparece con el primer envío bueno. **Probada
+a las 17:22**: la consulta "PRUEBA" entró en Leads de Flux «vía servidor», con los datos
+etiquetados, y sin errores en el servidor. La consulta "PRUEBA" se deja a propósito (el
+titular la usa para ver cómo se muestran los datos) y el aviso de Flux por cada envío
+queda prendido. Detalle en [ADS.md](ADS.md), "Prueba de conexión landing → Flux".
 
 **Publicado el 21/10/2026 a las 13:54 (hora argentina):** la conexión con **Flux by
 Salix**, sola. El merge de `main` a `produccion` chocó con las páginas de segmento,
@@ -364,8 +375,8 @@ clic). GA4 no está, porque no existe la propiedad. Cuando el titular los pase, 
 [Medicion.astro](src/components/Medicion.astro) en `main`, mergear a `produccion` y
 publicar.
 
-Al 21/10/2026, `main` y `produccion` tienen commits **sin pushear a GitHub** (el
-titular no lo pidió). Verificar con `git status -sb` y pushear cuando lo autorice.
+El 21/10/2026, por orden del titular, `main` y `produccion` se subieron a GitHub.
+Verificar con `git status -sb` que sigan al día.
 
 **Por qué se hicieron las páginas de segmento:** un usuario le preguntó a un asistente
 de IA a quién comprarle cerdo para un hotel en CABA y Porco Rosso apareció cuarto en
